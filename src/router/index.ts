@@ -9,6 +9,16 @@ const router = createRouter({
       name: 'home',
       component: DataCleansing,
     },
+    {
+      path: '/data-validation',
+      name: 'data-validation',
+      component: () => import('@/views/DataValidation.vue'),
+    },
+    {
+      path: '/data-validation/error-report',
+      name: 'data-validation-error-report',
+      component: () => import('@/views/DataValidationErrorReport.vue'),
+    },
   ],
 })
 
