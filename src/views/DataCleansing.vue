@@ -2,13 +2,19 @@
   <div
     class="flex flex-col min-h-screen w-full bg-[#f4f7f4] font-['Poppins',sans-serif] overflow-x-hidden text-[#171a1f]"
   >
-    <div class="flex flex-1 relative">
-      <!-- Sidebar component -->
-      <AppSidebar />
+    <div class="flex flex-1 relative items-stretch h-full">
+      <!-- Sidebar column wrapping container -->
+      <aside
+        class="w-0 lg:w-[260px] xl:w-[280px] 2xl:w-[320px] bg-white lg:border-r lg:border-[#cdcdcd] shrink-0 relative z-40 lg:z-10"
+      >
+        <div class="sticky top-0 h-screen w-full">
+          <AppSidebar :is-open="isSidebarOpen" @close="isSidebarOpen = false" />
+        </div>
+      </aside>
 
-      <div class="flex-1 flex flex-col min-w-0 relative">
+      <div class="flex-1 flex flex-col min-w-0 relative z-20">
         <!-- Topbar component -->
-        <AppTopbar />
+        <AppTopbar @toggle-sidebar="isSidebarOpen = !isSidebarOpen" />
 
         <!-- Main content -->
         <main
@@ -227,6 +233,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import {
   Plus as PlusIcon,
   Search as SearchIcon,
@@ -236,6 +243,8 @@ import {
 import AppSidebar from '@/components/layout/Sidebar.vue'
 import AppTopbar from '@/components/layout/Topbar.vue'
 import AppFooter from '@/components/layout/Footer.vue'
+
+const isSidebarOpen = ref(false)
 
 const tableData = [
   {

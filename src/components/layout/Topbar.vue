@@ -2,8 +2,17 @@
   <div
     class="h-[70px] md:h-[80px] lg:h-[90px] 2xl:h-[108px] bg-white border-b-[0.3px] border-[#cdcdcd] w-full shrink-0 flex items-center justify-between px-[16px] md:px-[24px] lg:px-[32px] 2xl:px-[40px] sticky top-0 z-30"
   >
-    <!-- Logo area replacement or simply an empty flex-1 space if there wasn't anything else besides the mobile hamburger -->
-    <div class="flex items-center"></div>
+    <!-- Mobile Menu Toggle -->
+    <div class="flex items-center lg:hidden">
+      <button
+        @click="$emit('toggle-sidebar')"
+        class="p-2 -ml-2 text-[#224E22] hover:bg-[#F4F7F4] rounded-md transition-colors"
+      >
+        <MenuIcon class="w-6 h-6" />
+      </button>
+    </div>
+
+    <div class="flex items-center lg:flex-1"></div>
 
     <div class="flex items-center gap-[35px] h-full pr-[10px]">
       <button class="relative hover:opacity-80 transition-opacity">
@@ -68,4 +77,8 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { Menu as MenuIcon } from 'lucide-vue-next'
+
+defineEmits(['toggle-sidebar'])
+</script>
