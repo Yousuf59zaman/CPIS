@@ -7,7 +7,11 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
+      redirect: '/data-validation',
+    },
+    {
+      path: '/data-validation',
+      name: 'data-validation',
       component: DataCleansing,
       meta: { layout: 'default' },
     },
@@ -21,6 +25,42 @@ const router = createRouter({
       path: '/data-validation/error-report',
       name: 'data-validation-error-report',
       component: () => import('@/pages/data-validation/error-report.vue'),
+      meta: { layout: 'default' },
+    },
+    {
+      path: '/data-validation/migration-template',
+      name: 'data-validation-migration-template',
+      component: () => import('@/pages/data-validation/migration-template.vue'),
+      meta: { layout: 'default' },
+    },
+    {
+      path: '/data-validation/finalize-claimant-data',
+      name: 'data-validation-finalize-claimant-data',
+      component: () => import('@/pages/data-validation/finalize-claimant-data.vue'),
+      meta: { layout: 'default' },
+    },
+    {
+      path: '/data-migration',
+      name: 'data-migration',
+      component: () => import('@/pages/data-migration/index.vue'),
+      meta: { layout: 'default' },
+    },
+    {
+      path: '/data-migration/migration-template',
+      name: 'data-migration-template',
+      component: () => import('@/pages/data-migration/migration-template.vue'),
+      meta: { layout: 'default' },
+    },
+    {
+      path: '/data-migration/migration-error-log',
+      name: 'data-migration-error-log',
+      component: () => import('@/pages/data-migration/migration-error-log.vue'),
+      meta: { layout: 'default' },
+    },
+    {
+      path: '/data-migration/migration-report',
+      name: 'data-migration-report',
+      component: () => import('@/pages/data-migration/migration-report.vue'),
       meta: { layout: 'default' },
     },
   ],
