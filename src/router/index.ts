@@ -1,25 +1,31 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import DataCleansing from '@/views/DataCleansing.vue'
+import { authMiddleware } from '@/middleware/auth'
+import DataCleansing from '@/pages/data-validation/index.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
-      component: DataCleansing,
-    },
-    {
       path: '/data-validation',
       name: 'data-validation',
-      component: () => import('@/views/DataValidation.vue'),
+      component: DataCleansing,
+      meta: { layout: 'default' },
+    },
+    {
+      path: '/data-validation/data-cleansing-upload',
+      name: 'data-cleansing-upload',
+      component: () => import('@/pages/data-validation/data-cleansing-upload.vue'),
+      meta: { layout: 'default' },
     },
     {
       path: '/data-validation/error-report',
       name: 'data-validation-error-report',
-      component: () => import('@/views/DataValidationErrorReport.vue'),
+      component: () => import('@/pages/data-validation/error-report.vue'),
+      meta: { layout: 'default' },
     },
   ],
 })
+
+router.beforeEach(authMiddleware)
 
 export default router
