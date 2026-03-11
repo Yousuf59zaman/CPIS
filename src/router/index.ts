@@ -16,7 +16,7 @@ const router = createRouter({
       meta: { layout: 'default' },
     },
     {
-      path: '/data-cleansing-upload',
+      path: '/data-validation/data-cleansing-upload',
       name: 'data-cleansing-upload',
       component: () => import('@/pages/data-validation/data-cleansing-upload.vue'),
       meta: { layout: 'default' },

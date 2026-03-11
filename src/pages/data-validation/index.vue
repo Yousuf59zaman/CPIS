@@ -5,6 +5,13 @@ import {
   ChevronLeft as ChevronLeftIcon,
   ChevronRight as ChevronRightIcon,
 } from 'lucide-vue-next'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const goToUpload = () => {
+  router.push({ name: 'data-cleansing-upload' })
+}
 
 const tableData = [
   {

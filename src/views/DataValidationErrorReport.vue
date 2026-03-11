@@ -350,6 +350,7 @@
                         <EyeIcon class="w-4 h-4 text-[#6b7280]" />
                       </div>
                       <div
+                        @click="isModalOpen = true"
                         class="bg-[#f3f4f6] w-8 h-8 rounded-full flex items-center justify-center cursor-pointer hover:bg-[#e5e7eb]"
                       >
                         <WrenchIcon class="w-4 h-4 text-[#6b7280]" />
@@ -453,6 +454,9 @@
       </div>
     </div>
     <AppFooter />
+
+    <!-- Validation Error Modal -->
+    <ValidationErrorModal :is-open="isModalOpen" @close="isModalOpen = false" />
   </div>
 </template>
 
@@ -471,8 +475,10 @@ import {
 import AppSidebar from '@/components/layout/Sidebar.vue'
 import AppTopbar from '@/components/layout/Topbar.vue'
 import AppFooter from '@/components/layout/Footer.vue'
+import ValidationErrorModal from '@/components/modals/ValidationErrorModal.vue'
 
 const isSidebarOpen = ref(false)
+const isModalOpen = ref(false)
 
 const tableData = [
   { docket: '07-04-2023-MCB-MC-0005', name: 'Johnathan Miller', errors: '01', rowNum: '142' },
