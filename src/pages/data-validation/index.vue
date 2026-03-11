@@ -13,6 +13,13 @@ const goToUpload = () => {
   router.push({ name: 'data-cleansing-upload' })
 }
 
+const stats = [
+  { label: 'Total Batches', value: '124' },
+  { label: 'Pending Validation', value: '24' },
+  { label: 'Submitted to IT', value: '892' },
+  { label: 'Failed Batches', value: '3' },
+]
+
 const tableData = [
   {
     id: 'BCH-2023-10-001',
@@ -76,9 +83,26 @@ const tableData = [
 
     <div class="h-[18px] 2xl:h-[24px] w-full shrink-0"></div>
 
+    <!-- Stats Cards -->
+    <div
+      class="grid grid-cols-2 xl:grid-cols-4 gap-[12px] 2xl:gap-[16px] w-full animate-fade-in-up mb-[24px] 2xl:mb-[28px]">
+      <div v-for="stat in stats" :key="stat.label"
+        class="bg-white border-[0.458px] border-[rgba(203,171,88,0.5)] rounded-[6px] h-[85px] 2xl:h-[105px] flex items-center relative overflow-hidden">
+        <div
+          class="absolute left-0 top-[10%] bottom-[10%] w-[8px] 2xl:w-[10px] bg-[rgba(255,187,90,0.23)] rounded-r-[6px]">
+        </div>
+        <div class="flex flex-col pl-[22px] 2xl:pl-[28px]">
+          <span class="font-['Poppins'] font-light text-[#4e090a] text-[13px] 2xl:text-[18px] leading-tight">{{
+            stat.label }}</span>
+          <span class="font-['Poppins'] font-normal text-black text-[16px] 2xl:text-[20px] leading-normal mt-[4px]">{{
+            stat.value }}</span>
+        </div>
+      </div>
+    </div>
+
     <!-- The Main White Card -->
     <div
-      class="bg-white rounded-[10px] shadow-sm border border-gray-100 pt-[24px] px-[16px] pb-[16px] w-full max-w-full animate-fade-in-up flex flex-col min-w-0"
+      class="bg-white rounded-[10px] shadow-sm border border-gray-100 pt-[24px] px-[16px] pb-[16px] w-full max-w-full animate-fade-in-up flex flex-col min-w-0 mt-[16px] 2xl:mt-[20px]"
       style="box-shadow: 8px 8px 72px 0px rgba(0, 0, 0, 0.05)">
       <!-- Card Header -->
       <div
