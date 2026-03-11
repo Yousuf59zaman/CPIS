@@ -1,10 +1,24 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import {
   ChevronRight as ChevronRightIcon,
   FileCheck as FileCheckIcon,
   ClipboardCheck as ClipboardCheckIcon,
   Info as InfoIcon,
 } from 'lucide-vue-next'
+import DataCleansingModal from '@/components/modals/DataCleansingModal.vue'
+
+const router = useRouter()
+const isModalOpen = ref(false)
+
+const handleUploadCSV = () => {
+  isModalOpen.value = true
+  setTimeout(() => {
+    isModalOpen.value = false
+    router.push('/data-validation/error-report')
+  }, 5000)
+}
 </script>
 
 <template>
@@ -147,28 +161,7 @@ import {
   </main>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import {
-  ChevronRight as ChevronRightIcon,
-  FileCheck as FileCheckIcon,
-  ClipboardCheck as ClipboardCheckIcon,
-  Info as InfoIcon,
-} from 'lucide-vue-next'
-import DataCleansingModal from '@/components/modals/DataCleansingModal.vue'
 
-const router = useRouter()
-const isModalOpen = ref(false)
-
-const handleUploadCSV = () => {
-  isModalOpen.value = true
-  setTimeout(() => {
-    isModalOpen.value = false
-    router.push('/data-validation/error-report')
-  }, 5000)
-}
-</script>
 
 <style scoped>
 @keyframes fadeInUp {
