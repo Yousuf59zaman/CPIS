@@ -1,3 +1,10 @@
+<script setup lang="ts">
+import { Menu as MenuIcon } from 'lucide-vue-next'
+
+defineEmits(['toggle-sidebar'])
+</script>
+
+
 <template>
   <div
     class="h-[70px] md:h-[80px] lg:h-[90px] 2xl:h-[108px] bg-white border-b-[0.3px] border-[#cdcdcd] w-full shrink-0 flex items-center justify-between px-[16px] md:px-[24px] lg:px-[32px] 2xl:px-[40px] sticky top-0 z-30">
@@ -56,8 +63,4 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { Menu as MenuIcon } from 'lucide-vue-next'
 
-defineEmits(['toggle-sidebar'])
-</script>
