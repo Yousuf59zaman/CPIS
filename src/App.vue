@@ -1,9 +1,22 @@
 <template>
-  <RouterView />
+  <component :is="currentLayout">
+    <RouterView />
+  </component>
 </template>
 
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
+import { computed, type Component } from 'vue'
+import { useRoute, RouterView } from 'vue-router'
+import DefaultLayout from '@/layouts/default.vue'
+
+const layouts: Record<string, Component> = {
+  default: DefaultLayout,
+}
+
+const route = useRoute()
+const currentLayout = computed(
+  () => layouts[(route.meta.layout as string) ?? 'default'] ?? DefaultLayout,
+)
 </script>
 
 <style>
