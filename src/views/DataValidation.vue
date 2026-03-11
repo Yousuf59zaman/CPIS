@@ -153,7 +153,11 @@
                     >
                   </div>
                 </div>
-
+                <p
+                  class="text-[16px] md:text-[18px] 2xl:text-[20px] text-[#000] font-normal capitalize mb-2"
+                >
+                  Transfer To Template
+                </p>
                 <div class="w-full h-px bg-[#d1d5db] mb-5 lg:mb-6"></div>
 
                 <!-- System Notice Block -->
