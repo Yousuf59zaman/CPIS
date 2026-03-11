@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { Menu as MenuIcon } from 'lucide-vue-next'
 
-defineEmits(['toggle-sidebar'])
+const emit = defineEmits<{
+  (e: 'toggle-sidebar'): void
+}>()
 </script>
 
 
@@ -10,7 +12,7 @@ defineEmits(['toggle-sidebar'])
     class="h-[70px] md:h-[80px] lg:h-[90px] 2xl:h-[108px] bg-white border-b-[0.3px] border-[#cdcdcd] w-full shrink-0 flex items-center justify-between px-[16px] md:px-[24px] lg:px-[32px] 2xl:px-[40px] sticky top-0 z-30">
     <!-- Mobile Menu Toggle -->
     <div class="flex items-center lg:hidden">
-      <button @click="$emit('toggle-sidebar')"
+      <button type="button" aria-label="Toggle sidebar" @click="emit('toggle-sidebar')"
         class="p-2 -ml-2 text-[#224E22] hover:bg-[#F4F7F4] rounded-md transition-colors">
         <MenuIcon class="w-6 h-6" />
       </button>
@@ -27,17 +29,23 @@ defineEmits(['toggle-sidebar'])
       </button>
 
       <!-- Profile Section: Full on lg+, icon only on smaller screens -->
-      <div class="relative flex items-center shrink-0 w-auto lg:w-[200px] 2xl:w-[240px]">
-        <!-- Circular layered profile picture overlapping left edge (always visible) -->
-        <div
-          class="relative lg:absolute lg:left-[3px] z-10 w-[40px] h-[40px] lg:w-[46px] lg:h-[46px] 2xl:w-[54px] 2xl:h-[54px] flex items-center justify-center cursor-pointer">
+      <div class="relative flex items-center shrink-0">
+        <!-- Mobile-only: circle in flow -->
+        <div class="lg:hidden relative z-10 w-[40px] h-[40px] flex items-center justify-center cursor-pointer">
           <img src="@/assets/icons/topbar/Ellipse 2858.svg" class="absolute w-full h-full object-contain" />
           <img src="@/assets/icons/topbar/profile_pic.svg" class="absolute w-[50%] h-[50%] object-contain mb-[4px]" />
         </div>
 
-        <!-- Expanded Profile Box (Hidden on mobile/tablet, visible on lg+) -->
+        <!-- Expanded Profile Box (lg+): circle overlaps left edge from inside -->
         <div
-          class="hidden lg:flex items-center bg-[rgba(245,248,245,0.7)] border-[0.2px] border-[#a8aaa9] rounded-[6px] w-[185px] 2xl:w-[213px] h-[65px] 2xl:h-[77px] ml-[24px] 2xl:ml-[30px] pl-[30px] 2xl:pl-[34px] pr-[10px] 2xl:pr-[12px] gap-[8px] 2xl:gap-[12px]">
+          class="hidden lg:flex items-center relative bg-[rgba(245,248,245,0.7)] border-[0.2px] border-[#a8aaa9] rounded-[6px] w-[210px] 2xl:w-[248px] h-[65px] 2xl:h-[77px] pl-[54px] 2xl:pl-[64px] pr-[10px] 2xl:pr-[12px] gap-[8px] 2xl:gap-[12px]">
+          <!-- Circle: absolute inside box, overlaps left edge -->
+          <div
+            class="absolute left-[3px] top-1/2 -translate-y-1/2 z-10 w-[46px] h-[46px] 2xl:w-[54px] 2xl:h-[54px] flex items-center justify-center cursor-pointer">
+            <img src="@/assets/icons/topbar/Ellipse 2858.svg" class="absolute w-full h-full object-contain" />
+            <img src="@/assets/icons/topbar/profile_pic.svg" class="absolute w-[50%] h-[50%] object-contain mb-[4px]" />
+          </div>
+
           <div class="flex flex-col justify-center gap-[2px]">
             <span
               class="font-['Poppins'] font-medium text-[#0d2f0d] text-[13px] 2xl:text-[15px] leading-[1.2] whitespace-nowrap tracking-tight">Maria
@@ -47,9 +55,9 @@ defineEmits(['toggle-sidebar'])
               Officer</span>
           </div>
 
-          <div class="h-[28px] 2xl:h-[34px] border-l-[0.5px] border-[#cdcdcd] mx-[2px] opacity-80"></div>
+          <div class="h-[28px] 2xl:h-[34px] border-l-[0.5px] border-[#cdcdcd] mx-[2px] opacity-80 shrink-0"></div>
 
-          <div class="flex flex-col justify-center gap-[4px] mt-px">
+          <div class="flex flex-col justify-center gap-[4px] mt-px min-w-0">
             <span
               class="font-['Poppins'] font-light text-[#8e8e8e] text-[8.5px] 2xl:text-[9.5px] leading-none whitespace-nowrap tracking-wide">Session
               ID: SEAS:XXXX</span>
@@ -62,5 +70,3 @@ defineEmits(['toggle-sidebar'])
     </div>
   </div>
 </template>
-
-

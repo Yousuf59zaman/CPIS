@@ -1,3 +1,40 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+import { X as XIcon } from 'lucide-vue-next'
+import DashboardIcon from '@/assets/icons/sidebar/Dashboard.svg'
+import TaskInboxIcon from '@/assets/icons/sidebar/Task_Inbox.svg'
+import ClaimsListIcon from '@/assets/icons/sidebar/Claims_List.svg'
+import ReportsIcon from '@/assets/icons/sidebar/Reports.svg'
+import DataValidationIcon from '@/assets/icons/sidebar/Data_Validation.svg'
+import DataMigrationIcon from '@/assets/icons/sidebar/Data_Migration.svg'
+import AdministrationIcon from '@/assets/icons/sidebar/Administration.svg'
+
+const route = useRoute()
+
+const navItems = computed(() =>
+  [
+    { name: 'Dashboard', path: '#', icon: DashboardIcon },
+    { name: 'Task Inbox', path: '#', icon: TaskInboxIcon },
+    { name: 'Claims List', path: '#', icon: ClaimsListIcon },
+    { name: 'Reports', path: '#', icon: ReportsIcon },
+    { name: 'Data Validation', path: '/data-validation', icon: DataValidationIcon },
+    { name: 'Data Migration', path: '/data-migration', icon: DataMigrationIcon },
+    { name: 'Administration', path: '#', icon: AdministrationIcon },
+  ].map((item) => ({
+    ...item,
+    active: item.path !== '#' && (route.path === item.path || route.path.startsWith(item.path + '/')),
+  })),
+)
+
+defineProps<{
+  isOpen: boolean
+}>()
+
+defineEmits(['close'])
+</script>
+
+
 <template>
   <div class="contents">
     <!-- Mobile Overlay -->
@@ -52,8 +89,8 @@
             <img :src="item.icon" alt="icon" class="w-[38px] h-[35px] 2xl:w-[46px] 2xl:h-[43px]" />
           </div>
           <span class="font-['Poppins']" :class="item.active
-              ? 'text-white font-medium text-[18px] leading-[20px] [text-shadow:0_2px_2px_rgba(0,0,0,0.10)]'
-              : 'text-[#0A1F0A] font-normal text-[18px] leading-normal [text-shadow:0_2px_2px_rgba(0,0,0,0.10)]'
+            ? 'text-white font-medium text-[18px] leading-[20px] [text-shadow:0_2px_2px_rgba(0,0,0,0.10)]'
+            : 'text-[#0A1F0A] font-normal text-[18px] leading-normal [text-shadow:0_2px_2px_rgba(0,0,0,0.10)]'
             ">{{ item.name }}</span>
         </router-link>
       </nav>
@@ -67,29 +104,4 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { X as XIcon } from 'lucide-vue-next'
-import DashboardIcon from '@/assets/icons/sidebar/Dashboard.svg'
-import TaskInboxIcon from '@/assets/icons/sidebar/Task_Inbox.svg'
-import ClaimsListIcon from '@/assets/icons/sidebar/Claims_List.svg'
-import ReportsIcon from '@/assets/icons/sidebar/Reports.svg'
-import DataValidationIcon from '@/assets/icons/sidebar/Data_Validation.svg'
-import DataMigrationIcon from '@/assets/icons/sidebar/Data_Migration.svg'
-import AdministrationIcon from '@/assets/icons/sidebar/Administration.svg'
 
-const navItems = [
-  { name: 'Dashboard', path: '#', icon: DashboardIcon, active: false },
-  { name: 'Task Inbox', path: '#', icon: TaskInboxIcon, active: false },
-  { name: 'Claims List', path: '#', icon: ClaimsListIcon, active: false },
-  { name: 'Reports', path: '#', icon: ReportsIcon, active: false },
-  { name: 'Data Validation', path: '/', icon: DataValidationIcon, active: true },
-  { name: 'Data Migration', path: '#', icon: DataMigrationIcon, active: false },
-  { name: 'Administration', path: '#', icon: AdministrationIcon, active: false },
-]
-
-defineProps<{
-  isOpen: boolean
-}>()
-
-defineEmits(['close'])
-</script>
