@@ -7,7 +7,7 @@
         <img src="@/assets/icons/footer/lock.svg" class="w-[18px] h-[18px] opacity-80" />
       </div>
       <span
-        class="text-[#171a1f] opacity-80 text-[13px] md:text-[14px] xl:text-[18px] font-['Poppins'] font-light whitespace-normal md:whitespace-nowrap"
+        class="text-[#171A1F] text-[18px] font-['Poppins'] font-light capitalize whitespace-normal md:whitespace-nowrap"
         >Encrypted Connection (TLS)</span
       >
     </div>
@@ -19,7 +19,7 @@
         <img src="@/assets/icons/footer/clock.svg" class="w-[18px] h-[18px] opacity-80" />
       </div>
       <span
-        class="text-[#171a1f] opacity-80 text-[13px] md:text-[14px] xl:text-[18px] font-['Poppins'] font-light whitespace-normal md:whitespace-nowrap"
+        class="text-[#171A1F] text-[18px] font-['Poppins'] font-light capitalize whitespace-normal md:whitespace-nowrap"
         >Idle Timeout: 10 Minutes</span
       >
     </div>
@@ -31,7 +31,7 @@
         <img src="@/assets/icons/footer/shield-alert.svg" class="w-[18px] h-[18px] opacity-80" />
       </div>
       <span
-        class="text-[#171a1f] opacity-80 text-[13px] md:text-[14px] xl:text-[18px] font-['Poppins'] font-light whitespace-normal md:whitespace-nowrap"
+        class="text-[#171A1F] text-[18px] font-['Poppins'] font-light capitalize whitespace-normal md:whitespace-nowrap"
         >5 Failed Attempts Will Lock Account</span
       >
     </div>

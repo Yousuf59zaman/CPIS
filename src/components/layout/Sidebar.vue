@@ -75,8 +75,12 @@
             <img :src="item.icon" alt="icon" class="w-[38px] h-[35px] 2xl:w-[46px] 2xl:h-[43px]" />
           </div>
           <span
-            class="font-['Poppins'] text-[13px] 2xl:text-[15px] leading-none"
-            :class="item.active ? 'text-white font-medium' : 'text-[#224E22] font-medium'"
+            class="font-['Poppins']"
+            :class="
+              item.active
+                ? 'text-white font-medium text-[18px] leading-[20px] [text-shadow:0_2px_2px_rgba(0,0,0,0.10)]'
+                : 'text-[#0A1F0A] font-normal text-[18px] leading-normal [text-shadow:0_2px_2px_rgba(0,0,0,0.10)]'
+            "
             >{{ item.name }}</span
           >
         </router-link>
