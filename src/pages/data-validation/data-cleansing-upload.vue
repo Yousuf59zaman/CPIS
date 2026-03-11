@@ -60,6 +60,7 @@
               class="flex flex-col sm:flex-row items-center justify-center gap-3 lg:gap-5 mb-4 lg:mb-5 w-full sm:w-auto px-4 sm:px-0"
             >
               <button
+                @click="handleUploadCSV"
                 class="bg-[#285328] text-white h-[48px] rounded-[6px] text-[15px] md:text-[17px] 2xl:text-[18.667px] leading-normal font-medium text-center w-full sm:w-[220px] hover:bg-[#1b3d1b] transition-colors shadow-sm"
               >
                 Upload CSV
@@ -184,16 +185,33 @@
         </div>
       </div>
     </div>
+
+    <!-- Data Cleansing Modal -->
+    <DataCleansingModal :isOpen="isModalOpen" @close="isModalOpen = false" />
   </main>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import {
   ChevronRight as ChevronRightIcon,
   FileCheck as FileCheckIcon,
   ClipboardCheck as ClipboardCheckIcon,
   Info as InfoIcon,
 } from 'lucide-vue-next'
+import DataCleansingModal from '@/components/modals/DataCleansingModal.vue'
+
+const router = useRouter()
+const isModalOpen = ref(false)
+
+const handleUploadCSV = () => {
+  isModalOpen.value = true
+  setTimeout(() => {
+    isModalOpen.value = false
+    router.push('/data-validation/error-report')
+  }, 5000)
+}
 </script>
 
 <style scoped>
