@@ -13,7 +13,7 @@
 
     <div class="flex items-center gap-[35px] h-full pr-[10px]">
       <button class="relative hover:opacity-80 transition-opacity">
-        <img src="@/assets/icons/topbar/bell.svg" alt="Notifications"
+        <img src="@/assets/icons/topbar/.svg" alt="Notifications"
           class="w-[20px] h-[22px] md:w-[22px] md:h-[24px] 2xl:w-[24px] 2xl:h-[26px] opacity-80" />
         <span
           class="absolute top-0 -right-px w-[6px] h-[6px] md:w-[7px] md:h-[7px] 2xl:w-[8px] 2xl:h-[8px] bg-[#eA5455] rounded-full border-[1.5px] border-white"></span>
@@ -24,8 +24,7 @@
         <!-- Circular layered profile picture overlapping left edge (always visible) -->
         <div
           class="relative lg:absolute lg:left-[3px] z-10 w-[40px] h-[40px] lg:w-[46px] lg:h-[46px] 2xl:w-[54px] 2xl:h-[54px] flex items-center justify-center cursor-pointer">
-          <img src="@/assets/icons/topbar/Ellipse 2858.svg" class="absolute w-full h-full object-contain" />
-          <img src="@/assets/icons/topbar/profile_pic.svg" class="absolute w-[50%] h-[50%] object-contain mb-[4px]" />
+          <img src="@/assets/icons/topbar/Mask group.svg" class="w-full h-full object-contain" alt="Profile" />
         </div>
 
         <!-- Expanded Profile Box (Hidden on mobile/tablet, visible on lg+) -->

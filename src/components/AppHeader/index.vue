@@ -6,14 +6,18 @@ const emit = defineEmits<{
 }>()
 </script>
 
-
 <template>
   <div
-    class="h-[70px] md:h-[80px] lg:h-[90px] 2xl:h-[108px] bg-white border-b-[0.3px] border-[#cdcdcd] w-full shrink-0 flex items-center justify-between px-[16px] md:px-[24px] lg:px-[32px] 2xl:px-[40px] sticky top-0 z-30">
+    class="h-[70px] md:h-[80px] lg:h-[90px] 2xl:h-[108px] bg-white border-b-[0.3px] border-[#cdcdcd] w-full shrink-0 flex items-center justify-between px-[16px] md:px-[24px] lg:px-[32px] 2xl:px-[40px] sticky top-0 z-30"
+  >
     <!-- Mobile Menu Toggle -->
     <div class="flex items-center lg:hidden">
-      <button type="button" aria-label="Toggle sidebar" @click="emit('toggle-sidebar')"
-        class="p-2 -ml-2 text-[#224E22] hover:bg-[#F4F7F4] rounded-md transition-colors">
+      <button
+        type="button"
+        aria-label="Toggle sidebar"
+        @click="emit('toggle-sidebar')"
+        class="p-2 -ml-2 text-[#224E22] hover:bg-[#F4F7F4] rounded-md transition-colors"
+      >
         <MenuIcon class="w-6 h-6" />
       </button>
     </div>
@@ -22,48 +26,68 @@ const emit = defineEmits<{
 
     <div class="flex items-center gap-[35px] h-full pr-[10px]">
       <button class="relative hover:opacity-80 transition-opacity">
-        <img src="@/assets/icons/topbar/bell.svg" alt="Notifications"
-          class="w-[20px] h-[22px] md:w-[22px] md:h-[24px] 2xl:w-[24px] 2xl:h-[26px] opacity-80" />
+        <img
+          src="@/assets/icons/topbar/.svg"
+          alt="Notifications"
+          class="w-[20px] h-[22px] md:w-[22px] md:h-[24px] 2xl:w-[24px] 2xl:h-[26px] opacity-80"
+        />
         <span
-          class="absolute top-0 -right-px w-[6px] h-[6px] md:w-[7px] md:h-[7px] 2xl:w-[8px] 2xl:h-[8px] bg-[#eA5455] rounded-full border-[1.5px] border-white"></span>
+          class="absolute top-0 -right-px w-[6px] h-[6px] md:w-[7px] md:h-[7px] 2xl:w-[8px] 2xl:h-[8px] bg-[#eA5455] rounded-full border-[1.5px] border-white"
+        ></span>
       </button>
 
       <!-- Profile Section: Full on lg+, icon only on smaller screens -->
       <div class="relative flex items-center shrink-0">
         <!-- Mobile-only: circle in flow -->
-        <div class="lg:hidden relative z-10 w-[40px] h-[40px] flex items-center justify-center cursor-pointer">
-          <img src="@/assets/icons/topbar/Ellipse 2858.svg" class="absolute w-full h-full object-contain" />
-          <img src="@/assets/icons/topbar/profile_pic.svg" class="absolute w-[50%] h-[50%] object-contain mb-[4px]" />
+        <div
+          class="lg:hidden relative z-10 w-[40px] h-[40px] flex items-center justify-center cursor-pointer"
+        >
+          <img
+            src="@/assets/icons/topbar/Mask group.svg"
+            class="w-full h-full object-contain"
+            alt="Profile"
+          />
         </div>
 
-        <!-- Expanded Profile Box (lg+): circle overlaps left edge from inside -->
+        <!-- Expanded Profile Box (lg+): circle overlaps left edge -->
         <div
-          class="hidden lg:flex items-center relative bg-[rgba(245,248,245,0.7)] border-[0.2px] border-[#a8aaa9] rounded-[6px] w-[210px] 2xl:w-[248px] h-[65px] 2xl:h-[77px] pl-[54px] 2xl:pl-[64px] pr-[10px] 2xl:pr-[12px] gap-[8px] 2xl:gap-[12px]">
-          <!-- Circle: absolute inside box, overlaps left edge -->
+          class="hidden lg:flex relative bg-[rgba(245,248,245,0.7)] border-[0.2px] border-[#a8aaa9] rounded-[12px] w-[230px] 2xl:w-[265px] h-[80px] 2xl:h-[95px] pl-[60px] 2xl:pl-[72px] pr-[14px] 2xl:pr-[18px]"
+        >
+          <!-- Circle: overlaps left edge -->
           <div
-            class="absolute left-[3px] top-1/2 -translate-y-1/2 z-10 w-[46px] h-[46px] 2xl:w-[54px] 2xl:h-[54px] flex items-center justify-center cursor-pointer">
-            <img src="@/assets/icons/topbar/Ellipse 2858.svg" class="absolute w-full h-full object-contain" />
-            <img src="@/assets/icons/topbar/profile_pic.svg" class="absolute w-[50%] h-[50%] object-contain mb-[4px]" />
+            class="absolute left-[-18px] 2xl:left-[-22px] top-1/2 -translate-y-1/2 z-10 w-[60px] h-[60px] 2xl:w-[72px] 2xl:h-[72px] flex items-center justify-center cursor-pointer"
+          >
+            <img
+              src="@/assets/icons/topbar/Mask group.svg"
+              class="w-full h-full object-contain"
+              alt="Profile"
+            />
           </div>
 
-          <div class="flex flex-col justify-center gap-[2px]">
-            <span
-              class="font-['Poppins'] font-medium text-[#0d2f0d] text-[13px] 2xl:text-[15px] leading-[1.2] whitespace-nowrap tracking-tight">Maria
-              Santos</span>
-            <span
-              class="font-['Poppins'] font-light text-[#286c45] text-[11px] 2xl:text-[12px] leading-[1.2] whitespace-nowrap">Record
-              Officer</span>
-          </div>
+          <div class="flex flex-col justify-center h-full w-full gap-[6px]">
+            <div class="flex flex-col justify-center gap-[1px]">
+              <span
+                class="font-['Poppins'] font-semibold text-[#0d2f0d] text-[15px] 2xl:text-[17px] leading-[1.2] whitespace-nowrap"
+                >Maria Santos</span
+              >
+              <span
+                class="font-['Poppins'] font-medium text-[#286c45] text-[13px] 2xl:text-[14px] leading-[1.3] whitespace-nowrap"
+                >Record Officer</span
+              >
+            </div>
 
-          <div class="h-[28px] 2xl:h-[34px] border-l-[0.5px] border-[#cdcdcd] mx-[2px] opacity-80 shrink-0"></div>
+            <div class="h-[0.5px] w-full bg-[#cdcdcd] opacity-60"></div>
 
-          <div class="flex flex-col justify-center gap-[4px] mt-px min-w-0">
-            <span
-              class="font-['Poppins'] font-light text-[#8e8e8e] text-[8.5px] 2xl:text-[9.5px] leading-none whitespace-nowrap tracking-wide">Session
-              ID: SEAS:XXXX</span>
-            <span
-              class="font-['Poppins'] font-light text-[#8e8e8e] text-[8.5px] 2xl:text-[9.5px] leading-none whitespace-nowrap tracking-wide">Audit
-              Ref: AUTH-SESSION-XXXXX</span>
+            <div class="flex flex-col justify-center gap-[3px] min-w-0">
+              <span
+                class="font-['Poppins'] font-light text-[#8e8e8e] text-[9.5px] 2xl:text-[11px] leading-none whitespace-nowrap tracking-wide"
+                >Session ID: SEAS:XXXX</span
+              >
+              <span
+                class="font-['Poppins'] font-light text-[#8e8e8e] text-[9.5px] 2xl:text-[11px] leading-none whitespace-nowrap tracking-wide"
+                >Audit Ref: AUTH-SESSION-XXXXX</span
+              >
+            </div>
           </div>
         </div>
       </div>

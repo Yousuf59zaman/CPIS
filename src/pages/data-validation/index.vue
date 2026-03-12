@@ -85,7 +85,8 @@ const tableData = [
 
     <!-- Stats Cards -->
     <div
-      class="grid grid-cols-2 xl:grid-cols-4 gap-[12px] 2xl:gap-[16px] w-full animate-fade-in-up mb-[24px] 2xl:mb-[28px]">
+      class="grid grid-cols-2 xl:grid-cols-4 gap-[12px] 2xl:gap-[16px] w-full animate-fade-in-up"
+      style="margin-bottom: 24px">
       <div v-for="stat in stats" :key="stat.label"
         class="bg-white border-[0.458px] border-[rgba(203,171,88,0.5)] rounded-[6px] h-[85px] 2xl:h-[105px] flex items-center relative overflow-hidden">
         <div
@@ -102,8 +103,8 @@ const tableData = [
 
     <!-- The Main White Card -->
     <div
-      class="bg-white rounded-[10px] shadow-sm border border-gray-100 pt-[24px] px-[16px] pb-[16px] w-full max-w-full animate-fade-in-up flex flex-col min-w-0 mt-[16px] 2xl:mt-[20px]"
-      style="box-shadow: 8px 8px 72px 0px rgba(0, 0, 0, 0.05)">
+      class="bg-white rounded-[10px] shadow-sm border border-gray-100 pt-[24px] px-[16px] pb-[16px] w-full max-w-full animate-fade-in-up flex flex-col min-w-0"
+      style="box-shadow: 8px 8px 72px 0px rgba(0, 0, 0, 0.05); margin-top: 16px">
       <!-- Card Header -->
       <div
         class="flex flex-col lg:flex-row justify-between items-start lg:items-center relative px-0 md:px-[16px] pb-[16px] gap-6 lg:gap-4">
