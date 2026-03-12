@@ -14,13 +14,13 @@ const route = useRoute()
 
 const navItems = computed(() =>
   [
-    { name: 'Dashboard', path: '#', icon: DashboardIcon },
-    { name: 'Task Inbox', path: '#', icon: TaskInboxIcon },
-    { name: 'Claims List', path: '#', icon: ClaimsListIcon },
-    { name: 'Reports', path: '#', icon: ReportsIcon },
+    { name: 'Dashboard', path: '/dashboard', icon: DashboardIcon },
+    { name: 'Task Inbox', path: '/task-inbox', icon: TaskInboxIcon },
+    { name: 'Claims List', path: '/claims-list', icon: ClaimsListIcon },
+    { name: 'Reports', path: '/reports', icon: ReportsIcon },
     { name: 'Data Validation', path: '/data-validation', icon: DataValidationIcon },
     { name: 'Data Migration', path: '/data-migration', icon: DataMigrationIcon },
-    { name: 'Administration', path: '#', icon: AdministrationIcon },
+    { name: 'Administration', path: '/administration', icon: AdministrationIcon },
   ].map((item) => ({
     ...item,
     active:
