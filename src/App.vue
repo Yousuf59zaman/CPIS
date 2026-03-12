@@ -8,9 +8,11 @@
 import { computed, type Component } from 'vue'
 import { useRoute, RouterView } from 'vue-router'
 import DefaultLayout from '@/layouts/default.vue'
+import AuthLayout from '@/layouts/auth.vue'
 
 const layouts: Record<string, Component> = {
   default: DefaultLayout,
+  auth: AuthLayout,
 }
 
 const route = useRoute()
