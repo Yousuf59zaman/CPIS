@@ -23,7 +23,8 @@ const navItems = computed(() =>
     { name: 'Administration', path: '/administration', icon: AdministrationIcon },
   ].map((item) => ({
     ...item,
-    active: route.path === item.path || route.path.startsWith(item.path + '/'),
+    active:
+      item.path !== '#' && (route.path === item.path || route.path.startsWith(item.path + '/')),
   })),
 )
 
