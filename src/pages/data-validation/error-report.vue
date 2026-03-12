@@ -1,4 +1,5 @@
 ﻿<script setup lang="ts">
+import { ref } from 'vue'
 import {
   ChevronRight as ChevronRightIcon,
   TriangleAlert as TriangleAlertIcon,
@@ -9,6 +10,9 @@ import {
   MoreVertical as MoreVerticalIcon,
   Settings2 as SettingsIcon,
 } from 'lucide-vue-next'
+import ValidationErrorModal from '@/components/modals/ValidationErrorModal.vue'
+
+const isValidationModalOpen = ref(false)
 
 const tableData = [
   { docket: '07-04-2023-MCB-MC-0005', name: 'Johnathan Miller', errors: '01', rowNum: '142' },
@@ -282,6 +286,7 @@ const tableData = [
                   <EyeIcon class="w-4 h-4 text-[#6b7280]" />
                 </div>
                 <div
+                  @click="isValidationModalOpen = true"
                   class="bg-[#f3f4f6] w-8 h-8 rounded-full flex items-center justify-center cursor-pointer hover:bg-[#e5e7eb]">
                   <WrenchIcon class="w-4 h-4 text-[#6b7280]" />
                 </div>
@@ -326,7 +331,10 @@ const tableData = [
                 <span class="text-[12px] font-medium text-[#9ca3af] uppercase">Action</span>
                 <div class="flex items-center gap-3">
                   <EyeIcon class="w-5 h-5 text-[#6b7280]" />
-                  <WrenchIcon class="w-5 h-5 text-[#6b7280]" />
+                  <WrenchIcon
+                    class="w-5 h-5 text-[#6b7280] cursor-pointer"
+                    @click="isValidationModalOpen = true"
+                  />
                   <MoreVerticalIcon class="w-5 h-5 text-[#9ca3af]" />
                 </div>
               </div>
@@ -370,6 +378,11 @@ const tableData = [
       </button>
     </div>
   </main>
+
+  <ValidationErrorModal
+    :isOpen="isValidationModalOpen"
+    @close="isValidationModalOpen = false"
+  />
 </template>
 
 
@@ -391,3 +404,4 @@ const tableData = [
   animation: fadeInUp 0.5s ease-out forwards;
 }
 </style>
+

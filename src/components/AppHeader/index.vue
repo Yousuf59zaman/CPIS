@@ -24,54 +24,58 @@ const emit = defineEmits<{
 
     <div class="flex items-center lg:flex-1"></div>
 
-    <div class="flex items-center gap-[35px] h-full pr-[10px]">
-      <button class="relative hover:opacity-80 transition-opacity">
+    <div class="flex items-center gap-[42px] h-full pr-[10px]">
+      <button class="relative hover:opacity-80 transition-opacity" style="margin-right: 8px">
         <img
           src="@/assets/icons/topbar/.svg"
           alt="Notifications"
-          class="w-[20px] h-[22px] md:w-[22px] md:h-[24px] 2xl:w-[24px] 2xl:h-[26px] opacity-80"
+          class="opacity-80"
+          style="width: 26px; height: 28px"
         />
-        <span
+        <!-- <span
           class="absolute top-0 -right-px w-[6px] h-[6px] md:w-[7px] md:h-[7px] 2xl:w-[8px] 2xl:h-[8px] bg-[#eA5455] rounded-full border-[1.5px] border-white"
-        ></span>
+        ></span> -->
       </button>
 
       <!-- Profile Section: Full on lg+, icon only on smaller screens -->
       <div class="relative flex items-center shrink-0">
         <!-- Mobile-only: circle in flow -->
         <div
-          class="lg:hidden relative z-10 w-[40px] h-[40px] flex items-center justify-center cursor-pointer"
+          class="lg:hidden relative z-10 w-[40px] h-[40px] flex items-center justify-center cursor-pointer rounded-full bg-white"
         >
           <img
             src="@/assets/icons/topbar/Mask group.svg"
-            class="w-full h-full object-contain"
+            class="w-[85%] h-[85%] object-contain"
             alt="Profile"
           />
         </div>
 
         <!-- Expanded Profile Box (lg+): circle overlaps left edge -->
         <div
-          class="hidden lg:flex relative bg-[rgba(245,248,245,0.7)] border-[0.2px] border-[#a8aaa9] rounded-[12px] w-[230px] 2xl:w-[265px] h-[80px] 2xl:h-[95px] pl-[60px] 2xl:pl-[72px] pr-[14px] 2xl:pr-[18px]"
+          class="hidden lg:flex relative bg-[rgba(245,248,245,0.7)] border-[0.2px] border-[#a8aaa9] rounded-[12px] pl-[36px] 2xl:pl-[40px]"
+          style="height: 77px; width: 220px"
         >
           <!-- Circle: overlaps left edge -->
           <div
-            class="absolute left-[-18px] 2xl:left-[-22px] top-1/2 -translate-y-1/2 z-10 w-[60px] h-[60px] 2xl:w-[72px] 2xl:h-[72px] flex items-center justify-center cursor-pointer"
+            class="absolute left-[-36px] 2xl:left-[-38px] top-1/2 -translate-y-1/2 z-10 w-[60px] h-[60px] 2xl:w-[72px] 2xl:h-[72px] flex items-center justify-center cursor-pointer rounded-full bg-white"
           >
             <img
               src="@/assets/icons/topbar/Mask group.svg"
-              class="w-full h-full object-contain"
+              class="w-[81%] h-[81%] object-contain"
               alt="Profile"
             />
           </div>
 
-          <div class="flex flex-col justify-center h-full w-full gap-[6px]">
+          <div class="flex flex-col justify-center h-full w-full" style="gap: 4px">
             <div class="flex flex-col justify-center gap-[1px]">
               <span
-                class="font-['Poppins'] font-semibold text-[#0d2f0d] text-[15px] 2xl:text-[17px] leading-[1.2] whitespace-nowrap"
+                class="font-['Poppins'] font-semibold text-[#0d2f0d] leading-[1.2] whitespace-nowrap"
+                style="font-size: 15px"
                 >Maria Santos</span
               >
               <span
-                class="font-['Poppins'] font-medium text-[#286c45] text-[13px] 2xl:text-[14px] leading-[1.3] whitespace-nowrap"
+                class="font-['Poppins'] font-medium text-[#286c45] leading-[1.3] whitespace-nowrap"
+                style="font-size: 12px"
                 >Record Officer</span
               >
             </div>
@@ -80,11 +84,13 @@ const emit = defineEmits<{
 
             <div class="flex flex-col justify-center gap-[3px] min-w-0">
               <span
-                class="font-['Poppins'] font-light text-[#8e8e8e] text-[9.5px] 2xl:text-[11px] leading-none whitespace-nowrap tracking-wide"
+                class="font-['Poppins'] font-light text-[#8e8e8e] leading-none whitespace-nowrap tracking-wide"
+                style="font-size: 9px"
                 >Session ID: SEAS:XXXX</span
               >
               <span
-                class="font-['Poppins'] font-light text-[#8e8e8e] text-[9.5px] 2xl:text-[11px] leading-none whitespace-nowrap tracking-wide"
+                class="font-['Poppins'] font-light text-[#8e8e8e] leading-none whitespace-nowrap tracking-wide"
+                style="font-size: 9px"
                 >Audit Ref: AUTH-SESSION-XXXXX</span
               >
             </div>
