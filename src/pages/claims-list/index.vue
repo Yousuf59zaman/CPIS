@@ -28,27 +28,27 @@ const claims = [
 ]
 
 function statusClass(s: string) {
-  if (s === 'Missing Documents') return 'bg-[#fed7aa] text-[#9a3412]'
-  if (s === 'Pending') return 'bg-[#ede9fe] text-[#5b21b6]'
-  if (s === 'Validated') return 'bg-[#d1fae5] text-[#065f46]'
-  return 'bg-[#f3f4f6] text-[#374151]'
+  if (s === 'Missing Documents') return 'bg-[#fed7aa]'
+  if (s === 'Pending') return 'bg-[#ede9fe]'
+  if (s === 'Validated') return 'bg-[#d1fae5]'
+  return 'bg-[#f3f4f6]'
 }
 </script>
 
 <template>
-  <main class="flex flex-col gap-[16px] 2xl:gap-[20px] p-[20px] 2xl:p-[24px]">
+  <main class="flex flex-col gap-[16px] 2xl:gap-[20px] p-[20px] 2xl:p-[24px] font-['Poppins']">
     <!-- Page header -->
     <div class="flex items-center justify-between">
-      <h1 class="text-[22px] 2xl:text-[24px] font-semibold text-[#171a1f]">Claim Search</h1>
+      <h1 class="text-[30px] leading-[45px] font-medium text-[#202224]">Claim Search</h1>
       <div class="flex items-center gap-[10px]">
-        <button class="flex items-center gap-[6px] px-[14px] py-[8px] bg-[#1d4a1d] hover:bg-[#163a16] text-white text-[12px] font-medium rounded-[8px] transition-colors">
+        <button class="flex items-center gap-[6px] px-[14px] py-[8px] bg-[#1d4a1d] hover:bg-[#163a16] text-white text-[16px] leading-[32px] font-medium rounded-[8px] transition-colors">
           <RotateCcw class="w-[13px] h-[13px]" />
           Clear Filters
         </button>
-        <nav class="text-[12px] text-[#9ca3af]">
+        <nav class="text-[16px] leading-[24px] font-light text-[#171A1F]">
           <span>Dashboard</span>
-          <span class="mx-[6px]">›</span>
-          <span class="text-[#374151] font-medium">Claim Search</span>
+          <span class="mx-[6px] text-[#A7A6A6]">›</span>
+          <span class="text-[#A7A6A6]">Claim Search</span>
         </nav>
       </div>
     </div>
@@ -57,28 +57,28 @@ function statusClass(s: string) {
     <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm p-[16px] 2xl:p-[20px]">
       <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-[12px]">
         <div>
-          <label class="block text-[11px] font-medium text-[#6b7280] mb-[5px]">Claim ID</label>
+          <label class="block text-[20px] leading-[28px] font-normal text-[#171A1F] mb-[5px]">Claim ID</label>
           <input
             v-model="filters.claimId"
             type="text"
             placeholder="e.g. CLM-2023-XXXX"
-            class="w-full px-[10px] py-[7px] border border-[#e5e7eb] rounded-[6px] text-[12px] bg-[#f9fafb] text-[#374151] placeholder-[#d1d5db] focus:outline-none focus:border-[#224e22]"
+            class="w-full px-[10px] py-[7px] border border-[#e5e7eb] rounded-[6px] text-[18px] leading-[27px] font-light text-[#171A1F] bg-[#f9fafb] placeholder-[#d1d5db] focus:outline-none focus:border-[#224e22]"
           />
         </div>
         <div>
-          <label class="block text-[11px] font-medium text-[#6b7280] mb-[5px]">Claimant Name</label>
+          <label class="block text-[20px] leading-[28px] font-normal text-[#171A1F] mb-[5px]">Claimant Name</label>
           <input
             v-model="filters.claimantName"
             type="text"
             placeholder="Enter full name..."
-            class="w-full px-[10px] py-[7px] border border-[#e5e7eb] rounded-[6px] text-[12px] bg-[#f9fafb] text-[#374151] placeholder-[#d1d5db] focus:outline-none focus:border-[#224e22]"
+            class="w-full px-[10px] py-[7px] border border-[#e5e7eb] rounded-[6px] text-[18px] leading-[27px] font-light text-[#171A1F] bg-[#f9fafb] placeholder-[#d1d5db] focus:outline-none focus:border-[#224e22]"
           />
         </div>
         <div>
-          <label class="block text-[11px] font-medium text-[#6b7280] mb-[5px]">Status</label>
+          <label class="block text-[20px] leading-[28px] font-normal text-[#171A1F] mb-[5px]">Status</label>
           <select
             v-model="filters.status"
-            class="w-full px-[10px] py-[7px] border border-[#e5e7eb] rounded-[6px] text-[12px] bg-[#f9fafb] text-[#374151] focus:outline-none focus:border-[#224e22] appearance-none cursor-pointer"
+            class="w-full px-[10px] py-[7px] border border-[#e5e7eb] rounded-[6px] text-[18px] leading-[27px] font-light text-[#171A1F] bg-[#f9fafb] focus:outline-none focus:border-[#224e22] appearance-none cursor-pointer"
           >
             <option>All Statuses</option>
             <option>Pending</option>
@@ -87,28 +87,28 @@ function statusClass(s: string) {
           </select>
         </div>
         <div>
-          <label class="block text-[11px] font-medium text-[#6b7280] mb-[5px]">Barangay</label>
+          <label class="block text-[20px] leading-[28px] font-normal text-[#171A1F] mb-[5px]">Barangay</label>
           <input
             v-model="filters.barangay"
             type="text"
             placeholder="Barangay"
-            class="w-full px-[10px] py-[7px] border border-[#e5e7eb] rounded-[6px] text-[12px] bg-[#f9fafb] text-[#374151] focus:outline-none focus:border-[#224e22]"
+            class="w-full px-[10px] py-[7px] border border-[#e5e7eb] rounded-[6px] text-[18px] leading-[27px] font-light text-[#171A1F] bg-[#f9fafb] focus:outline-none focus:border-[#224e22]"
           />
         </div>
         <div>
-          <label class="block text-[11px] font-medium text-[#6b7280] mb-[5px]">From Date</label>
+          <label class="block text-[20px] leading-[28px] font-normal text-[#171A1F] mb-[5px]">From Date</label>
           <input
             v-model="filters.fromDate"
             type="text"
-            class="w-full px-[10px] py-[7px] border border-[#e5e7eb] rounded-[6px] text-[12px] bg-[#f9fafb] text-[#374151] focus:outline-none focus:border-[#224e22]"
+            class="w-full px-[10px] py-[7px] border border-[#e5e7eb] rounded-[6px] text-[18px] leading-[27px] font-light text-[#171A1F] bg-[#f9fafb] focus:outline-none focus:border-[#224e22]"
           />
         </div>
         <div>
-          <label class="block text-[11px] font-medium text-[#6b7280] mb-[5px]">To Date</label>
+          <label class="block text-[20px] leading-[28px] font-normal text-[#171A1F] mb-[5px]">To Date</label>
           <input
             v-model="filters.toDate"
             type="text"
-            class="w-full px-[10px] py-[7px] border border-[#e5e7eb] rounded-[6px] text-[12px] bg-[#f9fafb] text-[#374151] focus:outline-none focus:border-[#224e22]"
+            class="w-full px-[10px] py-[7px] border border-[#e5e7eb] rounded-[6px] text-[18px] leading-[27px] font-light text-[#171A1F] bg-[#f9fafb] focus:outline-none focus:border-[#224e22]"
           />
         </div>
       </div>
@@ -119,7 +119,7 @@ function statusClass(s: string) {
       <div class="flex items-center justify-between px-[20px] py-[14px] border-b border-[#f5f5f5]">
         <div class="flex items-center gap-[10px]">
           <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
-          <h2 class="text-[16px] font-semibold text-[#171a1f]">Claim Intake Queue</h2>
+          <h2 class="text-[30px] leading-[45px] font-normal text-[#202224]">Claim Intake Queue</h2>
         </div>
         <MoreVertical class="w-[18px] h-[18px] text-[#9ca3af] cursor-pointer" />
       </div>
@@ -130,11 +130,11 @@ function statusClass(s: string) {
               <th class="px-[20px] py-[10px] w-[40px]">
                 <input type="checkbox" class="w-[13px] h-[13px] rounded border-[#d1d5db] accent-[#224e22]" />
               </th>
-              <th class="px-[20px] py-[10px] text-[11px] font-medium text-[#6b7280] uppercase tracking-wider text-left">Claim Reference No.</th>
-              <th class="px-[20px] py-[10px] text-[11px] font-medium text-[#6b7280] uppercase tracking-wider text-left">Claimant Name</th>
-              <th class="px-[20px] py-[10px] text-[11px] font-medium text-[#6b7280] uppercase tracking-wider text-left">Claim Type</th>
-              <th class="px-[20px] py-[10px] text-[11px] font-medium text-[#6b7280] uppercase tracking-wider text-left">Status</th>
-              <th class="px-[20px] py-[10px] text-[11px] font-medium text-[#6b7280] uppercase tracking-wider text-left">Action</th>
+              <th class="px-[20px] py-[10px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">Claim Reference No.</th>
+              <th class="px-[20px] py-[10px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">Claimant Name</th>
+              <th class="px-[20px] py-[10px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">Claim Type</th>
+              <th class="px-[20px] py-[10px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">Status</th>
+              <th class="px-[20px] py-[10px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -147,17 +147,17 @@ function statusClass(s: string) {
               <td class="px-[20px] py-[12px]">
                 <input type="checkbox" class="w-[13px] h-[13px] rounded border-[#d1d5db] accent-[#224e22]" @click.stop />
               </td>
-              <td class="px-[20px] py-[12px] text-[13px] text-[#374151] font-medium">{{ claim.ref }}</td>
-              <td class="px-[20px] py-[12px] text-[13px] text-[#374151]">{{ claim.name }}</td>
-              <td class="px-[20px] py-[12px] text-[13px] text-[#374151]">{{ claim.type }}</td>
+              <td class="px-[20px] py-[12px] text-[18px] leading-[27px] font-light text-[#232323]">{{ claim.ref }}</td>
+              <td class="px-[20px] py-[12px] text-[18px] leading-[27px] font-light text-[#232323]">{{ claim.name }}</td>
+              <td class="px-[20px] py-[12px] text-[18px] leading-[27px] font-light text-[#232323]">{{ claim.type }}</td>
               <td class="px-[20px] py-[12px]">
-                <span class="px-[10px] py-[3px] rounded-full text-[11px] font-medium" :class="statusClass(claim.status)">
+                <span class="px-[10px] py-[3px] rounded-full text-[15px] leading-[22px] font-light text-[#171A1F] flex items-center justify-center h-[23px]" :class="statusClass(claim.status)">
                   {{ claim.status }}
                 </span>
               </td>
               <td class="px-[20px] py-[12px]" @click.stop>
                 <span
-                  class="px-[12px] py-[3px] bg-[#d1fae5] text-[#065f46] rounded-full text-[11px] font-medium cursor-pointer hover:bg-[#a7f3d0] transition-colors"
+                  class="px-[12px] py-[3px] bg-[#d1fae5] text-[#171A1F] rounded-full text-[15px] leading-[22px] font-light flex items-center justify-center h-[23px] cursor-pointer hover:bg-[#a7f3d0] transition-colors"
                   @click="router.push(`/claims-list/${claim.ref}`)"
                 >
                   Open
@@ -168,9 +168,9 @@ function statusClass(s: string) {
         </table>
       </div>
       <div class="flex items-center justify-between px-[20px] py-[10px] border-t border-[#f0f0f0]">
-        <p class="text-[11px] text-[#9ca3af]">Showing 1 to 5 of 5 entries</p>
+        <p class="text-[16px] leading-[20px] font-light text-[#808080]">Showing 1 to 5 of 5 entries</p>
         <div class="flex items-center gap-[6px]">
-          <span class="text-[11px] text-[#9ca3af]">Page 1 of 12</span>
+          <span class="text-[16px] leading-[20px] font-light text-[#808080]">Page 1 of 12</span>
           <button class="w-[24px] h-[24px] border border-[#e5e7eb] rounded flex items-center justify-center hover:bg-[#f3f4f6]">
             <ChevronLeft class="w-[13px] h-[13px] text-[#6b7280]" />
           </button>

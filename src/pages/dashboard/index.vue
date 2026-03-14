@@ -33,16 +33,16 @@ const quickActions = [
 ]
 
 function priorityClass(p: string) {
-  if (p === 'High') return 'bg-[#fce7e7] text-[#c53030]'
-  if (p === 'SLA Risk') return 'bg-[#fed7aa] text-[#c05621]'
-  return 'bg-[#d1fae5] text-[#065f46]'
+  if (p === 'High') return 'bg-[#fce7e7]'
+  if (p === 'SLA Risk') return 'bg-[#fed7aa]'
+  return 'bg-[#d1fae5]'
 }
 </script>
 
 <template>
-  <main class="flex flex-col gap-[16px] 2xl:gap-[20px] p-[20px] 2xl:p-[24px]">
+  <main class="flex flex-col gap-[16px] 2xl:gap-[20px] p-[20px] 2xl:p-[24px] font-['Poppins']">
     <!-- Page title -->
-    <h1 class="text-[22px] 2xl:text-[24px] font-semibold text-[#171a1f]">Dashboard</h1>
+    <h1 class="text-[30px] leading-[45px] font-medium text-[#000000]">Dashboard</h1>
 
     <!-- Stats row -->
     <div class="grid grid-cols-2 xl:grid-cols-4 gap-[14px] 2xl:gap-[18px]">
@@ -55,11 +55,16 @@ function priorityClass(p: string) {
           {{ stat.icon }}
         </div>
         <div>
-          <p class="text-[26px] 2xl:text-[32px] font-bold text-[#171a1f] leading-none">{{ stat.value }}</p>
-          <p class="text-[11px] 2xl:text-[12px] text-[#6b7280] mt-[3px] whitespace-pre-line leading-[1.3]">{{ stat.label }}</p>
+          <p
+            class="text-[75px] leading-[112px] font-semibold tracking-[-4px] bg-clip-text text-transparent"
+            style="background: linear-gradient(200.38deg, #5E4D31 13.54%, #1D4A1D 89.85%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"
+          >
+            {{ stat.value }}
+          </p>
+          <p class="text-[21px] leading-[25px] font-medium text-[#1D4A1D] mt-[3px] whitespace-pre-line">{{ stat.label }}</p>
           <div class="flex items-center gap-[4px] mt-[4px]">
             <TrendingUp class="w-[11px] h-[11px]" :class="stat.down ? 'text-[#d0272a]' : 'text-[#16a34a]'" />
-            <span class="text-[10px]" :class="stat.down ? 'text-[#d0272a]' : 'text-[#16a34a]'">{{ stat.trend }} Lorem ipsum is</span>
+            <span class="text-[16.9986px] leading-[25px] font-normal text-[#0D9546]">{{ stat.trend }} Lorem ipsum is</span>
           </div>
         </div>
       </div>
@@ -70,7 +75,7 @@ function priorityClass(p: string) {
       <div class="flex items-center justify-between px-[20px] py-[14px] border-b border-[#f5f5f5]">
         <div class="flex items-center gap-[10px]">
           <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
-          <h2 class="text-[16px] font-semibold text-[#171a1f]">My Active Queue</h2>
+          <h2 class="text-[30px] leading-[45px] font-medium text-[#000000]">My Active Queue</h2>
         </div>
         <MoreVertical class="w-[18px] h-[18px] text-[#9ca3af] cursor-pointer" />
       </div>
@@ -78,29 +83,32 @@ function priorityClass(p: string) {
         <table class="w-full">
           <thead>
             <tr class="border-b border-[#f0f0f0]">
-              <th class="px-[20px] py-[10px] text-[11px] font-medium text-[#6b7280] uppercase tracking-wider text-left">Claim Ref</th>
-              <th class="px-[20px] py-[10px] text-[11px] font-medium text-[#6b7280] uppercase tracking-wider text-left">Claimant Name</th>
-              <th class="px-[20px] py-[10px] text-[11px] font-medium text-[#6b7280] uppercase tracking-wider text-left">Submission Date</th>
-              <th class="px-[20px] py-[10px] text-[11px] font-medium text-[#6b7280] uppercase tracking-wider text-left">Status</th>
-              <th class="px-[20px] py-[10px] text-[11px] font-medium text-[#6b7280] uppercase tracking-wider text-left">Days</th>
-              <th class="px-[20px] py-[10px] text-[11px] font-medium text-[#6b7280] uppercase tracking-wider text-left">Priority</th>
-              <th class="px-[20px] py-[10px] text-[11px] font-medium text-[#6b7280] uppercase tracking-wider text-left">Action</th>
+              <th class="px-[20px] py-[10px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">Claim Ref</th>
+              <th class="px-[20px] py-[10px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">Claimant Name</th>
+              <th class="px-[20px] py-[10px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">Submission Date</th>
+              <th class="px-[20px] py-[10px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">Status</th>
+              <th class="px-[20px] py-[10px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">Days</th>
+              <th class="px-[20px] py-[10px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">Priority</th>
+              <th class="px-[20px] py-[10px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">Action</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="item in queueItems" :key="item.ref" class="border-b border-[#f8f9fa] hover:bg-[#fafafa] transition-colors">
-              <td class="px-[20px] py-[12px] text-[13px] text-[#374151]">{{ item.ref }}</td>
-              <td class="px-[20px] py-[12px] text-[13px] text-[#374151]">{{ item.name }}</td>
-              <td class="px-[20px] py-[12px] text-[13px] text-[#374151]">{{ item.date }}</td>
-              <td class="px-[20px] py-[12px] text-[13px] text-[#374151]">{{ item.status }}</td>
-              <td class="px-[20px] py-[12px] text-[13px] text-[#374151]">{{ item.days }}</td>
+              <td class="px-[20px] py-[12px] text-[18px] leading-[27px] font-light text-[#1B1F25]">{{ item.ref }}</td>
+              <td class="px-[20px] py-[12px] text-[18px] leading-[27px] font-light text-[#1B1F25]">{{ item.name }}</td>
+              <td class="px-[20px] py-[12px] text-[18px] leading-[27px] font-light text-[#1B1F25]">{{ item.date }}</td>
+              <td class="px-[20px] py-[12px] text-[18px] leading-[27px] font-light text-[#1B1F25]">{{ item.status }}</td>
+              <td class="px-[20px] py-[12px] text-[18px] leading-[27px] font-light text-[#1B1F25]">{{ item.days }}</td>
               <td class="px-[20px] py-[12px]">
-                <span class="px-[10px] py-[3px] rounded-full text-[11px] font-medium" :class="priorityClass(item.priority)">
+                <span
+                  class="px-[10px] py-[3px] rounded-full text-[15px] leading-[22px] font-light text-[#1B1F25] flex items-center justify-center h-[23px]"
+                  :class="priorityClass(item.priority)"
+                >
                   {{ item.priority }}
                 </span>
               </td>
               <td class="px-[20px] py-[12px]">
-                <span class="px-[12px] py-[3px] bg-[#d1fae5] text-[#065f46] rounded-full text-[11px] font-medium cursor-pointer hover:bg-[#a7f3d0] transition-colors">
+                <span class="px-[12px] py-[3px] bg-[#d1fae5] text-[#1B1F25] rounded-full text-[15px] leading-[22px] font-light flex items-center justify-center h-[23px] cursor-pointer hover:bg-[#a7f3d0] transition-colors">
                   Open
                 </span>
               </td>
@@ -109,9 +117,9 @@ function priorityClass(p: string) {
         </table>
       </div>
       <div class="flex items-center justify-between px-[20px] py-[10px] border-t border-[#f0f0f0]">
-        <p class="text-[11px] text-[#9ca3af]">Showing 1 to 5 of 5 entries</p>
+        <p class="text-[16px] leading-[20px] font-light text-[#808080]">Showing 1 to 5 of 5 entries</p>
         <div class="flex items-center gap-[6px]">
-          <span class="text-[11px] text-[#9ca3af]">Page 1 of 12</span>
+          <span class="text-[16px] leading-[20px] font-light text-[#808080]">Page 1 of 12</span>
           <button class="w-[24px] h-[24px] border border-[#e5e7eb] rounded flex items-center justify-center hover:bg-[#f3f4f6] transition-colors">
             <ChevronLeft class="w-[13px] h-[13px] text-[#6b7280]" />
           </button>
@@ -129,7 +137,7 @@ function priorityClass(p: string) {
         <div class="flex items-center justify-between px-[20px] py-[14px] border-b border-[#f5f5f5]">
           <div class="flex items-center gap-[10px]">
             <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
-            <h2 class="text-[16px] font-semibold text-[#171a1f]">Workflow Status Overview</h2>
+            <h2 class="text-[30px] leading-[45px] font-medium text-[#000000]">Workflow Status Overview</h2>
           </div>
           <MoreVertical class="w-[18px] h-[18px] text-[#9ca3af] cursor-pointer" />
         </div>
@@ -137,20 +145,20 @@ function priorityClass(p: string) {
           <table class="w-full">
             <thead>
               <tr class="border-b border-[#f0f0f0]">
-                <th class="px-[20px] py-[10px] text-[11px] font-medium text-[#6b7280] uppercase tracking-wider text-left">Stage</th>
-                <th class="px-[20px] py-[10px] text-[11px] font-medium text-[#6b7280] uppercase tracking-wider text-left">Total</th>
-                <th class="px-[20px] py-[10px] text-[11px] font-medium text-[#6b7280] uppercase tracking-wider text-left">In Progress</th>
-                <th class="px-[20px] py-[10px] text-[11px] font-medium text-[#6b7280] uppercase tracking-wider text-left">Awaiting Action</th>
-                <th class="px-[20px] py-[10px] text-[11px] font-medium text-[#6b7280] uppercase tracking-wider text-left">SLA Risk</th>
+                <th class="px-[20px] py-[10px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">Stage</th>
+                <th class="px-[20px] py-[10px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">Total</th>
+                <th class="px-[20px] py-[10px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">In Progress</th>
+                <th class="px-[20px] py-[10px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">Awaiting Action</th>
+                <th class="px-[20px] py-[10px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">SLA Risk</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="row in workflowStages" :key="row.stage" class="border-b border-[#f8f9fa] hover:bg-[#fafafa] transition-colors">
-                <td class="px-[20px] py-[11px] text-[13px] text-[#374151]">{{ row.stage }}</td>
-                <td class="px-[20px] py-[11px] text-[13px] text-[#374151]">{{ row.total }}</td>
-                <td class="px-[20px] py-[11px] text-[13px] text-[#374151]">{{ row.inProgress }}</td>
-                <td class="px-[20px] py-[11px] text-[13px] text-[#374151]">{{ row.awaiting }}</td>
-                <td class="px-[20px] py-[11px] text-[13px] font-medium text-[#d0272a]">{{ row.sla }}</td>
+                <td class="px-[20px] py-[11px] text-[18px] leading-[27px] font-light text-[#1B1F25]">{{ row.stage }}</td>
+                <td class="px-[20px] py-[11px] text-[18px] leading-[27px] font-light text-[#1B1F25]">{{ row.total }}</td>
+                <td class="px-[20px] py-[11px] text-[18px] leading-[27px] font-light text-[#1B1F25]">{{ row.inProgress }}</td>
+                <td class="px-[20px] py-[11px] text-[18px] leading-[27px] font-light text-[#1B1F25]">{{ row.awaiting }}</td>
+                <td class="px-[20px] py-[11px] text-[18px] leading-[27px] font-light text-[#1B1F25]">{{ row.sla }}</td>
               </tr>
             </tbody>
           </table>
@@ -160,7 +168,7 @@ function priorityClass(p: string) {
       <!-- Quick Actions -->
       <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm overflow-hidden">
         <div class="flex items-center justify-between px-[20px] py-[14px] border-b border-[#f5f5f5]">
-          <h2 class="text-[16px] font-semibold text-[#171a1f]">Quick Actions</h2>
+          <h2 class="text-[30px] leading-[45px] font-medium text-[#000000]">Quick Actions</h2>
           <MoreVertical class="w-[18px] h-[18px] text-[#9ca3af] cursor-pointer" />
         </div>
         <div class="p-[16px] flex flex-col gap-[10px]">
@@ -172,7 +180,7 @@ function priorityClass(p: string) {
             <div class="w-[32px] h-[32px] bg-[#fef3c7] rounded-[8px] flex items-center justify-center shrink-0">
               <component :is="action.icon" class="w-[16px] h-[16px] text-[#d97706]" />
             </div>
-            <span class="text-[13px] font-medium text-[#374151]">{{ action.label }}</span>
+            <span class="text-[20px] leading-[30px] font-normal text-[#464255]">{{ action.label }}</span>
           </button>
         </div>
       </div>

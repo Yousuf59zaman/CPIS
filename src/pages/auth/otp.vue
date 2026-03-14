@@ -25,7 +25,7 @@ function onOtpKeydown(index: number, e: KeyboardEvent) {
 </script>
 
 <template>
-  <div class="flex-1 flex flex-col items-center justify-center pt-[100px] pb-[100px] px-4 gap-[14px]">
+  <div class="flex-1 flex flex-col items-center justify-center pt-[100px] pb-[100px] px-4 gap-[14px] font-['Poppins']">
     <!-- Card -->
     <div class="bg-white rounded-[15px] shadow-[0px_7px_23px_0px_rgba(0,0,0,0.05)] w-full max-w-[720px]">
       <AuthCardHeader />
@@ -45,28 +45,28 @@ function onOtpKeydown(index: number, e: KeyboardEvent) {
             <div>
               <div class="flex items-center gap-[6px] mb-[4px]">
                 <ClockIcon class="w-[13px] h-[13px] text-[#6b7280] shrink-0" />
-                <p class="text-[12px] font-medium text-[#374151]">OTP expires in 5 minutes</p>
+                <p class="text-[20px] leading-[20px] font-normal text-[#171A1F]">OTP expires in 5 minutes</p>
               </div>
-              <p class="text-[11px] text-[#9ca3af] pl-[19px] leading-[1.4]">The code will be invalid after the time limit.</p>
+              <p class="text-[17px] leading-[16px] font-light text-[#8D8D8D] pl-[19px]">The code will be invalid after the time limit.</p>
             </div>
             <div>
               <div class="flex items-center gap-[6px] mb-[4px]">
                 <InfoIcon class="w-[13px] h-[13px] text-[#6b7280] shrink-0" />
-                <p class="text-[12px] font-medium text-[#374151]">Maximum 3 attempts</p>
+                <p class="text-[20px] leading-[20px] font-normal text-[#171A1F]">Maximum 3 attempts</p>
               </div>
-              <p class="text-[11px] text-[#9ca3af] pl-[19px] leading-[1.4]">The code will be invalid after the time limit.</p>
+              <p class="text-[17px] leading-[16px] font-light text-[#8D8D8D] pl-[19px]">The code will be invalid after the time limit.</p>
             </div>
             <div>
               <div class="flex items-center gap-[6px] mb-[4px]">
                 <ShieldAlertIcon class="w-[13px] h-[13px] text-[#6b7280] shrink-0" />
-                <p class="text-[12px] font-medium text-[#374151]">Verification attempts logged</p>
+                <p class="text-[20px] leading-[20px] font-normal text-[#171A1F]">Verification attempts logged</p>
               </div>
-              <p class="text-[11px] text-[#9ca3af] pl-[19px] leading-[1.4]">IP address and timestamp are recorded for audit.</p>
+              <p class="text-[17px] leading-[16px] font-light text-[#8D8D8D] pl-[19px]">IP address and timestamp are recorded for audit.</p>
             </div>
             <div>
               <div class="flex items-center gap-[6px]">
                 <HeadphonesIcon class="w-[13px] h-[13px] text-[#6b7280] shrink-0" />
-                <p class="text-[12px] font-medium text-[#374151]">Need help? Contact System Admin</p>
+                <p class="text-[20px] leading-[20px] font-normal text-[#171A1F]">Need help? Contact System Admin</p>
               </div>
             </div>
           </div>
@@ -74,8 +74,8 @@ function onOtpKeydown(index: number, e: KeyboardEvent) {
 
         <!-- Right: OTP Entry -->
         <div class="flex-1 px-[36px] py-[28px]">
-          <h2 class="text-[18px] font-semibold text-[#171a1f] mb-[6px]">Enter One Time Password</h2>
-          <p class="text-[12px] text-[#6b7280] mb-[20px] leading-[1.5]">
+          <h2 class="text-[30px] leading-[45px] font-medium text-[#000000] mb-[6px]">Enter One Time Password</h2>
+          <p class="text-[16.3px] leading-[24px] font-light text-[#8D8D8D] mb-[20px]">
             We have sent a 6-digit OTP to your email. You can generate OTP maximum 4 times in 1 hour.
           </p>
 
@@ -97,7 +97,7 @@ function onOtpKeydown(index: number, e: KeyboardEvent) {
 
           <!-- Resend OTP -->
           <div class="flex items-center justify-end mb-[24px]">
-            <button class="flex items-center gap-[5px] text-[11.5px] text-[#6b7280] hover:text-[#374151] transition-colors">
+            <button class="flex items-center gap-[5px] text-[16.5px] leading-[20px] font-medium text-[#565E6D] transition-colors">
               <RefreshCwIcon class="w-[11px] h-[11px]" />
               <span>Resend OTP – 12:32</span>
             </button>
@@ -105,7 +105,7 @@ function onOtpKeydown(index: number, e: KeyboardEvent) {
 
           <!-- Continue button -->
           <button
-            class="w-full py-[12px] bg-[#1d4a1d] hover:bg-[#163a16] text-white text-[14px] font-medium rounded-[6px] transition-colors tracking-[0.2px]"
+            class="w-full py-[12px] bg-[#1d4a1d] hover:bg-[#163a16] text-white text-[20px] leading-[24px] font-medium font-['Inter'] rounded-[6px] transition-colors tracking-[0.2px] flex items-center justify-center"
           >
             Continue Verification
           </button>
@@ -114,14 +114,14 @@ function onOtpKeydown(index: number, e: KeyboardEvent) {
 
       <!-- Card footer: session + audit ref -->
       <div class="h-px bg-[#f0f0f0]"></div>
-      <div class="px-[36px] py-[11px] flex items-center justify-between text-[10px] text-[#9ca3af] font-light">
+      <div class="px-[36px] py-[11px] flex items-center justify-between text-[11.3043px] leading-[17px] font-normal text-[#171A1F] tracking-[-0.282609px] uppercase">
         <span>SESSION ID: SE35-74228-MCB-X9</span>
         <span>AUDIT REF: AUTH-OTP-B821-4AB</span>
       </div>
     </div>
 
     <!-- Below-card notice -->
-    <p class="text-[#171a1f]/50 text-[12px] font-light">
+    <p class="text-[#171A1F] text-[16px] leading-[24px] font-light opacity-50">
       Authorized Personnel Access Only • Secure Connection Active
     </p>
   </div>

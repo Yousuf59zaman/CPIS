@@ -35,7 +35,7 @@ const showPassword = ref(false)
           <!-- Logo header -->
           <div class="px-[40px] pt-[32px] pb-[24px] flex items-center justify-center gap-[14px] relative overflow-hidden">
             <img :src="logoWorkflow" alt="CPIS" class="w-[60px] h-[60px] object-contain shrink-0" />
-            
+
             <!-- Fingerprint ghost -->
             <div class="absolute right-[30px] top-[-10px] w-[80px] h-[80px] opacity-[0.04] pointer-events-none overflow-hidden rounded-full border-[8px] border-dashed border-gray-500 rotate-12"></div>
           </div>
@@ -47,7 +47,7 @@ const showPassword = ref(false)
           <div class="px-[40px] pt-[28px] pb-[26px] flex flex-col gap-[16px]">
             <!-- Username / Email -->
             <div>
-              <label class="block text-[12px] font-medium text-[#374151] mb-[7px]">Username/Email</label>
+              <label class="block text-[17px] leading-[26px] font-normal text-[#374151] mb-[7px]">Username/Email</label>
               <input
                 v-model="username"
                 type="text"
@@ -58,7 +58,7 @@ const showPassword = ref(false)
 
             <!-- Password -->
             <div>
-              <label class="block text-[12px] font-medium text-[#374151] mb-[7px]">Password</label>
+              <label class="block text-[17px] leading-[26px] font-normal text-[#374151] mb-[7px]">Password</label>
               <div class="relative">
                 <input
                   v-model="password"
@@ -89,11 +89,11 @@ const showPassword = ref(false)
                     :class="rememberMe ? 'translate-x-[20px]' : 'translate-x-[2px]'"
                   ></div>
                 </div>
-                <span class="text-[12.5px] text-[#374151]">Remember me</span>
+                <span class="text-[15px] leading-[22px] font-normal text-[#374151]">Remember me</span>
               </label>
               <router-link
                 to="/auth/reset-password"
-                class="text-[12.5px] text-[#d9a047] hover:text-[#b45309] font-medium transition-colors"
+                class="text-[15px] leading-[22px] font-normal text-[#1C581C] hover:text-[#163a16] transition-colors"
               >
                 Forgot Password?
               </router-link>
@@ -101,15 +101,15 @@ const showPassword = ref(false)
 
             <!-- Access CPIS button -->
             <button
-              class="w-full py-[13px] bg-[#1d4a1d] hover:bg-[#163a16] text-white text-[15px] font-medium rounded-[4px] transition-colors mt-[2px] tracking-[0.2px]"
+              class="w-full py-[13px] bg-[#1d4a1d] hover:bg-[#163a16] text-white text-[20.1137px] leading-[24px] font-medium font-['Inter'] rounded-[4px] transition-colors mt-[2px] tracking-[0.2px] flex items-center justify-center"
             >
               Access CPIS
             </button>
 
             <!-- Authorized notice -->
             <div class="text-center mt-[2px]">
-              <p class="text-[#d9a047] text-[13.5px] font-medium">Authorized Personnel Only</p>
-              <p class="text-[#b2b2b2] text-[11px] mt-[3px] leading-[1.4]">
+              <p class="text-[#d9a047] text-[17px] leading-[23.8px] font-medium">Authorized Personnel Only</p>
+              <p class="text-[#b2b2b2] text-[14px] leading-[21px] font-light mt-[3px]">
                 Unauthorized access is strictly prohibited and monitored.
               </p>
             </div>
@@ -119,7 +119,9 @@ const showPassword = ref(false)
           <div class="h-px bg-[#f0f0f0]"></div>
           <div class="px-[40px] py-[13px] flex items-center justify-center gap-[7px] text-[#9ca3af]">
             <ShieldCheckIcon class="w-[14px] h-[14px]" />
-            <span class="text-[11px] font-light">Encrypted Session Established</span>
+            <span class="text-[16px] leading-[24px] font-light text-[#171A1F]"
+              >Encrypted Session Established</span
+            >
           </div>
         </div>
       </div>
@@ -145,4 +147,3 @@ const showPassword = ref(false)
   </div>
 </template>
 
-   
