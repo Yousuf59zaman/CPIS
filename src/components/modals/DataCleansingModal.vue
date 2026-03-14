@@ -14,7 +14,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1">
           <!-- Left Panel: Browser Preview with Violations (adapted from AuditResult left side) -->
           <div
-            class="p-5 rounded-lg shadow-lg overflow-hidden h-fit"
+            class="p-10 rounded-lg shadow-lg overflow-hidden h-full flex flex-col"
             style="background: linear-gradient(91deg, rgba(34, 78, 34, 0.18) 0.62%, rgba(34, 78, 34, 0.08) 99.38%)"
           >
             <!-- Browser Chrome Bar (from AuditResult.vue) -->
@@ -42,7 +42,7 @@
             </div>
 
             <!-- Browser Content: CPIS Logo -->
-            <div class="relative bg-white mb-4 flex flex-col items-center justify-center px-6 py-8">
+            <div class="relative bg-white mb-10 flex flex-col items-center justify-center px-6 py-12">
               <div class="w-[100px] h-[100px] rounded-full border-2 border-dashed border-[#224E22]/30 flex items-center justify-center mb-4 relative">
                 <div class="w-[80px] h-[80px] rounded-full border-2 border-[#224E22]/20 flex items-center justify-center bg-white">
                   <img src="@/assets/images/CPIS_Logo.png" alt="CPIS" class="w-14 h-14 rounded-full" />
@@ -59,7 +59,7 @@
                 </h3>
               </div>
 
-              <ul class="space-y-2.5 text-sm ml-1">
+              <ul class="space-y-5 text-sm ml-1">
                 <li
                   v-for="(item, i) in checklistItems"
                   :key="i"
@@ -116,7 +116,7 @@
                   <div class="mx-auto relative">
                     <!-- LoadingLine component adapted for Vue 3 -->
                     <div class="relative w-full h-full overflow-hidden flex justify-center">
-                      <img class="w-2/3" src="@/assets/images/scan_background.png" alt="Scanning" />
+                      <img class="w-2/3 transition-all duration-700" src="@/assets/images/scan_background.png" alt="Scanning" style="filter: hue-rotate(85deg) brightness(1.1) saturate(1.2);" />
                       <div class="absolute top-0 left-0 w-full h-2 bg-[#224E22] animate-loading-line z-10"></div>
                     </div>
                   </div>

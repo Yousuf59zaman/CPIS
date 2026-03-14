@@ -150,34 +150,46 @@ const tableData = [
 
       <!-- Table -->
       <div class="overflow-x-auto custom-scrollbar w-full pb-3">
-        <table class="w-full text-left border-collapse" style="min-width: 720px">
-          <thead>
+        <table class="w-full text-left border-collapse block md:table min-w-full md:min-w-[720px]">
+          <thead class="hidden md:table-header-group">
             <tr class="bg-[#fafafa] border-b-[0.3px] border-[#b2b2b2]">
               <th v-for="col in columns" :key="col"
                 class="py-[12px] 2xl:py-[14px] px-[16px] text-[12px] 2xl:text-[16px] font-['Poppins'] font-normal text-[#202224] uppercase whitespace-nowrap tracking-wide">
                 {{ col }}</th>
             </tr>
           </thead>
-          <tbody>
-            <tr v-for="(row, idx) in tableData" :key="idx" class="border-b-[0.3px] border-[#e5e7eb] last:border-b-0">
+          <tbody class="block md:table-row-group">
+            <tr v-for="(row, idx) in tableData" :key="idx" 
+              class="block md:table-row bg-white border border-gray-100 md:border-b-[0.3px] md:border-[#e5e7eb] last:border-b-0 rounded-[10px] md:rounded-none mb-4 md:mb-0 p-4 md:p-0 shadow-sm md:shadow-none">
               <td
-                class="py-[14px] 2xl:py-[18px] px-[16px] text-[13px] 2xl:text-[16px] font-['Poppins'] text-[#202224] opacity-80 whitespace-nowrap">
-                {{ row.docketNumber }}</td>
-              <td
-                class="py-[14px] 2xl:py-[18px] px-[16px] text-[13px] 2xl:text-[16px] font-['Poppins'] text-[#202224] opacity-80 whitespace-nowrap">
-                {{ row.claimantName }}</td>
-              <td
-                class="py-[14px] 2xl:py-[18px] px-[16px] text-[13px] 2xl:text-[16px] font-['Poppins'] text-[#202224] opacity-80 whitespace-nowrap">
-                {{ row.errorCount }}</td>
-              <td class="py-[14px] 2xl:py-[18px] px-[16px]">
-                <span
-                  class="inline-flex items-center justify-center bg-white border-[0.5px] border-[#a6a6a6] rounded-full px-[14px] py-[2px] text-[12px] 2xl:text-[14px] font-['Poppins'] font-light text-[#1b1f25] whitespace-nowrap">{{
-                  row.status }}</span>
+                class="flex md:table-cell justify-between items-center py-[12px] md:py-[14px] 2xl:py-[18px] border-b border-gray-50 md:border-0 last:border-0 md:px-[16px] text-[13px] 2xl:text-[16px] font-['Poppins'] text-[#202224] whitespace-nowrap">
+                <span class="md:hidden font-medium text-gray-500 text-[11px] uppercase tracking-wider">Docket Number</span>
+                <span class="opacity-80">{{ row.docketNumber }}</span>
               </td>
               <td
-                class="py-[14px] 2xl:py-[18px] px-[16px] text-[13px] 2xl:text-[16px] font-['Poppins'] text-[#202224] opacity-80 whitespace-nowrap">
-                {{ row.rowNumber }}</td>
-              <td class="py-[14px] 2xl:py-[18px] px-[16px]">
+                class="flex md:table-cell justify-between items-center py-[12px] md:py-[14px] 2xl:py-[18px] border-b border-gray-50 md:border-0 last:border-0 md:px-[16px] text-[13px] 2xl:text-[16px] font-['Poppins'] text-[#202224] whitespace-nowrap">
+                <span class="md:hidden font-medium text-gray-500 text-[11px] uppercase tracking-wider">Claimant Name</span>
+                <span class="opacity-80">{{ row.claimantName }}</span>
+              </td>
+              <td
+                class="flex md:table-cell justify-between items-center py-[12px] md:py-[14px] 2xl:py-[18px] border-b border-gray-50 md:border-0 last:border-0 md:px-[16px] text-[13px] 2xl:text-[16px] font-['Poppins'] text-[#202224] whitespace-nowrap">
+                <span class="md:hidden font-medium text-gray-500 text-[11px] uppercase tracking-wider">Error Count</span>
+                <span class="opacity-80">{{ row.errorCount }}</span>
+              </td>
+              <td class="flex md:table-cell justify-between items-center py-[12px] md:py-[14px] 2xl:py-[18px] border-b border-gray-50 md:border-0 last:border-0 md:px-[16px]">
+                <span class="md:hidden font-medium text-gray-500 text-[11px] uppercase tracking-wider">Status</span>
+                <span
+                  class="inline-flex items-center justify-center bg-white border-[0.5px] border-[#a6a6a6] rounded-full px-[14px] py-[2px] text-[12px] 2xl:text-[14px] font-['Poppins'] font-light text-[#1b1f25] whitespace-nowrap leading-none">
+                  {{ row.status }}
+                </span>
+              </td>
+              <td
+                class="flex md:table-cell justify-between items-center py-[12px] md:py-[14px] 2xl:py-[18px] border-b border-gray-50 md:border-0 last:border-0 md:px-[16px] text-[13px] 2xl:text-[16px] font-['Poppins'] text-[#202224] whitespace-nowrap">
+                <span class="md:hidden font-medium text-gray-500 text-[11px] uppercase tracking-wider">Row #</span>
+                <span class="opacity-80">{{ row.rowNumber }}</span>
+              </td>
+              <td class="flex md:table-cell justify-between items-center pt-[16px] pb-[4px] md:py-[14px] 2xl:py-[18px] md:px-[16px]">
+                <span class="md:hidden font-medium text-gray-500 text-[11px] uppercase tracking-wider">Action</span>
                 <div class="flex items-center gap-[8px]">
                   <button type="button" aria-label="View"
                     class="w-[28px] h-[28px] flex items-center justify-center text-[#6b7280] hover:text-[#374151] transition-colors">

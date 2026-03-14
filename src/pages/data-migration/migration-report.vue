@@ -81,11 +81,11 @@ const tableData = Array.from({ length: 11 }, () => ({
     <!-- Stats Cards -->
     <div class="grid grid-cols-2 xl:grid-cols-4 gap-[12px] 2xl:gap-[16px] w-full animate-fade-in-up">
       <div v-for="stat in stats" :key="stat.label"
-        class="bg-white border-[0.458px] border-[rgba(203,171,88,0.5)] rounded-[6px] py-[14px] 2xl:py-[18px] px-[16px] 2xl:px-[20px] flex flex-col relative overflow-hidden">
+        class="bg-white border-[0.458px] border-[rgba(203,171,88,0.5)] rounded-[6px] py-[14px] 2xl:py-[18px] px-[16px] 2xl:px-[20px] flex flex-col relative overflow-hidden h-[85px] 2xl:h-[105px] justify-center">
         <div class="absolute left-0 top-[10%] bottom-[10%] w-[6px] bg-[rgba(255,187,90,0.23)] rounded-r-[4px]"></div>
-        <span class="font-['Poppins'] font-light text-[#4e090a] text-[12px] 2xl:text-[15px] mb-[6px]">{{ stat.label
+        <span class="font-['Poppins'] font-light text-[#4e090a] text-[12px] 2xl:text-[15px] mb-[4px] leading-tight">{{ stat.label
           }}</span>
-        <span class="font-['Poppins'] font-normal text-black text-[18px] 2xl:text-[22px] leading-tight">{{ stat.value
+        <span class="font-['Poppins'] font-normal text-black text-[18px] 2xl:text-[22px] leading-tight mt-[2px]">{{ stat.value
           }}</span>
       </div>
     </div>
@@ -121,37 +121,52 @@ const tableData = Array.from({ length: 11 }, () => ({
 
       <!-- Table -->
       <div class="overflow-x-auto custom-scrollbar w-full pb-3">
-        <table class="w-full text-left border-collapse" style="min-width: 860px">
-          <thead>
+        <table class="w-full text-left border-collapse block md:table min-w-full md:min-w-[860px]">
+          <thead class="hidden md:table-header-group">
             <tr class="bg-[#fafafa] border-b-[0.3px] border-[#b2b2b2]">
               <th v-for="col in columns" :key="col"
                 class="py-[12px] 2xl:py-[14px] px-[16px] text-[12px] 2xl:text-[16px] font-['Poppins'] font-normal text-[#202224] uppercase whitespace-nowrap tracking-wide">
                 {{ col }}</th>
             </tr>
           </thead>
-          <tbody>
-            <tr v-for="(row, idx) in tableData" :key="idx" class="border-b-[0.3px] border-[#e5e7eb] last:border-b-0">
+          <tbody class="block md:table-row-group">
+            <tr v-for="(row, idx) in tableData" :key="idx" 
+              class="block md:table-row bg-white border border-gray-100 md:border-b-[0.3px] md:border-[#e5e7eb] last:border-b-0 rounded-[10px] md:rounded-none mb-4 md:mb-0 p-4 md:p-0 shadow-sm md:shadow-none">
               <td
-                class="py-[14px] 2xl:py-[18px] px-[16px] text-[13px] 2xl:text-[16px] font-['Poppins'] text-[#202224] opacity-80 whitespace-nowrap">
-                {{ row.docketNumber }}</td>
+                class="flex md:table-cell justify-between items-center py-[12px] md:py-[14px] 2xl:py-[18px] border-b border-gray-50 md:border-0 last:border-0 md:px-[16px] text-[13px] 2xl:text-[16px] font-['Poppins'] text-[#202224] whitespace-nowrap">
+                <span class="md:hidden font-medium text-gray-500 text-[11px] uppercase tracking-wider">Docket Number</span>
+                <span class="opacity-80">{{ row.docketNumber }}</span>
+              </td>
               <td
-                class="py-[14px] 2xl:py-[18px] px-[16px] text-[13px] 2xl:text-[16px] font-['Poppins'] text-[#202224] opacity-80 whitespace-nowrap">
-                {{ row.names }}</td>
+                class="flex md:table-cell justify-between items-center py-[12px] md:py-[14px] 2xl:py-[18px] border-b border-gray-50 md:border-0 last:border-0 md:px-[16px] text-[13px] 2xl:text-[16px] font-['Poppins'] text-[#202224] whitespace-nowrap">
+                <span class="md:hidden font-medium text-gray-500 text-[11px] uppercase tracking-wider">Names Based on VCAF</span>
+                <span class="opacity-80">{{ row.names }}</span>
+              </td>
               <td
-                class="py-[14px] 2xl:py-[18px] px-[16px] text-[13px] 2xl:text-[16px] font-['Poppins'] text-[#202224] opacity-80 whitespace-nowrap">
-                {{ row.barangay }}</td>
+                class="flex md:table-cell justify-between items-center py-[12px] md:py-[14px] 2xl:py-[18px] border-b border-gray-50 md:border-0 last:border-0 md:px-[16px] text-[13px] 2xl:text-[16px] font-['Poppins'] text-[#202224] whitespace-nowrap">
+                <span class="md:hidden font-medium text-gray-500 text-[11px] uppercase tracking-wider">Barangay(s)</span>
+                <span class="opacity-80">{{ row.barangay }}</span>
+              </td>
               <td
-                class="py-[14px] 2xl:py-[18px] px-[16px] text-[13px] 2xl:text-[16px] font-['Poppins'] text-[#202224] opacity-80 whitespace-nowrap">
-                {{ row.gender }}</td>
+                class="flex md:table-cell justify-between items-center py-[12px] md:py-[14px] 2xl:py-[18px] border-b border-gray-50 md:border-0 last:border-0 md:px-[16px] text-[13px] 2xl:text-[16px] font-['Poppins'] text-[#202224] whitespace-nowrap">
+                <span class="md:hidden font-medium text-gray-500 text-[11px] uppercase tracking-wider">Gender</span>
+                <span class="opacity-80">{{ row.gender }}</span>
+              </td>
               <td
-                class="py-[14px] 2xl:py-[18px] px-[16px] text-[13px] 2xl:text-[16px] font-['Poppins'] text-[#202224] opacity-80 whitespace-nowrap">
-                {{ row.age }}</td>
+                class="flex md:table-cell justify-between items-center py-[12px] md:py-[14px] 2xl:py-[18px] border-b border-gray-50 md:border-0 last:border-0 md:px-[16px] text-[13px] 2xl:text-[16px] font-['Poppins'] text-[#202224] whitespace-nowrap">
+                <span class="md:hidden font-medium text-gray-500 text-[11px] uppercase tracking-wider">Age</span>
+                <span class="opacity-80">{{ row.age }}</span>
+              </td>
               <td
-                class="py-[14px] 2xl:py-[18px] px-[16px] text-[13px] 2xl:text-[16px] font-['Poppins'] text-[#202224] opacity-80 whitespace-nowrap">
-                {{ row.birthdate }}</td>
+                class="flex md:table-cell justify-between items-center py-[12px] md:py-[14px] 2xl:py-[18px] border-b border-gray-50 md:border-0 last:border-0 md:px-[16px] text-[13px] 2xl:text-[16px] font-['Poppins'] text-[#202224] whitespace-nowrap">
+                <span class="md:hidden font-medium text-gray-500 text-[11px] uppercase tracking-wider">Birthdate</span>
+                <span class="opacity-80">{{ row.birthdate }}</span>
+              </td>
               <td
-                class="py-[14px] 2xl:py-[18px] px-[16px] text-[13px] 2xl:text-[16px] font-['Poppins'] text-[#202224] opacity-80 whitespace-nowrap">
-                {{ row.maa }}</td>
+                class="flex md:table-cell justify-between items-center py-[12px] md:py-[14px] 2xl:py-[18px] border-b border-gray-50 md:border-0 last:border-0 md:px-[16px] text-[13px] 2xl:text-[16px] font-['Poppins'] text-[#202224] whitespace-nowrap">
+                <span class="md:hidden font-medium text-gray-500 text-[11px] uppercase tracking-wider">Number of MAA</span>
+                <span class="opacity-80">{{ row.maa }}</span>
+              </td>
             </tr>
           </tbody>
         </table>
