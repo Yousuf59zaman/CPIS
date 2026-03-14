@@ -1,158 +1,166 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { FileText, ArrowRight } from 'lucide-vue-next'
+import { ArrowRight, ChevronDown, FileText } from 'lucide-vue-next'
 
 defineOptions({ name: 'SerReviewPage' })
 
-const reviewerDecision = ref<'approve' | 'return' | null>(null)
+const reviewerDecision = ref<'approve' | 'return'>('approve')
+
+const summaryCards = [
+  { label: 'Claim ID', value: 'CL-2024-99810' },
+  { label: 'Status', value: 'Pending SER Review' },
+  { label: 'Assigned Unit', value: 'Property Claims (West)' },
+  { label: 'Assigned Officer', value: 'Sarah Thompson' },
+]
+
+const financialRows = [
+  { label: 'Original Claimed Amount', value: 'PHP45,250.00' },
+  { label: 'Policy Deductible', value: 'PHP1,000.00' },
+  { label: 'Ineligible Items (Deduction)', value: '(PHP12,100.00)' },
+  { label: 'Liability Percentage', value: '100%' },
+  { label: 'Adjusted Loss Value', value: 'PHP33,150.00' },
+  { label: 'Proposed Settlement', value: 'PHP32,150.00' },
+]
+
+const supportingEvidence = [
+  'Inspector_Notes_V2.pdf',
+  'Photos_Damage_Rear.zip',
+  'Standard_Rates_Table.pdf',
+]
 </script>
 
 <template>
-  <main class="flex flex-col gap-[16px] 2xl:gap-[20px] p-[20px] 2xl:p-[24px]">
-    <!-- Header -->
-    <div class="flex items-center justify-between flex-wrap gap-[8px]">
-      <h1 class="text-[22px] 2xl:text-[24px] font-semibold text-[#171a1f]">SER Review</h1>
-      <button class="flex items-center gap-[6px] px-[14px] py-[7px] border border-[#224e22] rounded-[7px] text-[12px] text-[#224e22] font-medium hover:bg-[#f0f4f0] transition-colors">
-        <FileText class="w-[13px] h-[13px]" /> View Full Claim File
-      </button>
-    </div>
-
-    <!-- Info strip -->
-    <div class="flex flex-wrap gap-[20px] pb-[14px] border-b border-[#e5e7eb]">
-      <div v-for="f in [
-        { label: 'Claim ID', value: 'CP-00101' },
-        { label: 'Status', value: 'SER Review' },
-        { label: 'Assigned Unit', value: 'SER Review Panel' },
-        { label: 'Assigned Officer', value: 'Atty. Maria Santos' },
-      ]" :key="f.label" class="border-l-2 border-[#d97706] pl-[10px]">
-        <p class="text-[10px] text-[#9ca3af] uppercase">{{ f.label }}</p>
-        <p class="text-[13px] font-semibold text-[#1d4a1d]">{{ f.value }}</p>
-      </div>
-    </div>
-
-    <!-- Session Information -->
-    <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm p-[20px]">
-      <div class="flex items-center gap-[10px] mb-[14px]">
-        <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
-        <h2 class="text-[16px] font-semibold text-[#171a1f]">Session Information</h2>
-      </div>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-[10px] mb-[12px]">
-        <div v-for="f in [
-          { label: 'Session Date', value: '23 January 2025' },
-          { label: 'Session ID', value: 'SER-SESSION-001' },
-          { label: 'Division', value: 'Marawi Division' },
-          { label: 'Session Status', value: 'Active' },
-        ]" :key="f.label">
-          <p class="text-[10px] text-[#6b7280] mb-[3px]">{{ f.label }}</p>
-          <div class="border border-[#e5e7eb] rounded-[6px] px-[10px] py-[7px] bg-[#f9fafb]">
-            <span class="text-[12px] text-[#374151]">{{ f.value }}</span>
-          </div>
+  <main class="flex flex-col gap-[20px] bg-[#f4f5f7] p-[20px] 2xl:p-[24px]" style="font-family: 'Poppins', Inter, sans-serif;">
+    <div class="flex flex-wrap items-center justify-between gap-[12px]">
+      <h1 class="text-[24px] md:text-[30px] font-medium text-[#202224]">SER Review</h1>
+      <div class="flex flex-wrap items-center gap-[10px]">
+        <button type="button" class="h-[32px] px-[12px] rounded-[999px] bg-[#275227] text-white text-[11px] flex items-center gap-[6px]">
+          <FileText class="w-[12px] h-[12px]" />
+          View Full Claim File
+          <ChevronDown class="w-[12px] h-[12px]" />
+        </button>
+        <div class="flex items-center gap-[8px] h-[32px] rounded-[999px] border border-[#e5e7eb] bg-[#f7f7f7] px-[14px] text-[10px] font-light text-[#a7a6a6]">
+          <span>Task Inbox</span>
+          <ChevronDown class="h-[10px] w-[10px] rotate-[-90deg]" />
+          <span>SER Review</span>
+          <ChevronDown class="h-[10px] w-[10px] rotate-[-90deg]" />
+          <span>CL-2024-99810</span>
         </div>
       </div>
-      <div class="flex gap-[10px]">
-        <button class="flex items-center gap-[6px] px-[14px] py-[8px] bg-[#1d4a1d] hover:bg-[#163a16] text-white text-[12px] font-medium rounded-[7px] transition-colors">
-          <FileText class="w-[13px] h-[13px]" /> Generate Agenda PDF
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-[12px]">
+      <div v-for="card in summaryCards" :key="card.label"
+        class="bg-white border border-[#ececec] rounded-[8px] p-[12px] shadow-[0px_2px_6px_rgba(0,0,0,0.04)]">
+        <p class="text-[11px] text-[#6b7280]">{{ card.label }}</p>
+        <div class="mt-[6px] h-[26px] rounded-[4px] border border-[#e6e6e6] bg-[#fffdf6] px-[10px] flex items-center">
+          <span class="text-[12px] text-[#171a1f]">{{ card.value }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-between gap-[12px]">
+      <h2 class="text-[16px] font-semibold text-[#202224]">Session Information</h2>
+      <div class="flex items-center gap-[8px]">
+        <button type="button" class="h-[28px] px-[10px] rounded-[999px] border border-[#e5e7eb] text-[11px] text-[#171a1f] bg-white">
+          Generate Agenda PDF
         </button>
-        <button class="flex items-center gap-[6px] px-[14px] py-[8px] bg-[#d97706] hover:bg-[#b45309] text-white text-[12px] font-medium rounded-[7px] transition-colors">
+        <button type="button" class="h-[28px] px-[10px] rounded-[999px] border border-[#e5e7eb] text-[11px] text-[#171a1f] bg-white flex items-center gap-[6px]">
           Start Session
+          <ChevronDown class="w-[12px] h-[12px]" />
         </button>
       </div>
     </div>
 
-    <!-- Financial Assessment Summary -->
-    <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm p-[20px]">
-      <div class="flex items-center gap-[10px] mb-[14px]">
-        <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
-        <h2 class="text-[16px] font-semibold text-[#171a1f]">Financial Assessment Summary</h2>
+    <section class="bg-white rounded-[10px] shadow-[8px_8px_72px_0px_rgba(0,0,0,0.05)] p-[20px]">
+      <div class="flex items-center gap-[10px] mb-[12px]">
+        <div class="w-[4px] h-[24px] bg-[#234f23] rounded-br-[5px] rounded-tr-[5px]"></div>
+        <h2 class="text-[18px] md:text-[20px] font-medium text-[#202224]">Financial Assessment Summary</h2>
       </div>
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-[10px]">
-        <div v-for="f in [
-          { label: 'Structural Repair', value: '₱85,000.00' },
-          { label: 'Temporary Housing', value: '₱20,000.00' },
-          { label: 'Personal Property Damage', value: '₱25,000.00' },
-          { label: 'Administrative Fees', value: '₱15,000.00' },
-          { label: 'Total SER Amount', value: '₱145,000.00' },
-          { label: 'Compliance Status', value: 'Verified' },
-        ]" :key="f.label">
-          <div>
-            <p class="text-[10px] text-[#6b7280] mb-[3px]">{{ f.label }}</p>
-            <div class="border border-[#e5e7eb] rounded-[6px] px-[10px] py-[7px] bg-[#f9fafb]">
-              <span class="text-[12px] font-medium" :class="f.label === 'Total SER Amount' ? 'text-[#1d4a1d]' : 'text-[#374151]'">{{ f.value }}</span>
-            </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-[10px]">
+        <div v-for="row in financialRows" :key="row.label" class="grid grid-cols-1 sm:grid-cols-[190px_1fr] items-center gap-[8px] rounded-[6px] border border-[#e5e7eb] bg-[#f6f7f6] px-[12px] py-[8px]">
+          <p class="text-[12px] text-[#171a1f]">{{ row.label }}</p>
+          <div class="flex h-[26px] items-center rounded-[4px] border border-[#e6e6e6] bg-white px-[10px]">
+            <span class="text-[12px] text-[#171a1f]">{{ row.value }}</span>
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- Basis of Settlement -->
-    <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm p-[20px]">
+    <section class="bg-white rounded-[10px] shadow-[8px_8px_72px_0px_rgba(0,0,0,0.05)] p-[20px]">
       <div class="flex items-center gap-[10px] mb-[12px]">
-        <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
-        <h2 class="text-[16px] font-semibold text-[#171a1f]">Basis of Settlement</h2>
+        <div class="w-[4px] h-[24px] bg-[#234f23] rounded-br-[5px] rounded-tr-[5px]"></div>
+        <h2 class="text-[18px] md:text-[20px] font-medium text-[#202224]">Basis Of Settlement</h2>
       </div>
-      <p class="text-[12px] text-[#6b7280] leading-[1.7] mb-[10px]">
-        The settlement evaluation is based on the damage inspection report conducted on 10 January 2025, photographic evidence, 
-        and the applicable compensation matrix under CPIS guidelines. The structural damages have been classified as Major, 
-        warranting full compensation under Category A provisions.
+      <p class="text-[12px] leading-[1.55] text-[#171a1f]">
+        Assessment completed based on site inspection report dated Oct 12, 2024. The structural damage reported at the rear of the property (Item 4b in original claim) was deemed as pre-existing wear and tear rather than storm damage, resulting in the $12,100.00 reduction.
       </p>
-      <p class="text-[12px] text-[#6b7280] leading-[1.7]">
-        The proposed compensation of ₱145,000.00 reflects the total cost of structural repair, temporary housing assistance, 
-        replacement of damaged personal property, and applicable administrative processing fees. This amount is consistent with 
-        board-approved SER computation guidelines.
+      <p class="text-[12px] leading-[1.55] text-[#171a1f] mt-[8px]">
+        The remainder of the claim for roof tile replacement and interior water damage is consistent with weather event "Storm ALPHA" records. Labor rates applied are in accordance with the 2024 standardized schedule of rates for the Western District.
       </p>
-    </div>
+    </section>
 
-    <!-- Supporting Evidence -->
-    <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm p-[20px]">
+    <section class="bg-white rounded-[10px] shadow-[8px_8px_72px_0px_rgba(0,0,0,0.05)] p-[20px]">
       <div class="flex items-center gap-[10px] mb-[12px]">
-        <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
-        <h2 class="text-[16px] font-semibold text-[#171a1f]">Supporting Evidence</h2>
+        <div class="w-[4px] h-[24px] bg-[#234f23] rounded-br-[5px] rounded-tr-[5px]"></div>
+        <h2 class="text-[18px] md:text-[20px] font-medium text-[#202224]">Supporting Evidence</h2>
       </div>
-      <div class="flex flex-wrap gap-[8px]">
-        <div v-for="doc in ["Inspector's Report.pdf", 'Damage Assessment.pdf', 'Property Title.pdf']" :key="doc"
-          class="flex items-center gap-[6px] px-[10px] py-[6px] border border-[#e5e7eb] rounded-[6px] bg-[#f9fafb]">
-          <span class="text-base">📄</span>
-          <span class="text-[11px] text-[#374151]">{{ doc }}</span>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-[10px] rounded-[8px] bg-[#fffaf0] p-[12px]">
+        <div v-for="doc in supportingEvidence" :key="doc" class="h-[32px] rounded-[6px] border border-[#e5e7eb] bg-white px-[10px] text-[11px] text-[#171a1f] flex items-center">
+          {{ doc }}
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- Reviewer Action -->
-    <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm p-[20px]">
-      <div class="flex items-center gap-[10px] mb-[14px]">
-        <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
-        <h2 class="text-[16px] font-semibold text-[#171a1f]">Reviewer Action</h2>
-      </div>
-      <div class="mb-[14px]">
-        <label class="text-[12px] font-medium text-[#374151] block mb-[6px]">Reviewer Comments</label>
-        <textarea rows="4" placeholder="Enter your review comments, observations, or recommendations..." class="w-full text-[12px] border border-[#e5e7eb] rounded-[8px] px-[12px] py-[10px] outline-none focus:border-[#224e22] resize-none text-[#374151] placeholder-[#9ca3af]"></textarea>
-      </div>
-      <div>
-        <p class="text-[12px] font-medium text-[#374151] mb-[8px]">Decision</p>
-        <div class="flex flex-col gap-[8px]">
-          <label v-for="opt in [
-            { val: 'approve', label: 'Approve SER', desc: 'SER is accurate and complete. Forward for payment authorization.' },
-            { val: 'return', label: 'Return for Revision', desc: 'SER requires additional data or corrections before approval.' },
-          ]" :key="opt.val"
-            class="flex items-start gap-[10px] p-[11px] border rounded-[8px] cursor-pointer transition-colors"
-            :class="reviewerDecision === opt.val ? 'border-[#224e22] bg-[#f0f4f0]' : 'border-[#e5e7eb]'">
-            <input type="radio" v-model="reviewerDecision" :value="opt.val" class="mt-[1px] accent-[#224e22]" />
-            <div>
-              <p class="text-[12px] font-semibold text-[#171a1f]">{{ opt.label }}</p>
-              <p class="text-[11px] text-[#6b7280]">{{ opt.desc }}</p>
-            </div>
-          </label>
-        </div>
-      </div>
-    </div>
+    <div class="text-[16px] font-semibold text-[#202224]">Reviewer Action</div>
 
-    <!-- CTAs -->
-    <div class="flex flex-col sm:flex-row gap-[12px]">
-      <button class="flex-1 py-[12px] bg-[#1d4a1d] hover:bg-[#163a16] text-white text-[14px] font-semibold rounded-[8px] transition-colors">
+    <section class="bg-white rounded-[10px] shadow-[8px_8px_72px_0px_rgba(0,0,0,0.05)] p-[20px]">
+      <div class="flex items-center gap-[10px] mb-[10px]">
+        <div class="w-[4px] h-[24px] bg-[#234f23] rounded-br-[5px] rounded-tr-[5px]"></div>
+        <h3 class="text-[16px] font-medium text-[#202224]">Reviewer Comments</h3>
+      </div>
+      <textarea
+        rows="4"
+        placeholder="Enter any additional notes for the authorizing officer..."
+        class="w-full rounded-[8px] border border-[#e5e7eb] px-[12px] py-[10px] text-[12px] text-[#171a1f] outline-none resize-none"
+      ></textarea>
+      <p class="text-[11px] text-[#6b7280] mt-[6px]">Mandatory if returning for revision. Characters remaining: 2000</p>
+    </section>
+
+    <section class="bg-white rounded-[10px] shadow-[8px_8px_72px_0px_rgba(0,0,0,0.05)] p-[20px]">
+      <div class="flex items-center gap-[10px] mb-[12px]">
+        <div class="w-[4px] h-[24px] bg-[#234f23] rounded-br-[5px] rounded-tr-[5px]"></div>
+        <h3 class="text-[16px] font-medium text-[#202224]">Decision</h3>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-[12px]">
+        <label class="rounded-[8px] border border-[#e5e7eb] bg-[#fffdf6] p-[12px] flex items-start gap-[8px] cursor-pointer"
+          :class="reviewerDecision === 'approve' ? 'border-[#275227]' : ''">
+          <input v-model="reviewerDecision" value="approve" type="radio" class="mt-[2px] accent-[#275227]" />
+          <div>
+            <p class="text-[12px] font-medium text-[#171a1f]">Approve SER</p>
+            <p class="text-[11px] text-[#6b7280]">Settlement will proceed to payment authorization.</p>
+          </div>
+        </label>
+        <label class="rounded-[8px] border border-[#e5e7eb] bg-[#fffdf6] p-[12px] flex items-start gap-[8px] cursor-pointer"
+          :class="reviewerDecision === 'return' ? 'border-[#275227]' : ''">
+          <input v-model="reviewerDecision" value="return" type="radio" class="mt-[2px] accent-[#275227]" />
+          <div>
+            <p class="text-[12px] font-medium text-[#171a1f]">Return for Revision</p>
+            <p class="text-[11px] text-[#6b7280]">Report will be sent back to Assessing Officer.</p>
+          </div>
+        </label>
+      </div>
+      <p class="text-[11px] text-[#6b7280] mt-[10px]">By submitting, you electronically sign this review decision.</p>
+    </section>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-[12px]">
+      <button type="button" class="h-[36px] rounded-[4px] bg-[#275227] text-[13px] font-medium text-white flex items-center justify-center gap-[8px]">
         Cancel Review
       </button>
-      <button class="flex-1 py-[12px] bg-[#d97706] hover:bg-[#b45309] text-white text-[14px] font-semibold rounded-[8px] transition-colors flex items-center justify-center gap-[8px]">
-        <ArrowRight class="w-[15px] h-[15px]" /> Submit Decision
+      <button type="button" class="h-[36px] rounded-[4px] bg-[#da972e] text-[13px] font-medium text-white flex items-center justify-center gap-[8px]">
+        <ArrowRight class="w-[14px] h-[14px]" />
+        Submit Decision
       </button>
     </div>
   </main>
