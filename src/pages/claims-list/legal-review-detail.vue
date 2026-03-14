@@ -1,156 +1,323 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Eye, Download, ChevronDown } from 'lucide-vue-next'
+import {
+  Eye,
+  Download,
+  ChevronDown,
+  Search,
+  SlidersHorizontal,
+  ChevronLeft,
+  ChevronRight,
+} from 'lucide-vue-next'
 
 defineOptions({ name: 'LegalReviewDetailPage' })
 
-const legalRecommendation = ref<'approve' | 'reject' | 'defer' | null>(null)
-const showClaimSummary = ref(true)
+const showReferenceData = ref(true)
+const selectedDecision = ref<'endorse' | 'investigate' | 'defer'>('endorse')
 
-const checklist = [
-  { text: 'All required identification documents are present and verified', checked: true },
-  { text: 'Property registration and title documents have been validated', checked: true },
-  { text: 'Damage assessment report is consistent with photographic evidence', checked: false },
-  { text: 'Claimant eligibility criteria are met under applicable regulations', checked: false },
+const breadcrumbs = ['Claims List', 'Legal Review', 'Legal Review Detail']
+
+const summaryCards = [
+  { label: 'Claim ID', value: 'CPIS-2026-001' },
+  { label: 'Claimant', value: 'John Doe' },
+  { label: 'Status', value: 'Pending', isStatus: true },
+  { label: 'Claim Type', value: 'Property Damage' },
+  { label: 'Assigned Officer', value: 'A. Rahman' },
 ]
 
-const docs = [
-  { name: "Inspector's Report.pdf", category: 'Inspection Report', action: 'View' },
-  { name: 'Title of Property.pdf', category: 'Property Document', action: 'View' },
-  { name: 'Barangay Certificate.pdf', category: 'Supporting Docs', action: 'View' },
-  { name: 'Damage Photos.zip', category: 'Damage Photo', action: 'View' },
+const referenceDetails = [
+  {
+    label: 'Property Location',
+    value: 'Barangay Lumbac Madaya, Marawi City, Lanao del Sur',
+  },
+  {
+    label: 'Inspection Summary',
+    value: 'Structural damage confirmed. Second floor collapse, roof failure, cracked foundation.',
+  },
+  {
+    label: 'GIS Reference',
+    value: 'GIS-REF-2025-00101 | Lat: 7.9986, Lng: 124.2928',
+  },
+  {
+    label: 'Proposed Compensation',
+    value: 'PHP 145,000.00 (Based on damage assessment report)',
+  },
+]
+
+const legalAssessmentText =
+  "Initial review of Title Deed Parcel 402 indicates valid ownership held by John Doe as of January 2026. The property damage falls within the statutory definitions of 'Natural Disaster Compensation' under Act 42 (2022). No prior claims registered for this specific plot. GIS reference alignment confirmed. Boundary disputes are not present in the registry for this location."
+
+const complianceItems = [
+  { text: 'Ownership Documents Verified', checked: true },
+  { text: 'Supporting Documents Complete', checked: false },
+  { text: 'Eligibility Criteria Met', checked: true },
+  { text: 'No Conflict of Interest Identified', checked: true },
+]
+
+const documentRows = [
+  {
+    name: 'Land Title Deed - Parcel 402',
+    category: 'Ownership',
+    uploadedBy: 'S. Kassim',
+    date: '2026-01-12',
+  },
+  {
+    name: 'Property Appraisal Report v2',
+    category: 'Valuation',
+    uploadedBy: 'M. Chen',
+    date: '2026-01-14',
+  },
+  {
+    name: 'GIS Boundary Survey Map',
+    category: 'Technical',
+    uploadedBy: 'GIS Dept',
+    date: '2026-01-10',
+  },
+  {
+    name: 'Structural Integrity Cert',
+    category: 'Safety',
+    uploadedBy: 'Eng. Tan',
+    date: '2026-01-15',
+  },
+  {
+    name: 'Claimant ID & Proof of Address',
+    category: 'KYC',
+    uploadedBy: 'John Doe',
+    date: '2026-01-08',
+  },
+]
+
+const decisionOptions = [
+  {
+    value: 'endorse',
+    title: 'Endorse for Legal Evaluation',
+    description: 'Move this case forward for board deliberation and final decision.',
+  },
+  {
+    value: 'investigate',
+    title: 'Require Further Investigation',
+    description: 'Need additional information for accurate assessment.',
+  },
+  {
+    value: 'defer',
+    title: 'Defer Decision',
+    description: 'Hold until additional documents are submitted and verified.',
+  },
 ]
 </script>
 
 <template>
-  <main class="flex flex-col gap-[16px] 2xl:gap-[20px] p-[20px] 2xl:p-[24px]">
-    <!-- Info strip -->
-    <div class="flex flex-wrap gap-[20px] pb-[14px] border-b border-[#e5e7eb]">
-      <div v-for="field in [
-        { label: 'Claim ID', value: 'CP-00101' },
-        { label: 'Claimant', value: 'John Smith' },
-        { label: 'Status', value: 'Under Legal Review' },
-        { label: 'Claim Type', value: 'Structural Damage' },
-        { label: 'Assigned Officer', value: 'Atty. Maria Santos' },
-      ]" :key="field.label" class="border-l-2 border-[#d97706] pl-[10px]">
-        <p class="text-[10px] text-[#9ca3af] uppercase">{{ field.label }}</p>
-        <p class="text-[13px] font-semibold text-[#1d4a1d]">{{ field.value }}</p>
+  <main class="flex flex-col gap-[20px] p-[20px] 2xl:p-[24px]">
+    <div class="flex flex-wrap items-center justify-between gap-[12px]">
+      <h1 class="text-[24px] md:text-[28px] font-semibold text-[#171a1f]">Legal Review</h1>
+      <div class="flex flex-wrap items-center gap-[10px] text-[12px] text-[#6b7280]">
+        <div class="flex items-center gap-[6px]">
+          <span v-for="(crumb, i) in breadcrumbs" :key="crumb" class="flex items-center gap-[6px]">
+            <span>{{ crumb }}</span>
+            <ChevronRight v-if="i < breadcrumbs.length - 1" class="w-[14px] h-[14px] text-[#9ca3af]" />
+          </span>
+        </div>
+        <span class="hidden sm:inline-block h-[14px] w-[1px] bg-[#e5e7eb]"></span>
+        <span class="text-[#171a1f]">Claim Reference: MCB-2025-00123</span>
       </div>
     </div>
 
-    <!-- Claim Summary & Reference Data (collapsible) -->
-    <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm overflow-hidden">
-      <button @click="showClaimSummary = !showClaimSummary" class="w-full flex items-center justify-between px-[20px] py-[14px] hover:bg-[#fafafa]">
-        <div class="flex items-center gap-[10px]">
-          <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
-          <h2 class="text-[16px] font-semibold text-[#171a1f]">Claim Summary &amp; Reference Data</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-[12px]">
+      <div v-for="card in summaryCards" :key="card.label"
+        class="bg-white border border-[#f2f2f2] rounded-[10px] shadow-[8px_8px_72px_0px_rgba(0,0,0,0.05)] p-[16px]">
+        <div class="flex items-start gap-[12px]">
+          <div class="w-[5px] bg-[#234f23] rounded-[5px] self-stretch"></div>
+          <div class="flex-1">
+            <p class="text-[12px] text-[#6b7280]">{{ card.label }}</p>
+            <div v-if="card.isStatus" class="mt-[8px]">
+              <span
+                class="inline-flex items-center px-[14px] h-[28px] rounded-[14px] bg-[#eef4ee] text-[#234f23] text-[12px] font-medium">
+                {{ card.value }}
+              </span>
+            </div>
+            <p v-else class="text-[18px] font-semibold text-[#171a1f] mt-[6px]">
+              {{ card.value }}
+            </p>
+          </div>
         </div>
-        <ChevronDown class="w-[16px] h-[16px] text-[#6b7280] transition-transform" :class="showClaimSummary ? 'rotate-180' : ''" />
+      </div>
+    </div>
+
+    <section class="bg-white rounded-[10px] shadow-[8px_8px_72px_0px_rgba(0,0,0,0.05)]">
+      <button type="button" class="w-full flex items-center justify-between px-[20px] py-[16px]"
+        @click="showReferenceData = !showReferenceData">
+        <div class="flex items-center gap-[10px]">
+          <h2 class="text-[22px] md:text-[24px] font-semibold text-[#171a1f]">Claim Summary &amp; Reference Data</h2>
+        </div>
+        <ChevronDown class="w-[18px] h-[18px] text-[#6b7280] transition-transform"
+          :class="showReferenceData ? 'rotate-180' : ''" />
       </button>
-      <div v-if="showClaimSummary" class="px-[20px] pb-[16px]">
-        <div class="grid grid-cols-2 gap-[10px]">
-          <div v-for="f in [
-            { label: 'Property Location', value: 'Barangay Lumbac Madaya, Marawi City, Lanao del Sur' },
-            { label: 'Inspection Summary', value: 'Structural damage confirmed — second floor collapse, roof failure, cracked foundation.' },
-            { label: 'GIS Reference', value: 'GIS-REF-2025-00101 | Lat: 7.9986, Lng: 124.2928' },
-            { label: 'Proposed Compensation', value: '₱145,000.00 (Based on damage assessment report)' },
-          ]" :key="f.label">
-            <div>
-              <p class="text-[10px] text-[#6b7280] mb-[4px]">{{ f.label }}</p>
-              <div class="border border-[#e5e7eb] rounded-[6px] px-[10px] py-[8px] bg-[#f9fafb]">
-                <p class="text-[12px] text-[#374151]">{{ f.value }}</p>
-              </div>
+      <div v-if="showReferenceData" class="px-[20px] pb-[20px]">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-[16px]">
+          <div v-for="detail in referenceDetails" :key="detail.label">
+            <p class="text-[12px] text-[#6b7280] mb-[6px]">{{ detail.label }}</p>
+            <div class="border border-[#e5e7eb] rounded-[8px] px-[14px] py-[12px] bg-[#f9fafb]">
+              <p class="text-[14px] text-[#171a1f] leading-[1.5]">{{ detail.value }}</p>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- Legal Assessment -->
-    <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm p-[20px]">
-      <div class="flex items-center gap-[10px] mb-[14px]">
-        <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
-        <h2 class="text-[16px] font-semibold text-[#171a1f]">Legal Assessment</h2>
-      </div>
-      <h3 class="text-[13px] font-semibold text-[#374151] mb-[8px]">Legal Findings &amp; Statutory Analysis</h3>
-      <p class="text-[12px] text-[#6b7280] leading-[1.7] mb-[10px]">
-        Upon thorough review of the submitted claim documentation, the legal team has conducted a statutory analysis in accordance with 
-        Republic Act No. 7160 (Local Government Code) and applicable CPIS guidelines. The claimant, John Smith, has presented 
-        evidence of substantial structural damage to the property located in Barangay Lumbac Madaya, Marawi City.
-      </p>
-      <p class="text-[12px] text-[#6b7280] leading-[1.7]">
-        The inspection findings, corroborated by photographic evidence and the inspector's signed report, confirm the extent of damages. 
-        The property has been assessed as uninhabitable. The proposed compensation of ₱145,000.00 is consistent with the damage severity 
-        under the applicable compensation matrix. The legal assessment concludes that this claim is eligible for board approval.
-      </p>
-    </div>
-
-    <!-- Compliance Checklist -->
-    <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm p-[20px]">
-      <div class="flex items-center gap-[10px] mb-[14px]">
-        <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
-        <h2 class="text-[16px] font-semibold text-[#171a1f]">Compliance &amp; Verification Checklist</h2>
-      </div>
-      <div class="space-y-[10px]">
-        <label v-for="(item, i) in checklist" :key="i" class="flex items-start gap-[10px]">
-          <input type="checkbox" :checked="item.checked" class="w-[14px] h-[14px] mt-[1px] accent-[#224e22]" />
-          <span class="text-[12px] text-[#374151]">{{ item.text }}</span>
-        </label>
-      </div>
-    </div>
-
-    <!-- Supporting Documents -->
-    <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm p-[20px]">
-      <div class="flex items-center gap-[10px] mb-[14px]">
-        <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
-        <h2 class="text-[16px] font-semibold text-[#171a1f]">Supporting Documents</h2>
-      </div>
-      <table class="w-full">
-        <thead>
-          <tr class="border-b border-[#f0f0f0] bg-[#fafafa]">
-            <th class="px-[12px] py-[9px] text-[10px] font-medium text-[#6b7280] uppercase text-left">Document Name</th>
-            <th class="px-[12px] py-[9px] text-[10px] font-medium text-[#6b7280] uppercase text-left">Category</th>
-            <th class="px-[12px] py-[9px] text-[10px] font-medium text-[#6b7280] uppercase text-left">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="d in docs" :key="d.name" class="border-b border-[#f8f9fa] hover:bg-[#fafafa]">
-            <td class="px-[12px] py-[10px] text-[12px] text-[#374151]">{{ d.name }}</td>
-            <td class="px-[12px] py-[10px] text-[12px] text-[#374151]">{{ d.category }}</td>
-            <td class="px-[12px] py-[10px]">
-              <div class="flex gap-[6px]">
-                <button class="text-[#6b7280] hover:text-[#374151]"><Eye class="w-[13px] h-[13px]" /></button>
-                <button class="text-[#6b7280] hover:text-[#374151]"><Download class="w-[13px] h-[13px]" /></button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Legal Recommendation -->
-    <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm p-[20px]">
-      <div class="flex items-center gap-[10px] mb-[14px]">
-        <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
-        <h2 class="text-[16px] font-semibold text-[#171a1f]">Legal Recommendation</h2>
-      </div>
-      <div class="flex flex-col gap-[9px] mb-[16px]">
-        <label v-for="opt in [
-          { val: 'approve', label: 'Recommend for Approval', desc: 'Claim meets all legal and statutory requirements for approval.' },
-          { val: 'reject', label: 'Recommend Rejection', desc: 'Claim does not meet eligibility criteria under applicable regulations.' },
-          { val: 'defer', label: 'Defer for Further Review', desc: 'Additional documentation or legal analysis is required.' },
-        ]" :key="opt.val"
-          class="flex items-start gap-[10px] p-[12px] border rounded-[8px] cursor-pointer transition-colors"
-          :class="legalRecommendation === opt.val ? 'border-[#224e22] bg-[#f0f4f0]' : 'border-[#e5e7eb]'">
-          <input type="radio" v-model="legalRecommendation" :value="opt.val" class="mt-[1px] accent-[#224e22]" />
+    <section class="grid grid-cols-1 xl:grid-cols-2 gap-[16px]">
+      <div class="bg-white rounded-[10px] shadow-[8px_8px_72px_0px_rgba(0,0,0,0.05)] p-[20px]">
+        <div class="flex items-start gap-[12px]">
+          <div class="w-[5px] h-[30px] bg-[#234f23] rounded-br-[5px] rounded-tr-[5px]"></div>
           <div>
-            <p class="text-[12px] font-semibold text-[#171a1f]">{{ opt.label }}</p>
-            <p class="text-[11px] text-[#6b7280]">{{ opt.desc }}</p>
+            <h2 class="text-[26px] md:text-[30px] font-medium text-[#171a1f]">Legal Assessment</h2>
+            <p class="text-[18px] text-[#171a1f] font-medium mt-[8px]">Legal Findings &amp; Statutory Analysis</p>
           </div>
-        </label>
+        </div>
+        <div
+          class="mt-[16px] bg-white border border-[#ededed] rounded-[4px] p-[14px] text-[15px] text-[#171a1f] leading-[1.7] shadow-[inset_1px_1px_1px_0px_rgba(0,0,0,0.08)]">
+          {{ legalAssessmentText }}
+        </div>
       </div>
-      <p class="text-[12px] font-medium text-[#374151] mb-[6px]">Legal Recommendation Notes</p>
-      <textarea rows="4" placeholder="Provide detailed legal reasoning and notes for the recommendation..." class="w-full text-[12px] border border-[#e5e7eb] rounded-[8px] px-[12px] py-[10px] outline-none focus:border-[#224e22] resize-none text-[#374151] placeholder-[#9ca3af]"></textarea>
-    </div>
+
+      <div class="bg-white rounded-[10px] shadow-[8px_8px_72px_0px_rgba(0,0,0,0.05)] p-[20px]">
+        <div class="flex items-start gap-[12px]">
+          <div class="w-[5px] h-[30px] bg-[#234f23] rounded-br-[5px] rounded-tr-[5px]"></div>
+          <h2 class="text-[26px] md:text-[30px] font-medium text-[#171a1f]">Compliance &amp; Verification Checklist</h2>
+        </div>
+        <div class="mt-[20px] space-y-[16px]">
+          <label v-for="item in complianceItems" :key="item.text"
+            class="flex items-start gap-[12px] text-[16px] text-[#171a1f]">
+            <input type="checkbox" :checked="item.checked" class="w-[16px] h-[16px] accent-[#7e8084]" />
+            <span>{{ item.text }}</span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white rounded-[10px] shadow-[8px_8px_72px_0px_rgba(0,0,0,0.05)]">
+      <div class="flex flex-wrap items-center justify-between gap-[12px] px-[20px] pt-[20px]">
+        <div class="flex items-center gap-[10px]">
+          <div class="w-[5px] h-[30px] bg-[#234f23] rounded-br-[5px] rounded-tr-[5px]"></div>
+          <h2 class="text-[18px] md:text-[20px] font-semibold text-[#171a1f]">Supporting Documents</h2>
+        </div>
+        <div class="flex flex-wrap items-center gap-[12px]">
+          <div class="relative">
+            <Search class="absolute left-[12px] top-1/2 -translate-y-1/2 w-[16px] h-[16px] text-[#9ca3af]" />
+            <input type="text" placeholder="search files..."
+              class="w-[200px] sm:w-[240px] h-[30px] rounded-[16px] border border-[#e5e7eb] pl-[36px] pr-[12px] text-[11px] text-[#171a1f] outline-none bg-white" />
+          </div>
+          <button type="button"
+            class="h-[30px] px-[12px] rounded-[16px] border border-[#e5e7eb] text-[11px] text-[#171a1f] flex items-center gap-[6px]">
+            <SlidersHorizontal class="w-[16px] h-[16px] text-[#6b7280]" />
+            Category
+          </button>
+        </div>
+      </div>
+
+      <div class="px-[20px] pb-[10px] pt-[12px]">
+        <div class="overflow-x-auto">
+          <table class="w-full min-w-[760px]">
+            <thead>
+              <tr class="bg-[#f6f7f6] border-y border-[#ececec]">
+                <th class="px-[12px] py-[10px] text-left text-[10px] font-semibold text-[#6b7280] uppercase">
+                  Document Name
+                </th>
+                <th class="px-[12px] py-[10px] text-left text-[10px] font-semibold text-[#6b7280] uppercase">
+                  Category
+                </th>
+                <th class="px-[12px] py-[10px] text-left text-[10px] font-semibold text-[#6b7280] uppercase">
+                  Uploaded By
+                </th>
+                <th class="px-[12px] py-[10px] text-left text-[10px] font-semibold text-[#6b7280] uppercase">
+                  Date
+                </th>
+                <th class="px-[12px] py-[10px] text-left text-[10px] font-semibold text-[#6b7280] uppercase">
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="row in documentRows" :key="row.name" class="border-b border-[#f0f0f0] hover:bg-[#fafafa]">
+                <td class="px-[12px] py-[10px] text-[12px] text-[#171a1f]">
+                  <div class="flex items-center gap-[10px]">
+                    <input type="checkbox" class="w-[14px] h-[14px] accent-[#234f23]" />
+                    <span>{{ row.name }}</span>
+                  </div>
+                </td>
+                <td class="px-[12px] py-[10px] text-[12px] text-[#171a1f]">
+                  <span
+                    class="inline-flex items-center px-[10px] h-[22px] rounded-[999px] border border-[#e5e7eb] text-[#6b7280] text-[10px]">
+                    {{ row.category }}
+                  </span>
+                </td>
+                <td class="px-[12px] py-[10px] text-[12px] text-[#171a1f]">{{ row.uploadedBy }}</td>
+                <td class="px-[12px] py-[10px] text-[12px] text-[#171a1f]">{{ row.date }}</td>
+                <td class="px-[12px] py-[12px]">
+                  <div class="flex items-center gap-[10px]">
+                    <button
+                      class="w-[26px] h-[26px] border border-[#e5e7eb] rounded-full flex items-center justify-center text-[#6b7280]"
+                      type="button">
+                      <Eye class="w-[14px] h-[14px]" />
+                    </button>
+                    <button
+                      class="w-[26px] h-[26px] border border-[#e5e7eb] rounded-full flex items-center justify-center text-[#6b7280]"
+                      type="button">
+                      <Download class="w-[14px] h-[14px]" />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div
+        class="flex flex-wrap items-center justify-between gap-[12px] px-[20px] pb-[18px] text-[12px] text-[#6b7280]">
+        <span>Showing 1 to 5 of 5 entries</span>
+        <div class="flex items-center gap-[12px]">
+          <span>Page 1 of 12</span>
+          <div class="flex items-center gap-[8px]">
+            <button
+              class="w-[26px] h-[26px] flex items-center justify-center rounded-[6px] border border-[#e5e7eb] text-[#6b7280]"
+              type="button">
+              <ChevronLeft class="w-[16px] h-[16px]" />
+            </button>
+            <button
+              class="w-[26px] h-[26px] flex items-center justify-center rounded-[6px] border border-[#e5e7eb] text-[#6b7280]"
+              type="button">
+              <ChevronRight class="w-[16px] h-[16px]" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white rounded-[10px] shadow-[8px_8px_72px_0px_rgba(0,0,0,0.05)] p-[20px]">
+      <div class="flex items-start gap-[12px]">
+        <div class="w-[5px] h-[30px] bg-[#234f23] rounded-br-[5px] rounded-tr-[5px]"></div>
+        <h2 class="text-[24px] md:text-[28px] font-semibold text-[#171a1f]">Decision and Endorsement Panel</h2>
+      </div>
+
+      <div class="grid grid-cols-1 xl:grid-cols-[460px_1fr] gap-[20px] mt-[18px]">
+        <div class="space-y-[18px]">
+          <label v-for="option in decisionOptions" :key="option.value"
+            class="flex items-start gap-[12px] cursor-pointer">
+            <input type="radio" name="decision" :value="option.value" v-model="selectedDecision"
+              class="mt-[6px] w-[16px] h-[16px] accent-[#234f23]" />
+            <div>
+              <p class="text-[16px] font-semibold text-[#171a1f]">{{ option.title }}</p>
+              <p class="text-[13px] text-[#6b7280]">{{ option.description }}</p>
+            </div>
+          </label>
+        </div>
+
+        <div>
+          <p class="text-[16px] font-semibold text-[#171a1f] mb-[8px]">Remarks</p>
+          <textarea rows="5" placeholder="Specify what further information or investigation is needed. Comment."
+            class="w-full h-[129px] border border-[#e5e7eb] rounded-[8px] px-[14px] py-[12px] text-[14px] text-[#171a1f] outline-none resize-none"></textarea>
+        </div>
+      </div>
+    </section>
   </main>
 </template>
