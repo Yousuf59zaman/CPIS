@@ -123,7 +123,7 @@ function statusClass(s: string) {
             <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
             <h2 class="text-[30px] leading-[45px] font-normal text-[#234F23]">Documents</h2>
           </div>
-          <button class="flex items-center gap-[5px] text-[12px] text-[#374151] border border-[#e5e7eb] rounded-[6px] px-[10px] py-[5px] hover:bg-[#f3f4f6] transition-colors">
+          <button class="flex items-center gap-[5px] text-[14px] leading-[29px] font-medium text-[#171A1F] border border-[#e5e7eb] rounded-[6px] px-[10px] py-[5px] hover:bg-[#f3f4f6] transition-colors">
             <Upload class="w-[12px] h-[12px]" /> Upload
           </button>
         </div>
