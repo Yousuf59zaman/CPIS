@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { TrendingUp, MoreVertical, ChevronLeft, ChevronRight, FileText, Search, Clock, BarChart2 } from 'lucide-vue-next'
+import { TrendingUp, MoreVertical, ChevronLeft, ChevronRight, FileText, Search, Clock, BarChart2, ClipboardList, RotateCcw, CheckCircle2, AlertTriangle } from 'lucide-vue-next'
 
 defineOptions({ name: 'DashboardPage' })
 
 const stats = [
-  { label: 'Pending\nApplications', value: '124', trend: '8.5%', icon: '📋', color: 'bg-[#fef3c7]', iconBg: 'bg-[#fffbeb]' },
-  { label: 'Returned\nApplications', value: '18', trend: '8.5%', icon: '↩', color: 'bg-[#f0fdf4]', iconBg: 'bg-[#f0fdf4]' },
-  { label: 'Completed\nIntake', value: '342', trend: '8.5%', icon: '✓', color: 'bg-[#eff6ff]', iconBg: 'bg-[#eff6ff]', down: true },
-  { label: 'Overdue\nApplications', value: '09', trend: '8.5%', icon: '!', color: 'bg-[#fef2f2]', iconBg: 'bg-[#fef2f2]' },
+  { label: 'Pending\nApplications', value: '124', trend: '8.5%', icon: ClipboardList, color: 'bg-[#fef3c7]', iconBg: 'bg-[#fffbeb]' },
+  { label: 'Returned\nApplications', value: '18', trend: '8.5%', icon: RotateCcw, color: 'bg-[#f0fdf4]', iconBg: 'bg-[#f0fdf4]' },
+  { label: 'Completed\nIntake', value: '342', trend: '8.5%', icon: CheckCircle2, color: 'bg-[#eff6ff]', iconBg: 'bg-[#eff6ff]', down: true },
+  { label: 'Overdue\nApplications', value: '09', trend: '8.5%', icon: AlertTriangle, color: 'bg-[#fef2f2]', iconBg: 'bg-[#fef2f2]' },
 ]
 
 const queueItems = [
@@ -40,7 +40,7 @@ function priorityClass(p: string) {
 </script>
 
 <template>
-  <main class="flex flex-col gap-[16px] 2xl:gap-[20px] p-[20px] 2xl:p-[24px] font-['Poppins']">
+  <main class="flex flex-col gap-[16px] 2xl:gap-[20px] p-[20px] 2xl:p-[24px] font-['Poppins'] bg-[rgba(241,243,241,0.15)]">
     <!-- Page title -->
     <h1 class="text-[30px] leading-[45px] font-medium text-[#000000]">Dashboard</h1>
 
@@ -49,32 +49,39 @@ function priorityClass(p: string) {
       <div
         v-for="stat in stats"
         :key="stat.label"
-        class="bg-white rounded-[12px] border border-[#f0f0f0] p-[16px] 2xl:p-[20px] flex items-center gap-[14px] shadow-sm"
+        class="relative bg-white rounded-[12px] border border-[#f0f0f0] p-[16px] 2xl:p-[20px] shadow-[8px_8px_72px_0px_rgba(0,0,0,0.05)] overflow-hidden"
       >
-        <div class="w-[52px] h-[52px] 2xl:w-[62px] 2xl:h-[62px] rounded-full flex items-center justify-center text-[22px] shrink-0" :class="stat.iconBg">
-          {{ stat.icon }}
-        </div>
-        <div>
-          <p
-            class="text-[75px] leading-[112px] font-semibold tracking-[-4px] bg-clip-text text-transparent"
-            style="background: linear-gradient(200.38deg, #5E4D31 13.54%, #1D4A1D 89.85%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"
-          >
-            {{ stat.value }}
-          </p>
-          <p class="text-[21px] leading-[25px] font-medium text-[#1D4A1D] mt-[3px] whitespace-pre-line">{{ stat.label }}</p>
-          <div class="flex items-center gap-[4px] mt-[4px]">
-            <TrendingUp class="w-[11px] h-[11px]" :class="stat.down ? 'text-[#d0272a]' : 'text-[#16a34a]'" />
-            <span class="text-[16.9986px] leading-[25px] font-normal text-[#0D9546]">{{ stat.trend }} Lorem ipsum is</span>
+        <div class="absolute -right-[28px] -top-[38px] h-[160px] w-[160px] rounded-full opacity-50" :class="stat.color"></div>
+        <div class="relative flex items-start justify-between gap-[12px]">
+          <div class="flex items-start gap-[12px]">
+            <div class="w-[52px] h-[52px] 2xl:w-[62px] 2xl:h-[62px] rounded-[10px] flex items-center justify-center shrink-0" :class="stat.iconBg">
+              <component :is="stat.icon" class="w-[24px] h-[24px] text-[#5b5b5b]" />
+            </div>
+            <div>
+              <p class="text-[21px] leading-[25px] font-medium text-[#1D4A1D] mt-[3px] whitespace-pre-line">{{ stat.label }}</p>
+              <div class="flex items-center gap-[4px] mt-[4px]">
+                <TrendingUp class="w-[11px] h-[11px]" :class="stat.down ? 'text-[#d0272a]' : 'text-[#16a34a]'" />
+                <span class="text-[16.9986px] leading-[25px] font-normal text-[#0D9546]">{{ stat.trend }} Lorem ipsum is</span>
+              </div>
+            </div>
+          </div>
+          <div class="text-right">
+            <p
+              class="text-[75px] leading-[112px] font-semibold tracking-[-4px] bg-clip-text text-transparent"
+              style="background: linear-gradient(200.38deg, #5E4D31 13.54%, #1D4A1D 89.85%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"
+            >
+              {{ stat.value }}
+            </p>
           </div>
         </div>
       </div>
     </div>
 
     <!-- My Active Queue -->
-    <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm overflow-hidden">
+    <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-[8px_8px_72px_0px_rgba(0,0,0,0.05)] overflow-hidden">
       <div class="flex items-center justify-between px-[20px] py-[14px] border-b border-[#f5f5f5]">
         <div class="flex items-center gap-[10px]">
-          <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
+          <div class="w-[5px] h-[30px] bg-[#234f23] rounded-br-[5px] rounded-tr-[5px]"></div>
           <h2 class="text-[30px] leading-[45px] font-medium text-[#000000]">My Active Queue</h2>
         </div>
         <MoreVertical class="w-[18px] h-[18px] text-[#9ca3af] cursor-pointer" />
@@ -82,7 +89,7 @@ function priorityClass(p: string) {
       <div class="overflow-x-auto">
         <table class="w-full">
           <thead>
-            <tr class="border-b border-[#f0f0f0]">
+            <tr class="border-b border-[#f0f0f0] bg-[#fafafa]">
               <th class="px-[20px] py-[10px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">Claim Ref</th>
               <th class="px-[20px] py-[10px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">Claimant Name</th>
               <th class="px-[20px] py-[10px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">Submission Date</th>
@@ -133,10 +140,10 @@ function priorityClass(p: string) {
     <!-- Workflow Status + Quick Actions -->
     <div class="grid grid-cols-1 lg:grid-cols-[1fr_280px] 2xl:grid-cols-[1fr_320px] gap-[14px] 2xl:gap-[18px]">
       <!-- Workflow Status -->
-      <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm overflow-hidden">
+      <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-[8px_8px_72px_0px_rgba(0,0,0,0.05)] overflow-hidden">
         <div class="flex items-center justify-between px-[20px] py-[14px] border-b border-[#f5f5f5]">
           <div class="flex items-center gap-[10px]">
-            <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
+            <div class="w-[5px] h-[30px] bg-[#234f23] rounded-br-[5px] rounded-tr-[5px]"></div>
             <h2 class="text-[30px] leading-[45px] font-medium text-[#000000]">Workflow Status Overview</h2>
           </div>
           <MoreVertical class="w-[18px] h-[18px] text-[#9ca3af] cursor-pointer" />
@@ -144,7 +151,7 @@ function priorityClass(p: string) {
         <div class="overflow-x-auto">
           <table class="w-full">
             <thead>
-              <tr class="border-b border-[#f0f0f0]">
+              <tr class="border-b border-[#f0f0f0] bg-[#fafafa]">
                 <th class="px-[20px] py-[10px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">Stage</th>
                 <th class="px-[20px] py-[10px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">Total</th>
                 <th class="px-[20px] py-[10px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">In Progress</th>
@@ -166,7 +173,7 @@ function priorityClass(p: string) {
       </div>
 
       <!-- Quick Actions -->
-      <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm overflow-hidden">
+      <div class="bg-[#f8f3ec] rounded-[12px] border border-[#f0f0f0] shadow-[8px_8px_72px_0px_rgba(0,0,0,0.05)] overflow-hidden">
         <div class="flex items-center justify-between px-[20px] py-[14px] border-b border-[#f5f5f5]">
           <h2 class="text-[30px] leading-[45px] font-medium text-[#000000]">Quick Actions</h2>
           <MoreVertical class="w-[18px] h-[18px] text-[#9ca3af] cursor-pointer" />
@@ -175,10 +182,10 @@ function priorityClass(p: string) {
           <button
             v-for="action in quickActions"
             :key="action.label"
-            class="flex items-center gap-[12px] w-full px-[14px] py-[12px] bg-[#fffbeb] hover:bg-[#fef3c7] rounded-[8px] transition-colors text-left"
+            class="flex items-center gap-[12px] w-full px-[14px] py-[12px] bg-white border border-[#f0f0f0] rounded-[8px] shadow-[0px_2px_6px_rgba(0,0,0,0.04)] hover:bg-[#fafafa] transition-colors text-left"
           >
-            <div class="w-[32px] h-[32px] bg-[#fef3c7] rounded-[8px] flex items-center justify-center shrink-0">
-              <component :is="action.icon" class="w-[16px] h-[16px] text-[#d97706]" />
+            <div class="w-[32px] h-[32px] bg-[#f9f3e8] rounded-[8px] flex items-center justify-center shrink-0">
+              <component :is="action.icon" class="w-[16px] h-[16px] text-[#b8894f]" />
             </div>
             <span class="text-[20px] leading-[30px] font-normal text-[#464255]">{{ action.label }}</span>
           </button>
