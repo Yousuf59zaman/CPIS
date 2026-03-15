@@ -1,170 +1,487 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { Eye, Download, FileDown } from 'lucide-vue-next'
+import { reactive } from 'vue'
+import {
+  BarElement,
+  CategoryScale,
+  Chart as ChartJS,
+  type ChartData,
+  type ChartOptions,
+  Legend,
+  LinearScale,
+  Tooltip,
+} from 'chart.js'
+import { Bar } from 'vue-chartjs'
+import {
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  Download,
+  Eye,
+  FileDown,
+  Search,
+} from 'lucide-vue-next'
 
 defineOptions({ name: 'ReportsPage' })
 
+ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend)
+
+const filters = reactive({
+  fromDate: '2026-12-01',
+  toDate: '2026-12-01',
+  office: '',
+  claimType: '',
+  status: '',
+  chartMode: 'count',
+  search: '',
+  pageSize: '10',
+})
+
+const officeOptions = [
+  { label: 'All Offices', value: '' },
+  { label: 'Office A - North', value: 'office-a' },
+  { label: 'Office B - Central', value: 'office-b' },
+  { label: 'Office C - South', value: 'office-c' },
+]
+
+const claimTypeOptions = [
+  { label: 'All Types', value: '' },
+  { label: 'Property', value: 'property' },
+  { label: 'Flood', value: 'flood' },
+  { label: 'Medical', value: 'medical' },
+]
+
+const statusOptions = [
+  { label: 'All Statuses', value: '' },
+  { label: 'Pending', value: 'Pending' },
+  { label: 'Returned', value: 'Returned' },
+  { label: 'Completed', value: 'Completed' },
+  { label: 'Overdue', value: 'Overdue' },
+]
+
+const pageSizeOptions = [
+  { label: '10', value: '10' },
+  { label: '25', value: '25' },
+  { label: '50', value: '50' },
+]
+
+const chartModeOptions = [
+  { label: 'By Count', value: 'count' },
+  { label: 'By Value', value: 'value' },
+]
+
+const summaryCards = [
+  { label: 'Total Claims', value: '157', note: '+12% from last month' },
+  { label: 'Claimant Name', value: '42' },
+  { label: 'Claim Type', value: '15' },
+  { label: 'Property Location', value: '88' },
+  { label: 'Overdue', value: '12' },
+]
+
 const claims = [
-  { agenda: 'AGN-001', claimant: 'John Smith', unit: 'Legal Review', status: 'Completed', submitted: '15-Jan-2025', type: 'Structural' },
-  { agenda: 'AGN-002', claimant: 'Maria Santos', unit: 'Ocular Inspection', status: 'Pending', submitted: '16-Jan-2025', type: 'Flooding' },
-  { agenda: 'AGN-003', claimant: 'Pedro Reyes', unit: 'GIS Validation', status: 'Overdue', submitted: '10-Jan-2025', type: 'Structural' },
-  { agenda: 'AGN-004', claimant: 'Ana Cruz', unit: 'Document Review', status: 'Returned', submitted: '12-Jan-2025', type: 'Fire Damage' },
-  { agenda: 'AGN-005', claimant: 'Carlos Gomez', unit: 'SER Evaluation', status: 'Pending', submitted: '14-Jan-2025', type: 'Flooding' },
+  {
+    agenda: 'CLM-88219',
+    claimant: 'Jonathan Vance',
+    unit: 'Unit A - North',
+    status: 'Pending',
+    submitted: '2023-10-12',
+    type: '12',
+  },
+  {
+    agenda: 'CLM-88220',
+    claimant: 'Sarah McAllister',
+    unit: 'Unit C - South',
+    status: 'Completed',
+    submitted: '2023-10-05',
+    type: '19',
+  },
+  {
+    agenda: 'CLM-88221',
+    claimant: 'Robert Chen',
+    unit: 'Unit B - Central',
+    status: 'Overdue',
+    submitted: '2023-09-15',
+    type: '39',
+  },
+  {
+    agenda: 'CLM-88222',
+    claimant: 'Elena Rodriguez',
+    unit: 'Unit A - North',
+    status: 'Returned',
+    submitted: '2023-10-20',
+    type: '6',
+  },
+  {
+    agenda: 'CLM-88223',
+    claimant: 'Marcus Thompson',
+    unit: 'Unit D - East',
+    status: 'Pending',
+    submitted: '2023-10-18',
+    type: '12',
+  },
 ]
 
-const stats = [
-  { label: 'Total Claims', value: '157', color: 'text-[#1d4a1d]' },
-  { label: 'Claimants', value: '42', color: 'text-[#5b21b6]' },
-  { label: 'Claim Types', value: '15', color: 'text-[#0369a1]' },
-  { label: 'Property Locations', value: '88', color: 'text-[#d97706]' },
-  { label: 'Overdue', value: '12', color: 'text-[#dc2626]' },
-]
-
-function statusColor(s: string) {
-  if (s === 'Completed') return 'bg-[#d1fae5] text-[#065f46]'
-  if (s === 'Pending') return 'bg-[#ede9fe] text-[#5b21b6]'
-  if (s === 'Overdue') return 'bg-[#fce7e7] text-[#c53030]'
-  if (s === 'Returned') return 'bg-[#fed7aa] text-[#9a3412]'
-  return 'bg-[#f3f4f6] text-[#374151]'
+const chartData: ChartData<'bar'> = {
+  labels: ['Pending', 'Returned', 'Completed', 'Overdue'],
+  datasets: [
+    {
+      data: [55, 18, 100, 14],
+      backgroundColor: ['#DFC1FC', '#F7F3EC', '#BFF1BF', '#FF3B3B'],
+      borderWidth: 0,
+      borderRadius: 0,
+      borderSkipped: false,
+      categoryPercentage: 0.68,
+      barPercentage: 0.84,
+      maxBarThickness: 100,
+    },
+  ],
 }
 
-const barData = [
-  { label: 'Pending', pct: 55, color: 'bg-[#7c3aed]' },
-  { label: 'Returned', pct: 25, color: 'bg-[#f97316]' },
-  { label: 'Completed', pct: 75, color: 'bg-[#16a34a]' },
-  { label: 'Overdue', pct: 15, color: 'bg-[#dc2626]' },
-]
+const chartOptions: ChartOptions<'bar'> = {
+  responsive: true,
+  maintainAspectRatio: false,
+  animation: false,
+  plugins: {
+    legend: {
+      display: false,
+    },
+    tooltip: {
+      backgroundColor: '#202224',
+      titleColor: '#ffffff',
+      bodyColor: '#ffffff',
+      displayColors: false,
+      padding: 10,
+    },
+  },
+  layout: {
+    padding: {
+      top: 8,
+      right: 8,
+      left: 0,
+      bottom: 0,
+    },
+  },
+  scales: {
+    x: {
+      border: {
+        display: false,
+      },
+      grid: {
+        display: false,
+      },
+      ticks: {
+        color: '#5d6168',
+        font: {
+          family: 'Poppins, sans-serif',
+          size: 12,
+          weight: 'normal',
+        },
+      },
+    },
+    y: {
+      min: 0,
+      max: 100,
+      ticks: {
+        stepSize: 25,
+        color: '#7d7e87',
+        font: {
+          family: 'Poppins, sans-serif',
+          size: 11,
+          weight: 'normal',
+        },
+      },
+      border: {
+        display: false,
+      },
+      grid: {
+        display: false,
+      },
+    },
+  },
+}
+
+const inputClass =
+  'h-[38px] w-full rounded-[6px] border border-[#ececec] bg-white px-[12px] text-[12px] text-[#4f4f58] outline-none transition placeholder:text-[#a1a1aa] focus:border-[#275227] focus:ring-1 focus:ring-[#275227]/10'
+
+const selectClass =
+  'h-[38px] w-full appearance-none rounded-[6px] border border-[#ececec] bg-white px-[12px] pr-[34px] text-[12px] text-[#4f4f58] outline-none transition focus:border-[#275227] focus:ring-1 focus:ring-[#275227]/10'
+
+function statusColor(status: string) {
+  if (status === 'Completed') return 'bg-[#d7f7d9] text-[#2c8c45]'
+  if (status === 'Pending') return 'bg-[#efdbff] text-[#8f42cf]'
+  if (status === 'Overdue') return 'bg-[#ff5252] text-white'
+  if (status === 'Returned') return 'bg-[#fff2bf] text-[#b38a1f]'
+  return 'bg-[#eef0f2] text-[#6b7280]'
+}
 </script>
 
 <template>
-  <main class="flex flex-col gap-[16px] 2xl:gap-[20px] p-[20px] 2xl:p-[24px]">
-    <!-- Header -->
-    <div class="flex items-center justify-between flex-wrap gap-[8px]">
-      <h1 class="text-[22px] 2xl:text-[24px] font-semibold text-[#171a1f]">Reports</h1>
-      <button class="flex items-center gap-[6px] px-[14px] py-[8px] bg-[#1d4a1d] hover:bg-[#163a16] text-white text-[12px] font-medium rounded-[7px] transition-colors">
-        <FileDown class="w-[13px] h-[13px]" /> Export Data
-      </button>
-    </div>
+  <main class="flex flex-col gap-[22px] bg-[#f4f5f7] p-[20px] 2xl:p-[24px]">
+    <div class="flex flex-wrap items-start justify-between gap-[12px]">
+      <h1 class="text-[24px] font-medium text-[#202224] md:text-[30px]">Reports</h1>
 
-    <!-- Filters -->
-    <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm p-[16px]">
-      <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-[10px] mb-[10px]">
-        <div>
-          <label class="text-[10px] text-[#6b7280] block mb-[4px]">From Date</label>
-          <input type="date" class="w-full text-[11px] border border-[#e5e7eb] rounded-[6px] px-[8px] py-[7px] outline-none focus:border-[#224e22] text-[#374151]" />
+      <div class="flex flex-wrap items-center justify-end gap-[10px]">
+        <button
+          type="button"
+          class="inline-flex h-[34px] items-center gap-[8px] rounded-[999px] bg-[#275227] px-[16px] text-[12px] font-medium text-white shadow-[0_8px_24px_rgba(39,82,39,0.16)] transition hover:bg-[#214721]"
+        >
+          <FileDown class="h-[13px] w-[13px]" />
+          Export Data
+        </button>
+
+        <div
+          class="flex items-center gap-[8px] rounded-[999px] border border-[#ece8e1] bg-[#fbfaf7] px-[16px] py-[8px] text-[10px] font-light text-[#9a9aa0]"
+        >
+          <span>Dashboard</span>
+          <ChevronRight class="h-[10px] w-[10px]" />
+          <span>Reports</span>
+          <ChevronRight class="h-[10px] w-[10px]" />
+          <span class="text-[#6b6b73]">Claims by Status</span>
         </div>
-        <div>
-          <label class="text-[10px] text-[#6b7280] block mb-[4px]">To Date</label>
-          <input type="date" class="w-full text-[11px] border border-[#e5e7eb] rounded-[6px] px-[8px] py-[7px] outline-none focus:border-[#224e22] text-[#374151]" />
-        </div>
-        <div>
-          <label class="text-[10px] text-[#6b7280] block mb-[4px]">Office / Unit</label>
-          <select class="w-full text-[11px] border border-[#e5e7eb] rounded-[6px] px-[8px] py-[7px] outline-none text-[#374151]">
-            <option>All Offices</option>
-            <option>Legal Review</option>
-            <option>Ocular Inspection</option>
-            <option>GIS Validation</option>
-          </select>
-        </div>
-        <div>
-          <label class="text-[10px] text-[#6b7280] block mb-[4px]">Claim Type</label>
-          <select class="w-full text-[11px] border border-[#e5e7eb] rounded-[6px] px-[8px] py-[7px] outline-none text-[#374151]">
-            <option>All Types</option>
-            <option>Structural Damage</option>
-            <option>Flooding</option>
-            <option>Fire Damage</option>
-          </select>
-        </div>
-        <div>
-          <label class="text-[10px] text-[#6b7280] block mb-[4px]">Status</label>
-          <select class="w-full text-[11px] border border-[#e5e7eb] rounded-[6px] px-[8px] py-[7px] outline-none text-[#374151]">
-            <option>All Statuses</option>
-            <option>Pending</option>
-            <option>Completed</option>
-            <option>Overdue</option>
-            <option>Returned</option>
-          </select>
-        </div>
-      </div>
-      <div class="flex gap-[8px]">
-        <button class="px-[20px] py-[8px] bg-[#1d4a1d] hover:bg-[#163a16] text-white text-[12px] font-medium rounded-[7px] transition-colors">Apply</button>
-        <button class="px-[20px] py-[8px] bg-[#d97706] hover:bg-[#b45309] text-white text-[12px] font-medium rounded-[7px] transition-colors">Reset</button>
       </div>
     </div>
 
-    <!-- Summary Stats -->
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-[10px]">
-      <div v-for="s in stats" :key="s.label" class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm p-[16px] text-center">
-        <p class="text-[28px] font-bold mb-[4px]" :class="s.color">{{ s.value }}</p>
-        <p class="text-[11px] text-[#6b7280]">{{ s.label }}</p>
-      </div>
-    </div>
+    <section class="rounded-[12px] bg-white p-[12px] shadow-[8px_8px_72px_0px_rgba(0,0,0,0.05)]">
+      <div class="grid grid-cols-1 gap-[12px] xl:grid-cols-6">
+        <div class="rounded-[8px] border border-[#ececec] bg-[#faf8f3] p-[10px] xl:col-span-2">
+          <label for="from-date" class="mb-[6px] block text-[12px] text-[#202224]">From Date</label>
+          <input id="from-date" v-model="filters.fromDate" type="date" :class="inputClass" />
+        </div>
 
-    <!-- Status Distribution Chart -->
-    <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm p-[20px]">
-      <div class="flex items-center gap-[10px] mb-[16px]">
-        <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
-        <h2 class="text-[16px] font-semibold text-[#171a1f]">Status Distribution</h2>
-      </div>
-      <div class="space-y-[12px]">
-        <div v-for="bar in barData" :key="bar.label" class="flex items-center gap-[10px]">
-          <span class="w-[80px] text-[11px] text-[#6b7280] text-right flex-shrink-0">{{ bar.label }}</span>
-          <div class="flex-1 bg-[#f3f4f6] rounded-full h-[10px] overflow-hidden">
-            <div class="h-full rounded-full transition-all" :class="bar.color" :style="{ width: bar.pct + '%' }"></div>
+        <div class="rounded-[8px] border border-[#ececec] bg-[#faf8f3] p-[10px] xl:col-span-2">
+          <label for="to-date" class="mb-[6px] block text-[12px] text-[#202224]">To Date</label>
+          <input id="to-date" v-model="filters.toDate" type="date" :class="inputClass" />
+        </div>
+
+        <div class="rounded-[8px] border border-[#ececec] bg-[#faf8f3] p-[10px] xl:col-span-2">
+          <label for="office-unit" class="mb-[6px] block text-[12px] text-[#202224]">Office/Unit</label>
+          <div class="relative">
+            <select id="office-unit" v-model="filters.office" :class="selectClass">
+              <option v-for="option in officeOptions" :key="option.value || option.label" :value="option.value">
+                {{ option.label }}
+              </option>
+            </select>
+            <ChevronDown
+              class="pointer-events-none absolute right-[10px] top-1/2 h-[14px] w-[14px] -translate-y-1/2 text-[#6a6c71]"
+            />
           </div>
-          <span class="text-[11px] text-[#6b7280] w-[30px]">{{ bar.pct }}%</span>
+        </div>
+
+        <div class="rounded-[8px] border border-[#ececec] bg-[#faf8f3] p-[10px] xl:col-span-3">
+          <label for="claim-type" class="mb-[6px] block text-[12px] text-[#202224]">Claim Type</label>
+          <div class="relative">
+            <select id="claim-type" v-model="filters.claimType" :class="selectClass">
+              <option v-for="option in claimTypeOptions" :key="option.value || option.label" :value="option.value">
+                {{ option.label }}
+              </option>
+            </select>
+            <ChevronDown
+              class="pointer-events-none absolute right-[10px] top-1/2 h-[14px] w-[14px] -translate-y-1/2 text-[#6a6c71]"
+            />
+          </div>
+        </div>
+
+        <div class="rounded-[8px] border border-[#ececec] bg-[#faf8f3] p-[10px] xl:col-span-3">
+          <label for="status-filter" class="mb-[6px] block text-[12px] text-[#202224]">Status</label>
+          <div class="relative">
+            <select id="status-filter" v-model="filters.status" :class="selectClass">
+              <option v-for="option in statusOptions" :key="option.value || option.label" :value="option.value">
+                {{ option.label }}
+              </option>
+            </select>
+            <ChevronDown
+              class="pointer-events-none absolute right-[10px] top-1/2 h-[14px] w-[14px] -translate-y-1/2 text-[#6a6c71]"
+            />
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Claims Table -->
-    <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm p-[20px]">
-      <div class="flex items-center justify-between mb-[12px] flex-wrap gap-[8px]">
-        <div class="flex items-center gap-[10px]">
-          <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
-          <h2 class="text-[15px] font-semibold text-[#171a1f]">Claims</h2>
+      <div class="mt-[12px] grid grid-cols-1 gap-[12px] md:grid-cols-2">
+        <button
+          type="button"
+          class="inline-flex h-[40px] items-center justify-center rounded-[4px] bg-[#275227] text-[14px] font-medium text-white transition hover:bg-[#214721]"
+        >
+          Apply
+        </button>
+        <button
+          type="button"
+          class="inline-flex h-[40px] items-center justify-center rounded-[4px] bg-[#da972e] text-[14px] font-medium text-white transition hover:bg-[#c38320]"
+        >
+          Reset
+        </button>
+      </div>
+    </section>
+
+    <section class="grid grid-cols-1 gap-[16px] sm:grid-cols-2 xl:grid-cols-5">
+      <article
+        v-for="card in summaryCards"
+        :key="card.label"
+        class="rounded-[10px] border border-[#ececec] bg-white px-[16px] py-[14px] shadow-[8px_8px_72px_0px_rgba(0,0,0,0.04)]"
+      >
+        <div class="border-l-[4px] border-[#f3d6aa] pl-[12px]">
+          <p class="text-[12px] text-[#9a5b64]">{{ card.label }}</p>
+          <p class="mt-[6px] text-[18px] font-semibold leading-none text-[#171a1f] md:text-[40px]">
+            {{ card.value }}
+          </p>
+          <p v-if="card.note" class="mt-[8px] text-[10px] text-[#b1b1b8]">{{ card.note }}</p>
         </div>
-        <div class="flex items-center gap-[8px]">
-          <input type="text" placeholder="Search..." class="text-[11px] border border-[#e5e7eb] rounded-[6px] px-[8px] py-[5px] outline-none focus:border-[#224e22] text-[#374151] w-[140px]" />
-          <select class="text-[11px] border border-[#e5e7eb] rounded-[6px] px-[8px] py-[5px] outline-none text-[#374151]">
-            <option>Show 10</option><option>Show 25</option><option>Show 50</option>
+      </article>
+    </section>
+
+    <section class="rounded-[12px] bg-white p-[18px] shadow-[8px_8px_72px_0px_rgba(0,0,0,0.05)]">
+      <div class="mb-[16px] flex flex-wrap items-start justify-between gap-[12px]">
+        <div>
+          <div class="flex items-center gap-[10px]">
+            <div class="h-[22px] w-[4px] rounded-br-[5px] rounded-tr-[5px] bg-[#275227]"></div>
+            <h2 class="text-[18px] font-medium text-[#202224] md:text-[20px]">Status Distribution</h2>
+          </div>
+          <p class="mt-[4px] text-[12px] text-[#6b7280]">
+            Current workload distribution across all processed units
+          </p>
+        </div>
+
+        <div class="relative min-w-[98px]">
+          <select v-model="filters.chartMode" :class="`${selectClass} h-[28px] rounded-[999px] bg-[#f5f6f6] py-0 text-[11px] text-[#8a8b92]`">
+            <option v-for="option in chartModeOptions" :key="option.value" :value="option.value">
+              {{ option.label }}
+            </option>
           </select>
-          <button class="flex items-center gap-[4px] px-[10px] py-[5px] border border-[#e5e7eb] rounded-[6px] text-[11px] text-[#374151] hover:bg-[#f3f4f6]">
-            <FileDown class="w-[11px] h-[11px]" /> CSV
+          <ChevronDown
+            class="pointer-events-none absolute right-[10px] top-1/2 h-[12px] w-[12px] -translate-y-1/2 text-[#8a8b92]"
+          />
+        </div>
+      </div>
+
+      <div class="h-[240px]">
+        <Bar :data="chartData" :options="chartOptions" />
+      </div>
+    </section>
+
+    <section class="rounded-[12px] bg-white p-[12px] shadow-[8px_8px_72px_0px_rgba(0,0,0,0.05)]">
+      <div class="mb-[12px] flex flex-wrap items-center justify-between gap-[10px] px-[2px]">
+        <div
+          class="flex w-full max-w-[340px] items-center gap-[8px] rounded-[999px] border border-[#e9eaec] bg-white px-[12px] py-[7px]"
+        >
+          <Search class="h-[12px] w-[12px] text-[#767982]" />
+          <input
+            v-model="filters.search"
+            type="text"
+            placeholder="Search claims by ID, Claimant or Unit.."
+            class="w-full bg-transparent text-[11px] text-[#5d6168] outline-none placeholder:text-[#a1a1aa]"
+          />
+        </div>
+
+        <div class="flex items-center gap-[10px]">
+          <div class="flex items-center gap-[8px] text-[12px] text-[#202224]">
+            <span>Show:</span>
+            <div class="relative min-w-[70px]">
+              <select v-model="filters.pageSize" :class="`${selectClass} h-[28px] rounded-[999px] py-0 text-[11px] text-[#6a6c71]`">
+                <option v-for="option in pageSizeOptions" :key="option.value" :value="option.value">
+                  {{ option.label }}
+                </option>
+              </select>
+              <ChevronDown
+                class="pointer-events-none absolute right-[10px] top-1/2 h-[12px] w-[12px] -translate-y-1/2 text-[#6a6c71]"
+              />
+            </div>
+          </div>
+
+          <button
+            type="button"
+            class="inline-flex h-[28px] items-center gap-[6px] rounded-[999px] border border-[#ececec] bg-white px-[10px] text-[11px] text-[#6a6c71]"
+          >
+            <FileDown class="h-[12px] w-[12px]" />
+            CSV
           </button>
         </div>
       </div>
+
       <div class="overflow-x-auto">
-        <table class="w-full min-w-[600px]">
+        <table class="w-full min-w-[860px]">
           <thead>
-            <tr class="border-b border-[#f0f0f0] bg-[#fafafa]">
-              <th class="px-[12px] py-[9px] text-[10px] font-medium text-[#6b7280] uppercase text-left">Agenda No.</th>
-              <th class="px-[12px] py-[9px] text-[10px] font-medium text-[#6b7280] uppercase text-left">Claimant Name</th>
-              <th class="px-[12px] py-[9px] text-[10px] font-medium text-[#6b7280] uppercase text-left">Assigned Unit</th>
-              <th class="px-[12px] py-[9px] text-[10px] font-medium text-[#6b7280] uppercase text-left">Status</th>
-              <th class="px-[12px] py-[9px] text-[10px] font-medium text-[#6b7280] uppercase text-left">Submitted</th>
-              <th class="px-[12px] py-[9px] text-[10px] font-medium text-[#6b7280] uppercase text-left">Claim Type</th>
-              <th class="px-[12px] py-[9px] text-[10px] font-medium text-[#6b7280] uppercase text-left">Action</th>
+            <tr class="border-b border-[#efefef] bg-[#fafafa]">
+              <th class="px-[12px] py-[12px] text-left">
+                <input type="checkbox" class="h-[12px] w-[12px] accent-[#275227]" />
+              </th>
+              <th class="px-[12px] py-[12px] text-left text-[10px] font-medium uppercase text-[#4f4f58]">
+                Agenda No
+              </th>
+              <th class="px-[12px] py-[12px] text-left text-[10px] font-medium uppercase text-[#4f4f58]">
+                Claimant Name
+              </th>
+              <th class="px-[12px] py-[12px] text-left text-[10px] font-medium uppercase text-[#4f4f58]">
+                Assigned Unit
+              </th>
+              <th class="px-[12px] py-[12px] text-left text-[10px] font-medium uppercase text-[#4f4f58]">Status</th>
+              <th class="px-[12px] py-[12px] text-left text-[10px] font-medium uppercase text-[#4f4f58]">
+                Submitted
+              </th>
+              <th class="px-[12px] py-[12px] text-left text-[10px] font-medium uppercase text-[#4f4f58]">
+                Claim Type
+              </th>
+              <th class="px-[12px] py-[12px] text-left text-[10px] font-medium uppercase text-[#4f4f58]">Action</th>
             </tr>
           </thead>
+
           <tbody>
-            <tr v-for="c in claims" :key="c.agenda" class="border-b border-[#f8f9fa] hover:bg-[#fafafa]">
-              <td class="px-[12px] py-[10px] text-[12px] font-medium text-[#374151]">{{ c.agenda }}</td>
-              <td class="px-[12px] py-[10px] text-[12px] text-[#374151]">{{ c.claimant }}</td>
-              <td class="px-[12px] py-[10px] text-[12px] text-[#374151]">{{ c.unit }}</td>
-              <td class="px-[12px] py-[10px]"><span class="px-[8px] py-[2px] rounded-full text-[10px] font-medium" :class="statusColor(c.status)">{{ c.status }}</span></td>
-              <td class="px-[12px] py-[10px] text-[12px] text-[#374151]">{{ c.submitted }}</td>
-              <td class="px-[12px] py-[10px] text-[12px] text-[#374151]">{{ c.type }}</td>
-              <td class="px-[12px] py-[10px]">
-                <div class="flex gap-[6px]">
-                  <button class="text-[#6b7280] hover:text-[#374151]"><Eye class="w-[13px] h-[13px]" /></button>
-                  <button class="text-[#6b7280] hover:text-[#374151]"><Download class="w-[13px] h-[13px]" /></button>
+            <tr v-for="claim in claims" :key="claim.agenda" class="border-b border-[#f3f3f3]">
+              <td class="px-[12px] py-[12px]">
+                <input type="checkbox" class="h-[12px] w-[12px] accent-[#275227]" />
+              </td>
+              <td class="px-[12px] py-[12px] text-[12px] text-[#5d6168]">{{ claim.agenda }}</td>
+              <td class="px-[12px] py-[12px] text-[12px] text-[#5d6168]">{{ claim.claimant }}</td>
+              <td class="px-[12px] py-[12px] text-[12px] text-[#5d6168]">{{ claim.unit }}</td>
+              <td class="px-[12px] py-[12px]">
+                <span
+                  class="inline-flex rounded-[999px] px-[10px] py-[2px] text-[10px] font-medium"
+                  :class="statusColor(claim.status)"
+                >
+                  {{ claim.status }}
+                </span>
+              </td>
+              <td class="px-[12px] py-[12px] text-[12px] text-[#5d6168]">{{ claim.submitted }}</td>
+              <td class="px-[12px] py-[12px] text-[12px] text-[#5d6168]">{{ claim.type }}</td>
+              <td class="px-[12px] py-[12px]">
+                <div class="flex items-center gap-[8px]">
+                  <button
+                    type="button"
+                    class="inline-flex h-[22px] w-[22px] items-center justify-center rounded-[999px] border border-[#ececec] text-[#6a6c71] transition hover:bg-[#f7f7f7]"
+                  >
+                    <Eye class="h-[11px] w-[11px]" />
+                  </button>
+                  <button
+                    type="button"
+                    class="inline-flex h-[22px] w-[22px] items-center justify-center rounded-[999px] border border-[#ececec] text-[#6a6c71] transition hover:bg-[#f7f7f7]"
+                  >
+                    <Download class="h-[11px] w-[11px]" />
+                  </button>
                 </div>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-    </div>
+
+      <div class="mt-[12px] flex flex-wrap items-center justify-between gap-[10px] px-[4px] text-[11px] text-[#a1a1aa]">
+        <span>Showing 1 to 5 of 5 entries</span>
+
+        <div class="flex items-center gap-[10px]">
+          <span>Page 1 of 12</span>
+          <div class="flex items-center gap-[6px]">
+            <button
+              type="button"
+              class="flex h-[20px] w-[20px] items-center justify-center rounded-[4px] border border-[#e5e7eb] bg-white text-[#8a8b92]"
+            >
+              <ChevronLeft class="h-[12px] w-[12px]" />
+            </button>
+            <button
+              type="button"
+              class="flex h-[20px] w-[20px] items-center justify-center rounded-[4px] border border-[#e5e7eb] bg-white text-[#8a8b92]"
+            >
+              <ChevronRight class="h-[12px] w-[12px]" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 </template>
