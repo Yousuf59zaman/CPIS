@@ -12,27 +12,27 @@ const agendaItems = [
 ]
 
 function statusColor(status: string) {
-  if (status === 'Pending') return 'bg-[#ede9fe] text-[#5b21b6]'
-  if (status === 'Under Review') return 'bg-[#fed7aa] text-[#9a3412]'
-  if (status === 'Completed') return 'bg-[#d1fae5] text-[#065f46]'
-  return 'bg-[#f3f4f6] text-[#374151]'
+  if (status === 'Pending') return 'bg-[#ede9fe]'
+  if (status === 'Under Review') return 'bg-[#fed7aa]'
+  if (status === 'Completed') return 'bg-[#d1fae5]'
+  return 'bg-[#f3f4f6]'
 }
 
 function recColor(rec: string) {
   if (rec === 'APPROVE') return 'text-[#16a34a] font-semibold'
   if (rec === 'REJECT') return 'text-[#dc2626] font-semibold'
   if (rec === 'DEFER') return 'text-[#d97706] font-semibold'
-  return 'text-[#374151]'
+  return 'text-[#171A1F]'
 }
 </script>
 
 <template>
-  <main class="flex flex-col gap-[16px] 2xl:gap-[20px] p-[20px] 2xl:p-[24px]">
+  <main class="flex flex-col gap-[16px] 2xl:gap-[20px] p-[20px] 2xl:p-[24px] font-['Poppins']">
     <!-- Header -->
     <div class="flex items-start justify-between flex-wrap gap-[8px]">
-      <h1 class="text-[22px] 2xl:text-[24px] font-semibold text-[#171a1f]">Board Agenda</h1>
-      <nav class="text-[12px] text-[#9ca3af] flex items-center gap-[6px]">
-        <span>Dashboard</span><span>›</span><span class="text-[#374151] font-medium">Board Agenda</span>
+      <h1 class="text-[30px] leading-[45px] font-medium text-[#202224]">Board Agenda</h1>
+      <nav class="text-[16px] leading-[24px] font-light text-[#A7A6A6] flex items-center gap-[6px]">
+        <span>Dashboard</span><span>›</span><span class="text-[#171A1F]">Board Agenda</span>
       </nav>
     </div>
 
@@ -40,7 +40,7 @@ function recColor(rec: string) {
     <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm p-[20px]">
       <div class="flex items-center gap-[10px] mb-[16px]">
         <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
-        <h2 class="text-[16px] font-semibold text-[#171a1f]">Session Information</h2>
+        <h2 class="text-[30px] leading-[45px] font-normal text-[#234F23]">Session Information</h2>
       </div>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-[10px] mb-[16px]">
         <div v-for="f in [
@@ -49,17 +49,17 @@ function recColor(rec: string) {
           { label: 'Agenda Number', value: 'AGN-2025-001' },
           { label: 'Session Status', value: 'Scheduled' },
         ]" :key="f.label">
-          <p class="text-[10px] text-[#6b7280] mb-[3px]">{{ f.label }}</p>
+          <p class="text-[20px] leading-[28px] font-normal text-[#171A1F] mb-[3px]">{{ f.label }}</p>
           <div class="border border-[#e5e7eb] rounded-[6px] px-[10px] py-[7px] bg-[#f9fafb]">
-            <span class="text-[12px] text-[#374151]">{{ f.value }}</span>
+            <span class="text-[18px] leading-[27px] font-light text-[#171A1F]">{{ f.value }}</span>
           </div>
         </div>
       </div>
       <div class="flex gap-[10px]">
-        <button class="flex items-center gap-[6px] px-[14px] py-[8px] bg-[#1d4a1d] hover:bg-[#163a16] text-white text-[12px] font-medium rounded-[7px] transition-colors">
+        <button class="flex items-center gap-[6px] px-[14px] py-[8px] bg-[#1d4a1d] hover:bg-[#163a16] text-white text-[16px] leading-[32px] font-medium rounded-[7px] transition-colors">
           <FileText class="w-[13px] h-[13px]" /> Generate Agenda PDF
         </button>
-        <button class="flex items-center gap-[6px] px-[14px] py-[8px] bg-[#d97706] hover:bg-[#b45309] text-white text-[12px] font-medium rounded-[7px] transition-colors">
+        <button class="flex items-center gap-[6px] px-[14px] py-[8px] bg-[#d97706] hover:bg-[#b45309] text-white text-[16px] leading-[32px] font-medium rounded-[7px] transition-colors">
           Start Session
         </button>
       </div>
@@ -69,34 +69,34 @@ function recColor(rec: string) {
     <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm p-[20px]">
       <div class="flex items-center gap-[10px] mb-[14px]">
         <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
-        <h2 class="text-[16px] font-semibold text-[#171a1f]">Agenda</h2>
+        <h2 class="text-[30px] leading-[45px] font-normal text-[#234F23]">Agenda</h2>
       </div>
       <div class="overflow-x-auto">
         <table class="w-full min-w-[700px]">
           <thead>
             <tr class="border-b border-[#f0f0f0] bg-[#fafafa]">
-              <th class="px-[12px] py-[9px] text-[10px] font-medium text-[#6b7280] uppercase text-left">Agenda No.</th>
-              <th class="px-[12px] py-[9px] text-[10px] font-medium text-[#6b7280] uppercase text-left">Claim Reference</th>
-              <th class="px-[12px] py-[9px] text-[10px] font-medium text-[#6b7280] uppercase text-left">Claimant</th>
-              <th class="px-[12px] py-[9px] text-[10px] font-medium text-[#6b7280] uppercase text-left">Claim Type</th>
-              <th class="px-[12px] py-[9px] text-[10px] font-medium text-[#6b7280] uppercase text-left">Legal Rec.</th>
-              <th class="px-[12px] py-[9px] text-[10px] font-medium text-[#6b7280] uppercase text-left">Inspection</th>
-              <th class="px-[12px] py-[9px] text-[10px] font-medium text-[#6b7280] uppercase text-left">Status</th>
-              <th class="px-[12px] py-[9px] text-[10px] font-medium text-[#6b7280] uppercase text-left">Action</th>
+              <th class="px-[12px] py-[9px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">Agenda No.</th>
+              <th class="px-[12px] py-[9px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">Claim Reference</th>
+              <th class="px-[12px] py-[9px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">Claimant</th>
+              <th class="px-[12px] py-[9px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">Claim Type</th>
+              <th class="px-[12px] py-[9px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">Legal Rec.</th>
+              <th class="px-[12px] py-[9px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">Inspection</th>
+              <th class="px-[12px] py-[9px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">Status</th>
+              <th class="px-[12px] py-[9px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">Action</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="row in agendaItems" :key="row.no" class="border-b border-[#f8f9fa] hover:bg-[#fafafa]">
-              <td class="px-[12px] py-[10px] text-[12px] text-[#374151] font-medium">{{ row.no }}</td>
-              <td class="px-[12px] py-[10px] text-[12px] text-[#374151]">{{ row.ref }}</td>
-              <td class="px-[12px] py-[10px] text-[12px] text-[#374151]">{{ row.claimant }}</td>
-              <td class="px-[12px] py-[10px] text-[12px] text-[#374151]">{{ row.type }}</td>
-              <td class="px-[12px] py-[10px] text-[12px]" :class="recColor(row.recommendation)">{{ row.recommendation }}</td>
-              <td class="px-[12px] py-[10px]"><span class="px-[8px] py-[2px] bg-[#d1fae5] text-[#065f46] rounded-full text-[10px] font-medium">{{ row.inspection }}</span></td>
-              <td class="px-[12px] py-[10px]"><span class="px-[8px] py-[2px] rounded-full text-[10px] font-medium" :class="statusColor(row.status)">{{ row.status }}</span></td>
+              <td class="px-[12px] py-[10px] text-[18px] leading-[27px] font-normal text-[#202224] opacity-80">{{ row.no }}</td>
+              <td class="px-[12px] py-[10px] text-[18px] leading-[27px] font-normal text-[#202224] opacity-80">{{ row.ref }}</td>
+              <td class="px-[12px] py-[10px] text-[18px] leading-[27px] font-normal text-[#202224] opacity-80">{{ row.claimant }}</td>
+              <td class="px-[12px] py-[10px] text-[18px] leading-[27px] font-normal text-[#202224] opacity-80">{{ row.type }}</td>
+              <td class="px-[12px] py-[10px] text-[18px] leading-[27px] font-light text-[#171A1F]" :class="recColor(row.recommendation)">{{ row.recommendation }}</td>
+              <td class="px-[12px] py-[10px]"><span class="px-[8px] py-[2px] bg-[#d1fae5] rounded-full text-[15px] leading-[22px] font-light text-[#1B1F25] flex items-center justify-center h-[23px]">{{ row.inspection }}</span></td>
+              <td class="px-[12px] py-[10px]"><span class="px-[8px] py-[2px] rounded-full text-[15px] leading-[22px] font-light text-[#1B1F25] flex items-center justify-center h-[23px]" :class="statusColor(row.status)">{{ row.status }}</span></td>
               <td class="px-[12px] py-[10px]">
                 <div class="flex gap-[6px]">
-                  <button class="px-[10px] py-[4px] bg-[#1d4a1d] hover:bg-[#163a16] text-white text-[10px] font-medium rounded-[5px] transition-colors">Open</button>
+                  <button class="px-[10px] py-[4px] bg-[#1d4a1d] hover:bg-[#163a16] text-white text-[15px] leading-[22px] font-medium rounded-[5px] transition-colors">Open</button>
                   <button class="text-[#6b7280] hover:text-[#374151]"><Eye class="w-[13px] h-[13px]" /></button>
                   <button class="text-[#6b7280] hover:text-[#374151]"><Download class="w-[13px] h-[13px]" /></button>
                 </div>
@@ -108,3 +108,4 @@ function recColor(rec: string) {
     </div>
   </main>
 </template>
+

@@ -23,7 +23,7 @@ const docs = [
 </script>
 
 <template>
-  <main class="flex flex-col gap-[16px] 2xl:gap-[20px] p-[20px] 2xl:p-[24px]">
+  <main class="flex flex-col gap-[16px] 2xl:gap-[20px] p-[20px] 2xl:p-[24px] font-['Poppins']">
     <!-- Info strip -->
     <div class="flex flex-wrap gap-[20px] pb-[14px] border-b border-[#e5e7eb]">
       <div v-for="field in [
@@ -33,8 +33,8 @@ const docs = [
         { label: 'Claim Type', value: 'Structural Damage' },
         { label: 'Assigned Officer', value: 'Atty. Maria Santos' },
       ]" :key="field.label" class="border-l-2 border-[#d97706] pl-[10px]">
-        <p class="text-[10px] text-[#9ca3af] uppercase">{{ field.label }}</p>
-        <p class="text-[13px] font-semibold text-[#1d4a1d]">{{ field.value }}</p>
+        <p class="text-[20px] leading-[28px] font-normal text-[#171A1F] uppercase">{{ field.label }}</p>
+        <p class="text-[18px] leading-[27px] font-light text-[#171A1F]">{{ field.value }}</p>
       </div>
     </div>
 
@@ -43,7 +43,7 @@ const docs = [
       <button @click="showClaimSummary = !showClaimSummary" class="w-full flex items-center justify-between px-[20px] py-[14px] hover:bg-[#fafafa]">
         <div class="flex items-center gap-[10px]">
           <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
-          <h2 class="text-[16px] font-semibold text-[#171a1f]">Claim Summary &amp; Reference Data</h2>
+          <h2 class="text-[30px] leading-[45px] font-normal text-[#234F23]">Claim Summary &amp; Reference Data</h2>
         </div>
         <ChevronDown class="w-[16px] h-[16px] text-[#6b7280] transition-transform" :class="showClaimSummary ? 'rotate-180' : ''" />
       </button>
@@ -56,9 +56,9 @@ const docs = [
             { label: 'Proposed Compensation', value: '₱145,000.00 (Based on damage assessment report)' },
           ]" :key="f.label">
             <div>
-              <p class="text-[10px] text-[#6b7280] mb-[4px]">{{ f.label }}</p>
+              <p class="text-[20px] leading-[28px] font-normal text-[#171A1F] mb-[4px]">{{ f.label }}</p>
               <div class="border border-[#e5e7eb] rounded-[6px] px-[10px] py-[8px] bg-[#f9fafb]">
-                <p class="text-[12px] text-[#374151]">{{ f.value }}</p>
+                <p class="text-[18px] leading-[27px] font-light text-[#171A1F]">{{ f.value }}</p>
               </div>
             </div>
           </div>
@@ -70,15 +70,15 @@ const docs = [
     <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm p-[20px]">
       <div class="flex items-center gap-[10px] mb-[14px]">
         <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
-        <h2 class="text-[16px] font-semibold text-[#171a1f]">Legal Assessment</h2>
+        <h2 class="text-[30px] leading-[45px] font-normal text-[#234F23]">Legal Assessment</h2>
       </div>
-      <h3 class="text-[13px] font-semibold text-[#374151] mb-[8px]">Legal Findings &amp; Statutory Analysis</h3>
-      <p class="text-[12px] text-[#6b7280] leading-[1.7] mb-[10px]">
+      <h3 class="text-[20px] leading-[28px] font-normal text-[#171A1F] mb-[8px]">Legal Findings &amp; Statutory Analysis</h3>
+      <p class="text-[16px] leading-[24px] font-light text-[#808080] mb-[10px]">
         Upon thorough review of the submitted claim documentation, the legal team has conducted a statutory analysis in accordance with 
         Republic Act No. 7160 (Local Government Code) and applicable CPIS guidelines. The claimant, John Smith, has presented 
         evidence of substantial structural damage to the property located in Barangay Lumbac Madaya, Marawi City.
       </p>
-      <p class="text-[12px] text-[#6b7280] leading-[1.7]">
+      <p class="text-[16px] leading-[24px] font-light text-[#808080]">
         The inspection findings, corroborated by photographic evidence and the inspector's signed report, confirm the extent of damages. 
         The property has been assessed as uninhabitable. The proposed compensation of ₱145,000.00 is consistent with the damage severity 
         under the applicable compensation matrix. The legal assessment concludes that this claim is eligible for board approval.
@@ -89,12 +89,12 @@ const docs = [
     <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm p-[20px]">
       <div class="flex items-center gap-[10px] mb-[14px]">
         <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
-        <h2 class="text-[16px] font-semibold text-[#171a1f]">Compliance &amp; Verification Checklist</h2>
+        <h2 class="text-[30px] leading-[45px] font-normal text-[#234F23]">Compliance &amp; Verification Checklist</h2>
       </div>
       <div class="space-y-[10px]">
         <label v-for="(item, i) in checklist" :key="i" class="flex items-start gap-[10px]">
           <input type="checkbox" :checked="item.checked" class="w-[14px] h-[14px] mt-[1px] accent-[#224e22]" />
-          <span class="text-[12px] text-[#374151]">{{ item.text }}</span>
+          <span class="text-[18px] leading-[27px] font-light text-[#171A1F]">{{ item.text }}</span>
         </label>
       </div>
     </div>
@@ -103,20 +103,20 @@ const docs = [
     <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm p-[20px]">
       <div class="flex items-center gap-[10px] mb-[14px]">
         <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
-        <h2 class="text-[16px] font-semibold text-[#171a1f]">Supporting Documents</h2>
+        <h2 class="text-[30px] leading-[45px] font-normal text-[#234F23]">Supporting Documents</h2>
       </div>
       <table class="w-full">
         <thead>
           <tr class="border-b border-[#f0f0f0] bg-[#fafafa]">
-            <th class="px-[12px] py-[9px] text-[10px] font-medium text-[#6b7280] uppercase text-left">Document Name</th>
-            <th class="px-[12px] py-[9px] text-[10px] font-medium text-[#6b7280] uppercase text-left">Category</th>
-            <th class="px-[12px] py-[9px] text-[10px] font-medium text-[#6b7280] uppercase text-left">Action</th>
+            <th class="px-[12px] py-[9px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">Document Name</th>
+            <th class="px-[12px] py-[9px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">Category</th>
+            <th class="px-[12px] py-[9px] text-[18px] leading-[27px] font-normal text-[#202224] uppercase text-left">Action</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="d in docs" :key="d.name" class="border-b border-[#f8f9fa] hover:bg-[#fafafa]">
-            <td class="px-[12px] py-[10px] text-[12px] text-[#374151]">{{ d.name }}</td>
-            <td class="px-[12px] py-[10px] text-[12px] text-[#374151]">{{ d.category }}</td>
+            <td class="px-[12px] py-[10px] text-[18px] leading-[27px] font-normal text-[#202224] opacity-80">{{ d.name }}</td>
+            <td class="px-[12px] py-[10px] text-[18px] leading-[27px] font-normal text-[#202224] opacity-80">{{ d.category }}</td>
             <td class="px-[12px] py-[10px]">
               <div class="flex gap-[6px]">
                 <button class="text-[#6b7280] hover:text-[#374151]"><Eye class="w-[13px] h-[13px]" /></button>
@@ -132,7 +132,7 @@ const docs = [
     <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm p-[20px]">
       <div class="flex items-center gap-[10px] mb-[14px]">
         <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
-        <h2 class="text-[16px] font-semibold text-[#171a1f]">Legal Recommendation</h2>
+        <h2 class="text-[30px] leading-[45px] font-normal text-[#234F23]">Legal Recommendation</h2>
       </div>
       <div class="flex flex-col gap-[9px] mb-[16px]">
         <label v-for="opt in [
@@ -144,13 +144,14 @@ const docs = [
           :class="legalRecommendation === opt.val ? 'border-[#224e22] bg-[#f0f4f0]' : 'border-[#e5e7eb]'">
           <input type="radio" v-model="legalRecommendation" :value="opt.val" class="mt-[1px] accent-[#224e22]" />
           <div>
-            <p class="text-[12px] font-semibold text-[#171a1f]">{{ opt.label }}</p>
-            <p class="text-[11px] text-[#6b7280]">{{ opt.desc }}</p>
+            <p class="text-[20px] leading-[28px] font-normal text-[#171A1F]">{{ opt.label }}</p>
+            <p class="text-[16px] leading-[24px] font-light text-[#808080]">{{ opt.desc }}</p>
           </div>
         </label>
       </div>
-      <p class="text-[12px] font-medium text-[#374151] mb-[6px]">Legal Recommendation Notes</p>
-      <textarea rows="4" placeholder="Provide detailed legal reasoning and notes for the recommendation..." class="w-full text-[12px] border border-[#e5e7eb] rounded-[8px] px-[12px] py-[10px] outline-none focus:border-[#224e22] resize-none text-[#374151] placeholder-[#9ca3af]"></textarea>
+      <p class="text-[20px] leading-[28px] font-normal text-[#171A1F] mb-[6px]">Legal Recommendation Notes</p>
+      <textarea rows="4" placeholder="Provide detailed legal reasoning and notes for the recommendation..." class="w-full text-[18px] leading-[27px] font-light border border-[#e5e7eb] rounded-[8px] px-[12px] py-[10px] outline-none focus:border-[#224e22] resize-none text-[#171A1F] placeholder-[#9ca3af]"></textarea>
     </div>
   </main>
 </template>
+
