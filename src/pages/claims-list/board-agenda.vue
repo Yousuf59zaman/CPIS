@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { Eye, Download, FileText } from 'lucide-vue-next'
 
 defineOptions({ name: 'BoardAgendaPage' })

@@ -1,167 +1,275 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Bold, Italic, AlignLeft, AlignCenter, Upload, Save, ArrowRight } from 'lucide-vue-next'
+import {
+  AlignLeft,
+  ArrowRight,
+  Bold,
+  ChevronDown,
+  Download,
+  Eye,
+  Italic,
+  List,
+  Save,
+  Upload,
+} from 'lucide-vue-next'
 
 defineOptions({ name: 'SerReportPage' })
 
-const official1 = ref(false)
-const official2 = ref(false)
+const summaryCards = [
+  { label: 'Claim ID', value: 'CPIS-2026-001' },
+  { label: 'Claimant', value: 'John Doe' },
+  { label: 'Legal Rec.', value: 'APPROVE', pill: true },
+  { label: 'Proposed Comp.', value: '$50,000.00' },
+  { label: 'Status', value: 'SER Drafting' },
+  { label: 'Meeting ID', value: 'M. Karim' },
+]
+
+const claimSummaryCards = [
+  {
+    label: 'Property Location',
+    value: 'Lot 442, Sector 9, Industrial Estate, Metropolitan City. GPS: 14.5905 N, 120.9842 E',
+  },
+  {
+    label: 'Inspection Summary',
+    value: 'Physical inspection confirmed 85% structural damage due to flooding. Foundation remains stable but interior requires full overhaul.',
+  },
+  {
+    label: 'Legal Findings Summary',
+    value: 'Title deed verified. No outstanding liens. Claimant holds 100% ownership since 2018. Compliance with Act 442-B confirmed.',
+  },
+  {
+    label: 'Board Resolution Notes',
+    value: 'Resolution #2026-A12: Approved for full settlement within the Infrastructure Recovery Category. Expedited processing requested.',
+  },
+]
 
 const compensationItems = [
-  { component: 'Structural Repair', amount: '₱85,000.00', notes: 'Based on inspection report' },
-  { component: 'Temporary Housing Allowance', amount: '₱20,000.00', notes: '3-month provision' },
-  { component: 'Personal Property Damage', amount: '₱25,000.00', notes: 'Assessed by inspector' },
-  { component: 'Administrative Fees', amount: '₱15,000.00', notes: 'Processing and verification' },
+  {
+    component: 'Structure Damage',
+    amount: '35000',
+    notes: 'Based on site inspection dated 2026-01-15',
+  },
+  {
+    component: 'Land Adjustment',
+    amount: '10000',
+    notes: 'Zonal value adjustment applied',
+  },
+  {
+    component: 'Livelihood Assistance',
+    amount: '5000',
+    notes: 'Standard 3-month support package',
+  },
+  {
+    component: 'Total Calculated Amount',
+    amount: '50,000.00',
+    notes: 'Auto-calculated based on component entries above.',
+    total: true,
+  },
 ]
 
 const attachments = [
-  { name: "Inspector's Report.pdf", date: '15-Jan-2025', by: 'C. Reyes' },
-  { name: 'Damage Assessment.pdf', date: '15-Jan-2025', by: 'C. Reyes' },
+  {
+    name: 'Land Title Deed - Parcel 402',
+    uploadedBy: 'S. Kassim',
+    date: '2026-01-12',
+  },
+  {
+    name: 'Property Appraisal Report v2',
+    uploadedBy: 'M. Chen',
+    date: '2026-01-14',
+  },
 ]
+
+const declarations = ref({
+  confirm: false,
+  certify: false,
+})
 </script>
 
 <template>
-  <main class="flex flex-col gap-[16px] 2xl:gap-[20px] p-[20px] 2xl:p-[24px]">
-    <!-- Header info strip -->
-    <div class="flex flex-wrap gap-[20px] pb-[14px] border-b border-[#e5e7eb]">
-      <div v-for="f in [
-        { label: 'Claim ID', value: 'CP-00101' },
-        { label: 'Claimant', value: 'John Smith' },
-        { label: 'Legal Rec.', value: 'APPROVE' },
-        { label: 'Proposed Comp.', value: '₱145,000.00' },
-        { label: 'Status', value: 'SER Report Drafting' },
-        { label: 'Meeting ID', value: 'MTG-2025-001' },
-      ]" :key="f.label" class="border-l-2 border-[#d97706] pl-[10px]">
-        <p class="text-[10px] text-[#9ca3af] uppercase">{{ f.label }}</p>
-        <p class="text-[13px] font-semibold text-[#1d4a1d]">{{ f.value }}</p>
+  <main class="flex flex-col gap-[20px] bg-[#f4f5f7] p-[20px] 2xl:p-[24px]" style="font-family: 'Poppins', Inter, sans-serif;">
+    <div class="flex flex-wrap items-center justify-between gap-[12px]">
+      <h1 class="text-[24px] md:text-[30px] font-medium text-[#202224]">Settlement Evaluation Report</h1>
+      <div
+        class="flex items-center gap-[8px] rounded-[999px] border border-[#e5e7eb] bg-[#f7f7f7] px-[16px] h-[32px] text-[10px] font-light text-[#a7a6a6]">
+        <span>Task Inbox</span>
+        <ChevronDown class="h-[10px] w-[10px] rotate-[-90deg]" />
+        <span>Claim CPIS-2026-001</span>
+        <ChevronDown class="h-[10px] w-[10px] rotate-[-90deg]" />
+        <span>SER Drafting</span>
       </div>
     </div>
 
-    <!-- Claim Summary Reference -->
-    <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm p-[20px]">
-      <div class="flex items-center gap-[10px] mb-[14px]">
-        <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
-        <h2 class="text-[16px] font-semibold text-[#171a1f]">Claim Summary Reference</h2>
-      </div>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-[10px]">
-        <div v-for="f in [
-          { label: 'Property Location', value: 'Bgry Lumbac Madaya, Marawi City' },
-          { label: 'Inspection Summary', value: 'Structural damage confirmed' },
-          { label: 'GIS Reference', value: 'GIS-REF-2025-00101' },
-          { label: 'Board Resolution', value: 'RES-2025-001 — Approved' },
-        ]" :key="f.label">
-          <div class="border border-[#e5e7eb] rounded-[8px] px-[12px] py-[10px] bg-[#f9fafb]">
-            <p class="text-[10px] text-[#6b7280] mb-[3px]">{{ f.label }}</p>
-            <p class="text-[12px] text-[#374151]">{{ f.value }}</p>
-          </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-[12px]">
+      <div v-for="card in summaryCards" :key="card.label"
+        class="bg-white border border-[#ececec] rounded-[8px] p-[12px] shadow-[0px_2px_6px_rgba(0,0,0,0.04)]">
+        <p class="text-[11px] text-[#6b7280]">{{ card.label }}</p>
+        <div v-if="card.pill" class="mt-[6px]">
+          <span class="inline-flex items-center px-[10px] h-[22px] rounded-[999px] border border-[#e6e6e6] text-[11px] text-[#171a1f]">
+            {{ card.value }}
+          </span>
         </div>
+        <p v-else class="text-[14px] text-[#171a1f] font-medium mt-[6px]">{{ card.value }}</p>
       </div>
     </div>
 
-    <!-- SER Report Content (rich text) -->
-    <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm p-[20px]">
-      <div class="flex items-center justify-between mb-[10px]">
+    <section class="bg-white rounded-[10px] shadow-[8px_8px_72px_0px_rgba(0,0,0,0.05)] p-[20px]">
+      <div class="flex items-center justify-between gap-[12px] mb-[14px]">
         <div class="flex items-center gap-[10px]">
-          <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
-          <h2 class="text-[16px] font-semibold text-[#171a1f]">SER Report Content</h2>
+          <div class="w-[4px] h-[24px] bg-[#234f23] rounded-br-[5px] rounded-tr-[5px]"></div>
+          <h2 class="text-[18px] md:text-[20px] font-medium text-[#202224]">Claim Summary Reference</h2>
         </div>
-        <span class="text-[10px] text-[#9ca3af] italic">Auto Save — 10:42 AM</span>
-      </div>
-      <!-- Toolbar -->
-      <div class="flex items-center gap-[6px] p-[6px] border border-[#e5e7eb] rounded-t-[7px] bg-[#fafafa]">
-        <button class="p-[5px] rounded hover:bg-[#e5e7eb] transition-colors"><Bold class="w-[13px] h-[13px] text-[#374151]" /></button>
-        <button class="p-[5px] rounded hover:bg-[#e5e7eb] transition-colors"><Italic class="w-[13px] h-[13px] text-[#374151]" /></button>
-        <div class="w-px h-[16px] bg-[#d1d5db] mx-[2px]"></div>
-        <button class="p-[5px] rounded hover:bg-[#e5e7eb] transition-colors"><AlignLeft class="w-[13px] h-[13px] text-[#374151]" /></button>
-        <button class="p-[5px] rounded hover:bg-[#e5e7eb] transition-colors"><AlignCenter class="w-[13px] h-[13px] text-[#374151]" /></button>
-      </div>
-      <textarea rows="8" class="w-full text-[12px] border border-[#e5e7eb] border-t-0 rounded-b-[7px] px-[12px] py-[10px] outline-none resize-none text-[#374151]"
-        placeholder="Write the SER report content here...">This Settlement Evaluation Report (SER) is prepared pursuant to the board's resolution dated 22 January 2025 approving the claim filed by John Smith (CP-00101). The report evaluates the appropriate compensation based on inspection findings, damage assessment, and applicable compensation matrices.</textarea>
-    </div>
-
-    <!-- Compensation Breakdown -->
-    <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm p-[20px]">
-      <div class="flex items-center gap-[10px] mb-[14px]">
-        <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
-        <h2 class="text-[16px] font-semibold text-[#171a1f]">Compensation Breakdown</h2>
-      </div>
-      <table class="w-full">
-        <thead>
-          <tr class="border-b border-[#f0f0f0] bg-[#fafafa]">
-            <th class="px-[12px] py-[9px] text-[10px] font-medium text-[#6b7280] uppercase text-left">Component</th>
-            <th class="px-[12px] py-[9px] text-[10px] font-medium text-[#6b7280] uppercase text-left">Amount (PHP)</th>
-            <th class="px-[12px] py-[9px] text-[10px] font-medium text-[#6b7280] uppercase text-left">Notes</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="item in compensationItems" :key="item.component" class="border-b border-[#f8f9fa] hover:bg-[#fafafa]">
-            <td class="px-[12px] py-[10px] text-[12px] text-[#374151]">{{ item.component }}</td>
-            <td class="px-[12px] py-[10px] text-[12px] font-medium text-[#374151]">{{ item.amount }}</td>
-            <td class="px-[12px] py-[10px] text-[12px] text-[#6b7280]">{{ item.notes }}</td>
-          </tr>
-          <tr class="border-t-2 border-[#e5e7eb] bg-[#f0f4f0]">
-            <td class="px-[12px] py-[10px] text-[13px] font-bold text-[#1d4a1d]">TOTAL</td>
-            <td class="px-[12px] py-[10px] text-[13px] font-bold text-[#1d4a1d]">₱145,000.00</td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Attachments -->
-    <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm p-[20px]">
-      <div class="flex items-center justify-between mb-[14px]">
-        <div class="flex items-center gap-[10px]">
-          <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
-          <h2 class="text-[16px] font-semibold text-[#171a1f]">Attachments</h2>
-        </div>
-        <button class="flex items-center gap-[5px] px-[12px] py-[6px] border border-[#e5e7eb] rounded-[6px] text-[11px] text-[#374151] hover:bg-[#f3f4f6]">
-          <Upload class="w-[12px] h-[12px]" /> Upload
+        <button type="button" class="w-[28px] h-[28px] rounded-full border border-[#e5e7eb] text-[#6b7280] flex items-center justify-center">
+          <ChevronDown class="w-[14px] h-[14px]" />
         </button>
       </div>
-      <table class="w-full">
-        <thead>
-          <tr class="border-b border-[#f0f0f0] bg-[#fafafa]">
-            <th class="px-[12px] py-[9px] text-[10px] font-medium text-[#6b7280] uppercase text-left">File Name</th>
-            <th class="px-[12px] py-[9px] text-[10px] font-medium text-[#6b7280] uppercase text-left">Date</th>
-            <th class="px-[12px] py-[9px] text-[10px] font-medium text-[#6b7280] uppercase text-left">Uploaded By</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="a in attachments" :key="a.name" class="border-b border-[#f8f9fa] hover:bg-[#fafafa]">
-            <td class="px-[12px] py-[10px] text-[12px] text-[#374151]">{{ a.name }}</td>
-            <td class="px-[12px] py-[10px] text-[12px] text-[#374151]">{{ a.date }}</td>
-            <td class="px-[12px] py-[10px] text-[12px] text-[#374151]">{{ a.by }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
 
-    <!-- Official Declaration -->
-    <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm p-[20px]">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-[12px]">
+        <div v-for="card in claimSummaryCards" :key="card.label"
+          class="rounded-[8px] border border-[#f0f0f0] bg-[#fffcf6] px-[14px] py-[12px]">
+          <p class="text-[11px] font-medium text-[#4e090a] mb-[4px]">{{ card.label }}</p>
+          <p class="text-[12px] text-[#171a1f] leading-[1.45]">{{ card.value }}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white rounded-[10px] shadow-[8px_8px_72px_0px_rgba(0,0,0,0.05)] p-[20px]">
+      <div class="flex items-center justify-between gap-[12px] mb-[10px]">
+        <div class="flex items-center gap-[10px]">
+          <div class="w-[4px] h-[24px] bg-[#234f23] rounded-br-[5px] rounded-tr-[5px]"></div>
+          <h2 class="text-[18px] md:text-[20px] font-medium text-[#202224]">SER Report Content</h2>
+        </div>
+        <span class="text-[10px] text-[#6b7280]">Auto Save At 14:22 PM</span>
+      </div>
+
+      <div class="border border-[#e5e7eb] rounded-[8px] overflow-hidden">
+        <div class="flex items-center gap-[10px] px-[12px] py-[8px] bg-[#fafafa] border-b border-[#e5e7eb] text-[#6b7280]">
+          <Bold class="w-[14px] h-[14px]" />
+          <Italic class="w-[14px] h-[14px]" />
+          <List class="w-[14px] h-[14px]" />
+          <AlignLeft class="w-[14px] h-[14px]" />
+        </div>
+        <textarea
+          rows="5"
+          placeholder="Enter any additional notes for the authorizing officer..."
+          class="w-full px-[12px] py-[10px] text-[12px] text-[#171a1f] outline-none resize-none"
+        ></textarea>
+      </div>
+    </section>
+
+    <section class="bg-white rounded-[10px] shadow-[8px_8px_72px_0px_rgba(0,0,0,0.05)] p-[20px]">
+      <div class="flex items-center justify-between gap-[12px] mb-[12px]">
+        <div class="flex items-center gap-[10px]">
+          <div class="w-[4px] h-[24px] bg-[#234f23] rounded-br-[5px] rounded-tr-[5px]"></div>
+          <h2 class="text-[18px] md:text-[20px] font-medium text-[#202224]">Compensation Breakdown</h2>
+        </div>
+        <span class="text-[11px] text-[#6b7280] bg-[#f6f7f6] border border-[#e5e7eb] px-[10px] py-[4px] rounded-[999px]">Currency: PHP</span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full min-w-[720px]">
+          <thead>
+            <tr class="bg-[#fafafa] border-y border-[#ececec]">
+              <th class="px-[12px] py-[10px] text-left text-[10px] font-semibold text-[#6b7280] uppercase">Component</th>
+              <th class="px-[12px] py-[10px] text-left text-[10px] font-semibold text-[#6b7280] uppercase">Amount PHP</th>
+              <th class="px-[12px] py-[10px] text-left text-[10px] font-semibold text-[#6b7280] uppercase">Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in compensationItems" :key="item.component" class="border-b border-[#f0f0f0]">
+              <td class="px-[12px] py-[10px] text-[12px]" :class="item.total ? 'font-semibold text-[#171a1f]' : 'text-[#171a1f]'">
+                {{ item.component }}
+              </td>
+              <td class="px-[12px] py-[10px] text-[12px]" :class="item.total ? 'font-semibold text-[#171a1f]' : 'text-[#171a1f]'">
+                {{ item.amount }}
+              </td>
+              <td class="px-[12px] py-[10px] text-[11px] text-[#6b7280]" :class="item.total ? 'italic' : ''">
+                {{ item.notes }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="bg-white rounded-[10px] shadow-[8px_8px_72px_0px_rgba(0,0,0,0.05)] p-[20px]">
+      <div class="flex items-center justify-between gap-[12px] mb-[12px]">
+        <div class="flex items-center gap-[10px]">
+          <div class="w-[4px] h-[24px] bg-[#234f23] rounded-br-[5px] rounded-tr-[5px]"></div>
+          <h2 class="text-[18px] md:text-[20px] font-medium text-[#202224]">Attachments</h2>
+        </div>
+        <button type="button" class="h-[28px] px-[12px] rounded-[999px] border border-[#e5e7eb] text-[11px] text-[#171a1f] bg-white flex items-center gap-[6px]">
+          <Upload class="w-[12px] h-[12px]" />
+          Upload Supporting SER Documents
+        </button>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full min-w-[720px]">
+          <thead>
+            <tr class="bg-[#fafafa] border-y border-[#ececec]">
+              <th class="px-[12px] py-[10px] text-left text-[10px] font-semibold text-[#6b7280] uppercase">
+                <div class="flex items-center gap-[8px]">
+                  <input type="checkbox" class="h-[12px] w-[12px] accent-[#234f23]" />
+                  Document Name
+                </div>
+              </th>
+              <th class="px-[12px] py-[10px] text-left text-[10px] font-semibold text-[#6b7280] uppercase">Uploaded By</th>
+              <th class="px-[12px] py-[10px] text-left text-[10px] font-semibold text-[#6b7280] uppercase">Date</th>
+              <th class="px-[12px] py-[10px] text-left text-[10px] font-semibold text-[#6b7280] uppercase">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="doc in attachments" :key="doc.name" class="border-b border-[#f0f0f0]">
+              <td class="px-[12px] py-[10px] text-[12px] text-[#171a1f]">
+                <div class="flex items-center gap-[8px]">
+                  <input type="checkbox" class="h-[12px] w-[12px] accent-[#234f23]" />
+                  {{ doc.name }}
+                </div>
+              </td>
+              <td class="px-[12px] py-[10px] text-[12px] text-[#171a1f]">{{ doc.uploadedBy }}</td>
+              <td class="px-[12px] py-[10px] text-[12px] text-[#171a1f]">{{ doc.date }}</td>
+              <td class="px-[12px] py-[10px]">
+                <div class="flex items-center gap-[6px]">
+                  <button class="w-[24px] h-[24px] rounded-full border border-[#e5e7eb] flex items-center justify-center text-[#6b7280]" type="button">
+                    <Eye class="w-[12px] h-[12px]" />
+                  </button>
+                  <button class="w-[24px] h-[24px] rounded-full border border-[#e5e7eb] flex items-center justify-center text-[#6b7280]" type="button">
+                    <Download class="w-[12px] h-[12px]" />
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="bg-white rounded-[10px] shadow-[8px_8px_72px_0px_rgba(0,0,0,0.05)] p-[20px]">
       <div class="flex items-center gap-[10px] mb-[12px]">
-        <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
-        <h2 class="text-[16px] font-semibold text-[#171a1f]">Official Declaration</h2>
+        <div class="w-[4px] h-[24px] bg-[#234f23] rounded-br-[5px] rounded-tr-[5px]"></div>
+        <h2 class="text-[18px] md:text-[20px] font-medium text-[#202224]">Official Declaration</h2>
       </div>
-      <div class="space-y-[10px]">
-        <label class="flex items-start gap-[10px] cursor-pointer">
-          <input type="checkbox" v-model="official1" class="w-[13px] h-[13px] mt-[1px] accent-[#224e22]" />
-          <span class="text-[12px] text-[#374151]">I certify that the information contained in this SER is accurate, complete, and based on verified documentation and inspection findings.</span>
+      <div class="space-y-[10px] text-[12px] text-[#171a1f]">
+        <label class="flex items-start gap-[8px]">
+          <input type="checkbox" v-model="declarations.confirm" class="mt-[2px] h-[12px] w-[12px] accent-[#7d7f84]" />
+          <span>I confirm that this Settlement Evaluation Report (SER) is prepared in strict accordance with the Board resolution #2026-A12.</span>
         </label>
-        <label class="flex items-start gap-[10px] cursor-pointer">
-          <input type="checkbox" v-model="official2" class="w-[13px] h-[13px] mt-[1px] accent-[#224e22]" />
-          <span class="text-[12px] text-[#374151]">I acknowledge that this report will be subject to review and that any falsification of information is a violation of CPIS policies and applicable laws.</span>
+        <label class="flex items-start gap-[8px]">
+          <input type="checkbox" v-model="declarations.certify" class="mt-[2px] h-[12px] w-[12px] accent-[#7d7f84]" />
+          <span>I certify that all compensation calculations have been verified against current zonal valuation and structural assessment reports.</span>
         </label>
       </div>
-    </div>
+    </section>
 
-    <!-- CTAs -->
-    <div class="flex flex-col sm:flex-row gap-[12px]">
-      <button class="flex-1 py-[12px] bg-[#1d4a1d] hover:bg-[#163a16] text-white text-[14px] font-semibold rounded-[8px] transition-colors flex items-center justify-center gap-[8px]">
-        <Save class="w-[15px] h-[15px]" /> Save Draft
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-[12px]">
+      <button type="button" class="h-[36px] rounded-[4px] bg-[#275227] text-[13px] font-medium text-white flex items-center justify-center gap-[8px]">
+        <Save class="w-[14px] h-[14px]" />
+        Save Draft
       </button>
-      <button class="flex-1 py-[12px] bg-[#d97706] hover:bg-[#b45309] text-white text-[14px] font-semibold rounded-[8px] transition-colors flex items-center justify-center gap-[8px]">
-        <ArrowRight class="w-[15px] h-[15px]" /> Submit for SER Review
+      <button type="button" class="h-[36px] rounded-[4px] bg-[#da972e] text-[13px] font-medium text-white flex items-center justify-center gap-[8px]">
+        <ArrowRight class="w-[14px] h-[14px]" />
+        Submit for SER Review
       </button>
     </div>
   </main>

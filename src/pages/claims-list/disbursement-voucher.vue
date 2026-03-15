@@ -1,118 +1,171 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { Save, ArrowRight } from 'lucide-vue-next'
+import { ArrowRight, ChevronRight, Save } from 'lucide-vue-next'
 
 defineOptions({ name: 'DisbursementVoucherPage' })
 
-const checklist = [
-  { label: 'Voucher amount matches approved compensation', checked: true },
-  { label: 'Payee information verified and complete', checked: true },
-  { label: 'Supporting documents attached and validated', checked: false },
-  { label: 'Budget allocation confirmed by Finance Division', checked: false },
+const summaryCards = [
+  { label: 'Claim ID', value: 'CPIS-2026-001' },
+  { label: 'Claimant', value: 'John Doe' },
+  { label: 'Approved Amount', value: '50,000.00 USD' },
+  { label: 'SER Ref', value: 'SER-2026-022' },
+  { label: 'Process Status', value: 'Pending Processing' },
+]
+
+const claimSummaryFields = [
+  { label: 'Claimant:', value: 'John Smith' },
+  { label: 'Location:', value: 'Structural' },
+  { label: 'Inspection:', value: 'Barangay Lumbac Madaya, Marawi City' },
+  { label: 'Current Status:', value: 'Pending Board Decision' },
+]
+
+const verificationChecks = [
+  {
+    title: 'SER Approval Verified',
+    description: 'Confirm expenditure matches approved service report values.',
+  },
+  {
+    title: 'Budget Allocation Confirmed',
+    description: 'Ensure GL code has sufficient funds for this disbursement.',
+  },
+  {
+    title: 'Bank Details Verified',
+    description: 'Verify payee bank account is active and matches KYC records.',
+  },
+  {
+    title: 'No Duplicate Payment Found',
+    description: 'System check completed for previous payments on this SER ref.',
+  },
 ]
 </script>
 
 <template>
-  <main class="flex flex-col gap-[16px] 2xl:gap-[20px] p-[20px] 2xl:p-[24px] font-['Poppins']">
-    <!-- Header info strip -->
-    <div class="flex flex-wrap gap-[20px] pb-[14px] border-b border-[#e5e7eb]">
-      <div v-for="f in [
-        { label: 'Claim ID', value: 'CP-00101' },
-        { label: 'Claimant', value: 'John Smith' },
-        { label: 'Approved Amount', value: '₱145,000.00' },
-        { label: 'SER Ref', value: 'SER-2025-001' },
-        { label: 'Process Status', value: 'Disbursement Processing' },
-      ]" :key="f.label" class="border-l-2 border-[#d97706] pl-[10px]">
-        <p class="text-[20px] leading-[28px] font-normal text-[#171A1F] uppercase">{{ f.label }}</p>
-        <p class="text-[18px] leading-[27px] font-light text-[#171A1F]">{{ f.value }}</p>
+  <main class="flex flex-col gap-[20px] bg-[#f4f5f7] p-[20px] 2xl:p-[24px] font-['Poppins']">
+    <div class="flex flex-wrap items-center justify-between gap-[12px]">
+      <h1 class="text-[30px] leading-[45px] font-medium text-[#202224]">Disbursement voucher</h1>
+      <div class="flex items-center gap-[8px] h-[32px] rounded-[999px] border border-[#e5e7eb] bg-[#f7f7f7] px-[16px] text-[16px] leading-[24px] font-light text-[#A7A6A6]">
+        <span>Claim list</span>
+        <ChevronRight class="h-[10px] w-[10px]" />
+        <span>Claims Management</span>
+        <ChevronRight class="h-[10px] w-[10px]" />
+        <span>Disbursement</span>
+        <ChevronRight class="h-[10px] w-[10px]" />
+        <span>New Voucher</span>
       </div>
     </div>
 
-    <!-- Claim Summary -->
-    <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm p-[20px]">
-      <div class="flex items-center gap-[10px] mb-[14px]">
-        <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
-        <h2 class="text-[30px] leading-[45px] font-normal text-[#234F23]">Claim Summary — CP-00101</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-[12px]">
+      <div v-for="card in summaryCards" :key="card.label"
+        class="bg-white border border-[#ececec] rounded-[8px] p-[12px] shadow-[0px_2px_6px_rgba(0,0,0,0.04)]">
+        <p class="text-[20px] leading-[28px] font-normal text-[#171A1F]">{{ card.label }}</p>
+        <p class="text-[18px] leading-[27px] font-light text-[#171A1F] mt-[6px]">{{ card.value }}</p>
       </div>
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-[8px]">
-        <div v-for="f in [
-          { label: 'Claimant Name', value: 'John Smith' },
-          { label: 'Claim Type', value: 'Structural Damage' },
-          { label: 'Property Location', value: 'Bgry Lumbac Madaya, Marawi' },
-          { label: 'Board Decision', value: 'APPROVED' },
-          { label: 'Board Resolution Date', value: '22 January 2025' },
-          { label: 'SER Reference', value: 'SER-2025-001' },
-        ]" :key="f.label">
-          <div>
-            <p class="text-[20px] leading-[28px] font-normal text-[#171A1F]">{{ f.label }}</p>
-            <div class="px-[9px] py-[6px] border border-[#e5e7eb] rounded-[5px] bg-[#f9fafb] mt-[3px]">
-              <span class="text-[18px] leading-[27px] font-light text-[#171A1F]" :class="f.label === 'Board Decision' ? 'text-[#16a34a] font-semibold' : ''">{{ f.value }}</span>
-            </div>
+    </div>
+
+    <section class="bg-white rounded-[10px] shadow-[8px_8px_72px_0px_rgba(0,0,0,0.05)] p-[20px]">
+      <div class="flex items-center gap-[10px] mb-[12px]">
+        <div class="w-[4px] h-[24px] bg-[#234f23] rounded-br-[5px] rounded-tr-[5px]"></div>
+        <h2 class="text-[30px] leading-[45px] font-normal text-[#234F23]">Claim summary</h2>
+      </div>
+
+      <div class="mb-[12px] text-[30px] leading-[45px] font-semibold text-[#1d4a1d]">CP-00101</div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-[10px]">
+        <div v-for="field in claimSummaryFields" :key="field.label" class="grid grid-cols-[120px_1fr] items-center gap-[8px] rounded-[6px] border border-[#e5e7eb] bg-[#f6f7f6] px-[12px] py-[8px]">
+          <p class="text-[20px] leading-[28px] font-normal text-[#171A1F]">{{ field.label }}</p>
+          <div class="flex h-[26px] items-center rounded-[4px] border border-[#e6e6e6] bg-white px-[10px]">
+            <span class="text-[18px] leading-[27px] font-light text-[#171A1F]">{{ field.value }}</span>
+          </div>
+        </div>
+        <div class="grid grid-cols-[120px_1fr] items-center gap-[8px] rounded-[6px] border border-[#e5e7eb] bg-[#f6f7f6] px-[12px] py-[8px] md:col-span-2">
+          <p class="text-[20px] leading-[28px] font-normal text-[#171A1F]">Current Status:</p>
+          <div class="flex h-[26px] items-center rounded-[4px] border border-[#e6e6e6] bg-white px-[10px]">
+            <span class="text-[18px] leading-[27px] font-light text-[#171A1F]">Significant damage observed, referred for Legal</span>
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- Payment Details -->
-    <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm p-[20px]">
-      <div class="flex items-center gap-[10px] mb-[14px]">
-        <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
+    <section class="bg-white rounded-[10px] shadow-[8px_8px_72px_0px_rgba(0,0,0,0.05)] p-[20px]">
+      <div class="flex items-center gap-[10px] mb-[6px]">
+        <div class="w-[4px] h-[24px] bg-[#234f23] rounded-br-[5px] rounded-tr-[5px]"></div>
         <h2 class="text-[30px] leading-[45px] font-normal text-[#234F23]">Payment Details</h2>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-[12px]">
-        <div>
-          <label class="text-[20px] leading-[28px] font-normal text-[#171A1F] block mb-[5px]">Voucher Number</label>
-          <div class="flex gap-[6px]">
-            <input type="text" value="DV-2025-001" class="flex-1 text-[18px] leading-[27px] font-light border border-[#e5e7eb] rounded-[7px] px-[10px] py-[8px] outline-none focus:border-[#224e22] text-[#171A1F]" />
-            <span class="px-[8px] py-[8px] bg-[#e5e7eb] text-[15px] leading-[22px] font-light text-[#1B1F25] rounded-[5px] h-fit flex items-center justify-center">Auto</span>
+      <p class="text-[16px] leading-[20px] font-light text-[#808080] mb-[10px]">Configure Disbursement Execution Parameters</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-[10px]">
+        <div class="grid grid-cols-[120px_1fr] items-center gap-[8px] rounded-[6px] border border-[#e5e7eb] bg-[#f6f7f6] px-[12px] py-[8px]">
+          <p class="text-[20px] leading-[28px] font-normal text-[#171A1F]">voucher number</p>
+          <div class="flex items-center gap-[6px]">
+            <div class="flex h-[26px] flex-1 items-center rounded-[4px] border border-[#e6e6e6] bg-white px-[10px]">
+              <span class="text-[18px] leading-[27px] font-light text-[#171A1F]">DV-2026-00452-GEN</span>
+            </div>
+            <span class="h-[20px] px-[8px] rounded-[999px] border border-[#e5e7eb] text-[15px] leading-[22px] font-light text-[#1B1F25] flex items-center">Auto</span>
           </div>
         </div>
-        <div>
-          <label class="text-[20px] leading-[28px] font-normal text-[#171A1F] block mb-[5px]">Payment Amount</label>
-          <input type="text" value="₱145,000.00" class="w-full text-[18px] leading-[27px] font-light border border-[#e5e7eb] rounded-[7px] px-[10px] py-[8px] outline-none focus:border-[#224e22] text-[#171A1F]" />
+        <div class="grid grid-cols-[120px_1fr] items-center gap-[8px] rounded-[6px] border border-[#e5e7eb] bg-[#f6f7f6] px-[12px] py-[8px]">
+          <p class="text-[20px] leading-[28px] font-normal text-[#171A1F]">Payment Amount</p>
+          <div class="flex h-[26px] items-center rounded-[4px] border border-[#e6e6e6] bg-white px-[10px]">
+            <span class="text-[18px] leading-[27px] font-light text-[#171A1F]">50,000.00</span>
+          </div>
         </div>
-        <div>
-          <label class="text-[20px] leading-[28px] font-normal text-[#171A1F] block mb-[5px]">Schedule Payment Date</label>
-          <input type="date" class="w-full text-[18px] leading-[27px] font-light border border-[#e5e7eb] rounded-[7px] px-[10px] py-[8px] outline-none focus:border-[#224e22] text-[#171A1F]" />
+        <div class="grid grid-cols-[120px_1fr] items-center gap-[8px] rounded-[6px] border border-[#e5e7eb] bg-[#f6f7f6] px-[12px] py-[8px] md:col-span-2">
+          <p class="text-[20px] leading-[28px] font-normal text-[#171A1F]">Schedule Payment Date</p>
+          <div class="flex h-[26px] items-center rounded-[4px] border border-[#e6e6e6] bg-white px-[10px]">
+            <span class="text-[18px] leading-[27px] font-light text-[#171A1F]">Select date</span>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- Financial Verification Checklist -->
-    <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm p-[20px]">
-      <div class="flex items-center gap-[10px] mb-[14px]">
-        <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
+    <section class="bg-white rounded-[10px] shadow-[8px_8px_72px_0px_rgba(0,0,0,0.05)] p-[20px]">
+      <div class="flex items-center gap-[10px] mb-[6px]">
+        <div class="w-[4px] h-[24px] bg-[#234f23] rounded-br-[5px] rounded-tr-[5px]"></div>
         <h2 class="text-[30px] leading-[45px] font-normal text-[#234F23]">Financial Verification Checklist</h2>
       </div>
+      <p class="text-[16px] leading-[20px] font-light text-[#808080] mb-[10px]">Confirm All Mandatory Compliance Checks Before Authorization</p>
+
       <div class="grid grid-cols-1 md:grid-cols-2 gap-[10px]">
-        <label v-for="(item, i) in checklist" :key="i" class="flex items-start gap-[10px] p-[10px] border border-[#e5e7eb] rounded-[8px] cursor-pointer hover:bg-[#fafafa]">
-          <input type="checkbox" :checked="item.checked" class="w-[13px] h-[13px] mt-[1px] accent-[#224e22]" />
-          <span class="text-[18px] leading-[27px] font-light text-[#171A1F]">{{ item.label }}</span>
+        <label v-for="item in verificationChecks" :key="item.title" class="flex items-start gap-[8px] rounded-[6px] border border-[#f0f0f0] bg-[#fffcf6] px-[12px] py-[10px]">
+          <input type="checkbox" class="mt-[2px] h-[12px] w-[12px] accent-[#234f23]" />
+          <div>
+            <p class="text-[20px] leading-[28px] font-normal text-[#171A1F]">{{ item.title }}</p>
+            <p class="text-[16px] leading-[20px] font-light text-[#808080]">{{ item.description }}</p>
+          </div>
         </label>
       </div>
-    </div>
+    </section>
 
-    <!-- Payment Remarks -->
-    <div class="bg-white rounded-[12px] border border-[#f0f0f0] shadow-sm p-[20px]">
-      <div class="flex items-center justify-between mb-[10px]">
-        <div class="flex items-center gap-[10px]">
-          <div class="w-[4px] h-[18px] bg-[#224e22] rounded-full"></div>
-          <h2 class="text-[30px] leading-[45px] font-normal text-[#234F23]">Payment Remarks &amp; Justification</h2>
-        </div>
-        <span class="text-[16px] leading-[20px] font-light text-[#808080] italic">Auto-saving...</span>
+    <section class="bg-white rounded-[10px] shadow-[8px_8px_72px_0px_rgba(0,0,0,0.05)] p-[20px]">
+      <div class="flex items-center gap-[10px] mb-[10px]">
+        <div class="w-[4px] h-[24px] bg-[#234f23] rounded-br-[5px] rounded-tr-[5px]"></div>
+        <h2 class="text-[30px] leading-[45px] font-normal text-[#234F23]">Payment Remarks &amp; Justification</h2>
       </div>
-      <textarea rows="4" placeholder="Enter remarks regarding the payment disbursement, any special conditions, or justification..." class="w-full text-[18px] leading-[27px] font-light border border-[#e5e7eb] rounded-[8px] px-[12px] py-[10px] outline-none focus:border-[#224e22] resize-none text-[#171A1F] placeholder-[#9ca3af]"></textarea>
-    </div>
+      <textarea
+        rows="4"
+        placeholder="Enter any additional notes for the authorizing officer..."
+        class="w-full rounded-[8px] border border-[#e5e7eb] px-[12px] py-[10px] text-[18px] leading-[27px] font-light text-[#171A1F] outline-none resize-none"
+      ></textarea>
+      <p class="text-[16px] leading-[20px] font-light text-[#808080] mt-[6px]">Auto-save active: Last saved 2 minutes ago</p>
+    </section>
 
-    <!-- CTAs -->
-    <div class="flex flex-col sm:flex-row gap-[12px]">
-      <button class="flex-1 py-[12px] bg-[#1d4a1d] hover:bg-[#163a16] text-white text-[20px] leading-[35px] font-medium rounded-[8px] transition-colors flex items-center justify-center gap-[8px]">
-        <Save class="w-[15px] h-[15px]" /> Save Draft
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-[12px]">
+      <button type="button" class="h-[36px] rounded-[4px] bg-[#275227] text-[20px] leading-[35px] font-medium text-white flex items-center justify-center gap-[8px]">
+        <Save class="w-[14px] h-[14px]" />
+        Save Draft
       </button>
-      <button class="flex-1 py-[12px] bg-[#d97706] hover:bg-[#b45309] text-white text-[20px] leading-[35px] font-medium rounded-[8px] transition-colors flex items-center justify-center gap-[8px]">
-        <ArrowRight class="w-[15px] h-[15px]" /> Submit for Authorization
+      <button type="button" class="h-[36px] rounded-[4px] bg-[#da972e] text-[20px] leading-[35px] font-medium text-white flex items-center justify-center gap-[8px]">
+        <ArrowRight class="w-[14px] h-[14px]" />
+        Submit for Authorization
       </button>
     </div>
   </main>
 </template>
+
+
+
+
+
+
+
+
 
